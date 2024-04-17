@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "120179228869",
+    "project_id": "fusshn-aef8e",
+    "storage_bucket": "fusshn-aef8e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120179228869:android:05599ec4286048d2ec70ac",
+        "android_client_info": {
+          "package_name": "com.example.fusshn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcp0lY1yzjPRQsJvZUg-InrQHe2QsgqEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
