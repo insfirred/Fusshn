@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fusshn/src/models/user_data.dart';
+import 'package:fusshn/src/services/firestore.dart';
 
 import '../services/firebase_auth.dart';
 
@@ -12,15 +15,18 @@ part 'app_repository.freezed.dart';
 final appRepositoryProvider = StateNotifierProvider<AppRepository, AppState>(
   (ref) => AppRepository(
     firebaseAuth: ref.watch(firebaseAuthProvider),
+    firestore: ref.watch(firestoreProvider),
   ),
 );
 
 class AppRepository extends StateNotifier<AppState> {
   final FirebaseAuth firebaseAuth;
+  final FirebaseFirestore firestore;
   late final StreamSubscription _subscription;
 
   AppRepository({
     required this.firebaseAuth,
+    required this.firestore,
   }) : super(const AppState()) {
     () async {
       await Future.delayed(const Duration(milliseconds: 2000));
@@ -115,6 +121,33 @@ class AppRepository extends StateNotifier<AppState> {
     firebaseAuth.signOut();
   }
 
+  // Future<AppStatus> _fetchUserDataAndNavigate() async {
+  //   AppStatus currentStatus = AppStatus.initial;
+  //   try {
+  //     final String currentUserId = state.authUser!.uid;
+  //     print('current userId: $currentUserId');
+  //     final CollectionReference<Map<String, dynamic>> usersCollection =
+  //         firestore.collection(UserData.userCollectionKey);
+
+  //     await usersCollection.doc(currentUserId).get().then(
+  //       (json) {
+  //         // here we checking if the current users have selected preferences or not
+  //         // based on the result we are setting the corresponding state
+  //         if (json.data()?[UserData.preferencesKey].length == 0) {
+  //           print("Preferences not present");
+  //           currentStatus = AppStatus.authenticatedWithNoPrefs;
+  //         } else {
+  //           currentStatus = AppStatus.authenticatedWithPrefs;
+  //         }
+  //       },
+  //     );
+  //   } catch (e) {
+  //     print(e);
+  //   }
+
+  //   return currentStatus;
+  // }
+
   // /// fetches user data from server & sets the state
   // _fetchUserDataAndSetState(User? user) async {
   //   final idToken = await user?.getIdToken();
@@ -177,6 +210,7 @@ class AppRepository extends StateNotifier<AppState> {
 class AppState with _$AppState {
   const factory AppState({
     @Default(null) User? authUser,
+    UserData? userData,
     @Default(AppStatus.initial) AppStatus status,
   }) = _AppState;
 }

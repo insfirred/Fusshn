@@ -29,6 +29,7 @@ mixin _$AuthViewState {
   Gender? get gender => throw _privateConstructorUsedError;
   bool get showPassword => throw _privateConstructorUsedError;
   bool get showConfirmPassword => throw _privateConstructorUsedError;
+  bool get isTermsAccepted => throw _privateConstructorUsedError;
   AuthViewStatus get status => throw _privateConstructorUsedError;
   AuthViewType get activeScreen => throw _privateConstructorUsedError;
   bool get isLogin => throw _privateConstructorUsedError;
@@ -59,6 +60,7 @@ abstract class $AuthViewStateCopyWith<$Res> {
       Gender? gender,
       bool showPassword,
       bool showConfirmPassword,
+      bool isTermsAccepted,
       AuthViewStatus status,
       AuthViewType activeScreen,
       bool isLogin,
@@ -91,6 +93,7 @@ class _$AuthViewStateCopyWithImpl<$Res, $Val extends AuthViewState>
     Object? gender = freezed,
     Object? showPassword = null,
     Object? showConfirmPassword = null,
+    Object? isTermsAccepted = null,
     Object? status = null,
     Object? activeScreen = null,
     Object? isLogin = null,
@@ -149,6 +152,10 @@ class _$AuthViewStateCopyWithImpl<$Res, $Val extends AuthViewState>
           ? _value.showConfirmPassword
           : showConfirmPassword // ignore: cast_nullable_to_non_nullable
               as bool,
+      isTermsAccepted: null == isTermsAccepted
+          ? _value.isTermsAccepted
+          : isTermsAccepted // ignore: cast_nullable_to_non_nullable
+              as bool,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -191,6 +198,7 @@ abstract class _$$AuthViewStateImplCopyWith<$Res>
       Gender? gender,
       bool showPassword,
       bool showConfirmPassword,
+      bool isTermsAccepted,
       AuthViewStatus status,
       AuthViewType activeScreen,
       bool isLogin,
@@ -221,6 +229,7 @@ class __$$AuthViewStateImplCopyWithImpl<$Res>
     Object? gender = freezed,
     Object? showPassword = null,
     Object? showConfirmPassword = null,
+    Object? isTermsAccepted = null,
     Object? status = null,
     Object? activeScreen = null,
     Object? isLogin = null,
@@ -279,6 +288,10 @@ class __$$AuthViewStateImplCopyWithImpl<$Res>
           ? _value.showConfirmPassword
           : showConfirmPassword // ignore: cast_nullable_to_non_nullable
               as bool,
+      isTermsAccepted: null == isTermsAccepted
+          ? _value.isTermsAccepted
+          : isTermsAccepted // ignore: cast_nullable_to_non_nullable
+              as bool,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -318,6 +331,7 @@ class _$AuthViewStateImpl
       this.gender,
       this.showPassword = false,
       this.showConfirmPassword = false,
+      this.isTermsAccepted = false,
       this.status = AuthViewStatus.initial,
       this.activeScreen = AuthViewType.login,
       this.isLogin = true,
@@ -358,6 +372,9 @@ class _$AuthViewStateImpl
   final bool showConfirmPassword;
   @override
   @JsonKey()
+  final bool isTermsAccepted;
+  @override
+  @JsonKey()
   final AuthViewStatus status;
   @override
   @JsonKey()
@@ -370,7 +387,7 @@ class _$AuthViewStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthViewState(name: $name, email: $email, password: $password, confirmPassword: $confirmPassword, mobile: $mobile, nameError: $nameError, emailError: $emailError, passwordError: $passwordError, confirmPasswordError: $confirmPasswordError, mobileError: $mobileError, gender: $gender, showPassword: $showPassword, showConfirmPassword: $showConfirmPassword, status: $status, activeScreen: $activeScreen, isLogin: $isLogin, errorMessage: $errorMessage)';
+    return 'AuthViewState(name: $name, email: $email, password: $password, confirmPassword: $confirmPassword, mobile: $mobile, nameError: $nameError, emailError: $emailError, passwordError: $passwordError, confirmPasswordError: $confirmPasswordError, mobileError: $mobileError, gender: $gender, showPassword: $showPassword, showConfirmPassword: $showConfirmPassword, isTermsAccepted: $isTermsAccepted, status: $status, activeScreen: $activeScreen, isLogin: $isLogin, errorMessage: $errorMessage)';
   }
 
   @override
@@ -391,6 +408,7 @@ class _$AuthViewStateImpl
       ..add(DiagnosticsProperty('gender', gender))
       ..add(DiagnosticsProperty('showPassword', showPassword))
       ..add(DiagnosticsProperty('showConfirmPassword', showConfirmPassword))
+      ..add(DiagnosticsProperty('isTermsAccepted', isTermsAccepted))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('activeScreen', activeScreen))
       ..add(DiagnosticsProperty('isLogin', isLogin))
@@ -424,6 +442,8 @@ class _$AuthViewStateImpl
                 other.showPassword == showPassword) &&
             (identical(other.showConfirmPassword, showConfirmPassword) ||
                 other.showConfirmPassword == showConfirmPassword) &&
+            (identical(other.isTermsAccepted, isTermsAccepted) ||
+                other.isTermsAccepted == isTermsAccepted) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.activeScreen, activeScreen) ||
                 other.activeScreen == activeScreen) &&
@@ -448,6 +468,7 @@ class _$AuthViewStateImpl
       gender,
       showPassword,
       showConfirmPassword,
+      isTermsAccepted,
       status,
       activeScreen,
       isLogin,
@@ -475,6 +496,7 @@ abstract class _AuthViewState implements AuthViewState {
       final Gender? gender,
       final bool showPassword,
       final bool showConfirmPassword,
+      final bool isTermsAccepted,
       final AuthViewStatus status,
       final AuthViewType activeScreen,
       final bool isLogin,
@@ -506,6 +528,8 @@ abstract class _AuthViewState implements AuthViewState {
   bool get showPassword;
   @override
   bool get showConfirmPassword;
+  @override
+  bool get isTermsAccepted;
   @override
   AuthViewStatus get status;
   @override
