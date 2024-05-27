@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 
 import '../ui/auth/auth_view.dart';
+import '../ui/event_detail_view/event_detail_view.dart';
 import '../ui/events_tab/events_view.dart';
 import '../ui/home_tab/home_view.dart';
 import '../ui/main/main_view.dart';
@@ -48,6 +49,10 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           path: '/onboarding',
           page: OnboardingRoute.page,
+        ),
+        AutoRoute(
+          path: '/event-detail',
+          page: EventDetailRoute.page,
         ),
       ];
 }

@@ -63,8 +63,8 @@ class _AuthViewState extends ConsumerState<AuthView> {
         children: [
           VideoPlayer(_controller),
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: viewHorizontalPadding),
+            padding: const EdgeInsets.symmetric(
+                horizontal: authViewHorizontalPadding),
             child: activeScreen == AuthViewType.register
                 ? const RegisterSection()
                 : const LoginSection(),

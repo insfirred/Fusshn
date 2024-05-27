@@ -26,11 +26,17 @@ class BottomBar extends ConsumerWidget {
             bottom: 7,
           ),
           decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+            color: const Color(0xFF111111).withOpacity(0.8),
             boxShadow: [
               BoxShadow(
-                spreadRadius: 0,
+                offset: const Offset(0, 4),
+                spreadRadius: 1,
                 blurRadius: 18,
-                color: Colors.black.withOpacity(0.1),
+                color: const Color(0xFF8E8E8E).withOpacity(0.25),
               ),
             ],
           ),
@@ -41,7 +47,6 @@ class BottomBar extends ConsumerWidget {
                 label: 'Home',
                 isActive: context.tabsRouter.activeIndex == 0,
                 onTap: () {
-                  // ref.read(homeTabModelProvider.notifier).refreshData();
                   _onTapTab(context, 0);
                 },
               ),

@@ -47,7 +47,7 @@ class _OnboardingViewState extends ConsumerState<OnboardingView> {
           VideoPlayer(_controller),
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: viewHorizontalPadding,
+              horizontal: authViewHorizontalPadding,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
