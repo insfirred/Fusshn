@@ -22,9 +22,13 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     EventDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<EventDetailRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const EventDetailView(),
+        child: EventDetailView(
+          eventData: args.eventData,
+          key: args.key,
+        ),
       );
     },
     EventsRoute.name: (routeData) {
@@ -88,16 +92,40 @@ class AuthRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [EventDetailView]
-class EventDetailRoute extends PageRouteInfo<void> {
-  const EventDetailRoute({List<PageRouteInfo>? children})
-      : super(
+class EventDetailRoute extends PageRouteInfo<EventDetailRouteArgs> {
+  EventDetailRoute({
+    required EventData eventData,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           EventDetailRoute.name,
+          args: EventDetailRouteArgs(
+            eventData: eventData,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'EventDetailRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<EventDetailRouteArgs> page =
+      PageInfo<EventDetailRouteArgs>(name);
+}
+
+class EventDetailRouteArgs {
+  const EventDetailRouteArgs({
+    required this.eventData,
+    this.key,
+  });
+
+  final EventData eventData;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'EventDetailRouteArgs{eventData: $eventData, key: $key}';
+  }
 }
 
 /// generated route for

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../common/enums.dart';
+import '../../models/event_data.dart';
 import '../common_widgets/animated_gradient_background.dart';
 import '../common_widgets/sliver_title.dart';
 import 'components/event_card.dart';
@@ -12,6 +13,7 @@ import 'components/greetings_appbar.dart';
 import 'components/home_banner.dart';
 import 'components/location_card.dart';
 import 'components/search_appbar.dart';
+import 'home_view_model.dart';
 
 @RoutePage()
 class HomeView extends ConsumerWidget {
@@ -26,21 +28,22 @@ class HomeView extends ConsumerWidget {
             slivers: [
               const GreetingAppBar(),
               const SearchAppBar(),
+              const SliverTitle(label: 'Trending'),
               // SliverToBoxAdapter(
-              //   child: Container(
-              //     padding: const EdgeInsets.symmetric(
-              //       horizontal: homeTabHorizontalPadding,
-              //     ),
-              //     child: Text(
-              //       'Trending',
-              //       style: Theme.of(context)
-              //           .textTheme
-              //           .titleMedium
-              //           ?.copyWith(fontSize: 18),
-              //     ),
+              //   child: ElevatedButton(
+              //     onPressed: () {
+              //       FirebaseFirestore.instance
+              //           .collection('events')
+              //           .add(eventWasteData.toJson())
+              //           .then(
+              //         (doc) {
+              //           doc.update({"id": doc.id});
+              //         },
+              //       );
+              //     },
+              //     child: const Text("Push Event Data"),
               //   ),
               // ),
-              SliverTitle(label: 'Trending'),
               const SliverToBoxAdapter(child: SizedBox(height: 12)),
               SliverToBoxAdapter(
                 child: SizedBox(
@@ -78,75 +81,20 @@ class HomeView extends ConsumerWidget {
                 onTap: () {},
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 8)),
-              SliverToBoxAdapter(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  height: 300,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 6,
-                    itemBuilder: (context, index) => EventCard(index),
-                  ),
-                ),
+              const SliverToBoxAdapter(
+                child: HorizontalEventSlider(),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 20)),
-              // SliverToBoxAdapter(
-              //   child: Container(
-              //     padding: const EdgeInsets.symmetric(
-              //       horizontal: homeTabHorizontalPadding,
-              //     ),
-              //     child: Row(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //       children: [
-              //         Text(
-              //           'Music Events',
-              //           style: Theme.of(context).textTheme.titleMedium,
-              //         ),
-              //         Container(
-              //           padding: const EdgeInsets.symmetric(
-              //             vertical: 6,
-              //             horizontal: 12,
-              //           ),
-              //           decoration: BoxDecoration(
-              //             border: Border.all(
-              //               color: const Color(0xFF78F894).withOpacity(0.7),
-              //               width: 0.5,
-              //             ),
-              //             borderRadius: BorderRadius.circular(20),
-              //           ),
-              //           child: Text(
-              //             'View All',
-              //             style: Theme.of(context)
-              //                 .textTheme
-              //                 .bodySmall
-              //                 ?.copyWith(
-              //                     color:
-              //                         const Color(0xFF78F894).withOpacity(0.7)),
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
               SliverTitle(
                 label: 'Music Events',
                 onTap: () {},
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 8)),
-              SliverToBoxAdapter(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  height: 300,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 6,
-                    itemBuilder: (context, index) => EventCard(index),
-                  ),
-                ),
+              const SliverToBoxAdapter(
+                child: HorizontalEventSlider(),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 20)),
-              SliverTitle(label: 'Featured Artists'),
+              const SliverTitle(label: 'Featured Artists'),
               const SliverToBoxAdapter(child: SizedBox(height: 11)),
               SliverToBoxAdapter(
                 child: SizedBox(
@@ -202,6 +150,32 @@ class HomeView extends ConsumerWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class HorizontalEventSlider extends ConsumerWidget {
+  const HorizontalEventSlider({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final List<EventData> eventDataList = ref.watch(
+      homeViewModelProvider.select((_) => _.events),
+    );
+
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      height: 300,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: eventDataList.length,
+        itemBuilder: (context, index) => EventCard(
+          eventData: eventDataList[index],
+          index: index,
         ),
       ),
     );

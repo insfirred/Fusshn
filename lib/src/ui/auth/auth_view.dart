@@ -19,24 +19,24 @@ class AuthView extends ConsumerStatefulWidget {
 }
 
 class _AuthViewState extends ConsumerState<AuthView> {
-  late final VideoPlayerController _controller;
+  // late final VideoPlayerController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/videos/onboarding.mp4');
+    // _controller = VideoPlayerController.asset('assets/videos/onboarding.mp4');
 
-    _controller.addListener(() {
-      setState(() {});
-    });
-    _controller.setLooping(true);
-    _controller.initialize().then((_) => setState(() {}));
-    _controller.play();
+    // _controller.addListener(() {
+    //   setState(() {});
+    // });
+    // _controller.setLooping(true);
+    // _controller.initialize().then((_) => setState(() {}));
+    // _controller.play();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    // _controller.dispose();
     super.dispose();
   }
 
@@ -61,7 +61,7 @@ class _AuthViewState extends ConsumerState<AuthView> {
     return Scaffold(
       body: Stack(
         children: [
-          VideoPlayer(_controller),
+          // VideoPlayer(_controller),
           Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: authViewHorizontalPadding),

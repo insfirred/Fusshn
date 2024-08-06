@@ -10,7 +10,6 @@ class UserData {
   static String nameKey = 'name';
   static String emailKey = 'email';
   static String phoneKey = 'phone';
-  static String preferencesKey = 'preferences';
 
   final String uid;
   final String name;

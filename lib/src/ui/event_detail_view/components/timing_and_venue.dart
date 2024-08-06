@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../common/dimens.dart';
 
 class TimingAndVenue extends StatelessWidget {
   const TimingAndVenue({
     super.key,
+    required this.startTime,
+    required this.endTime,
+    required this.gateCloses,
+    required this.location,
+    required this.organizerName,
   });
+
+  final DateTime startTime;
+  final DateTime endTime;
+  final DateTime gateCloses;
+  final String location;
+  final String organizerName;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +56,7 @@ class TimingAndVenue extends StatelessWidget {
                 Expanded(
                   flex: 5,
                   child: Text(
-                    '7:30 PM',
+                    DateFormat.jm().format(startTime),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
@@ -71,7 +84,7 @@ class TimingAndVenue extends StatelessWidget {
                 Expanded(
                   flex: 5,
                   child: Text(
-                    '7:30 PM',
+                    DateFormat.jm().format(gateCloses),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
@@ -103,7 +116,7 @@ class TimingAndVenue extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Mahalaxmi Lawns',
+                        location,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               decoration: TextDecoration.underline,
                               decorationColor: const Color(0xFFFFFFFF),
@@ -115,6 +128,11 @@ class TimingAndVenue extends StatelessWidget {
                             .textTheme
                             .bodySmall
                             ?.copyWith(color: const Color(0xFF808080)),
+                      ),
+                      const _EventLocationBox(
+                        lat: 1,
+                        lng: 1,
+                        // 28.396366244820598, 77.10404872451666
                       ),
                     ],
                   ),
@@ -172,7 +190,7 @@ class TimingAndVenue extends StatelessWidget {
                 Expanded(
                   flex: 5,
                   child: Text(
-                    'Playboy Media Ltd.',
+                    organizerName,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           decoration: TextDecoration.underline,
                           decorationColor: const Color(0xFFFFFFFF),
@@ -186,5 +204,38 @@ class TimingAndVenue extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _EventLocationBox extends StatelessWidget {
+  const _EventLocationBox({
+    required this.lat,
+    required this.lng,
+  });
+
+  final double lat;
+  final double lng;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _launchUrl,
+      behavior: HitTestBehavior.opaque,
+      child: Text(
+        'Tap to view location',
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              decoration: TextDecoration.underline,
+              decorationColor: const Color(0xFFFFFFFF),
+            ),
+      ),
+    );
+  }
+
+  Future<void> _launchUrl() async {
+    print('opening maps');
+    if (!await launchUrl(
+        Uri.parse('https://www.google.com/maps/place/$lat,$lng'))) {
+      throw Exception('Something went wrong on launching map url...');
+    }
   }
 }

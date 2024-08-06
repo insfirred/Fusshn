@@ -1,16 +1,23 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fusshn/src/models/event_data.dart';
 import 'package:fusshn/src/routing/app_router.dart';
+import 'package:intl/intl.dart';
 
 class EventCard extends StatelessWidget {
-  const EventCard(this.index, {super.key});
+  const EventCard({
+    super.key,
+    required this.index,
+    required this.eventData,
+  });
 
   final int index;
+  final EventData eventData;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.navigateTo(const EventDetailRoute()),
+      onTap: () => context.navigateTo(EventDetailRoute(eventData: eventData)),
       behavior: HitTestBehavior.opaque,
       child: Container(
         margin: EdgeInsets.only(
@@ -18,11 +25,11 @@ class EventCard extends StatelessWidget {
           right: index == 6 - 1 ? 16 : 6,
         ),
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-        child: const Stack(
+        child: Stack(
           children: [
-            _Image(),
-            _Gradient(),
-            _Data(),
+            _Image(eventData.posterUrl),
+            const _Gradient(),
+            _Data(eventData),
           ],
         ),
       ),
@@ -31,14 +38,16 @@ class EventCard extends StatelessWidget {
 }
 
 class _Image extends StatelessWidget {
-  const _Image();
+  const _Image(this.url);
+
+  final String url;
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
-      child: Image.asset(
-        'assets/images/test/event2.jpeg',
+      child: Image.network(
+        url,
         height: 285,
         width: 232,
         fit: BoxFit.cover,
@@ -73,7 +82,9 @@ class _Gradient extends StatelessWidget {
 }
 
 class _Data extends StatelessWidget {
-  const _Data();
+  const _Data(this.eventData);
+
+  final EventData eventData;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +97,7 @@ class _Data extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Techno - DJ Kalash',
+            eventData.name,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.titleMedium,
           ),
@@ -104,7 +115,7 @@ class _Data extends StatelessWidget {
                   SizedBox(
                     width: 190,
                     child: Text(
-                      'Club Khubani, Near petrol Pump, Aerocity',
+                      eventData.eventLocation,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
                           .textTheme
@@ -123,7 +134,9 @@ class _Data extends StatelessWidget {
                   ),
                   const SizedBox(width: 5),
                   Text(
-                    '30th September, 8:30 PM',
+                    DateFormat('d MMMM y, ')
+                        .add_jm()
+                        .format(eventData.startTime),
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context)
                         .textTheme

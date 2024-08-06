@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/dimens.dart';
@@ -6,7 +5,10 @@ import '../../../common/dimens.dart';
 class EventIntroduction extends StatefulWidget {
   const EventIntroduction({
     super.key,
+    required this.intro,
   });
+
+  final String intro;
 
   @override
   State<EventIntroduction> createState() => _EventIntroductionState();
@@ -56,7 +58,7 @@ class _EventIntroductionState extends State<EventIntroduction> {
             const SizedBox(height: 8),
             if (isVisible) ...[
               Text(
-                'The people, the energy, the music, the vibe. The mood. The picture-perfect sunsets, sprawling lawns, dominating energy, and the enigmatic landscape. With the bustling city of Pune dotting the backdrop of the festival, the 13th edition of BACARDÍ NH7 Weekender is set to be a grand affair.\n\nSo, head on over to the Happiest Music Festival for a time of eclectic acts, stunning performances, music that will leave you swooning, and memories that you’ll hold on to forever. Sip on cocktails, try the exciting food line-up, experience the art installations, catch a show atop the Ferris wheel, and let the festival spirit fill your soul.\n\nWe can’t wait to see our Weekender Warriors back home in Pune, where it all began.\n\n#13MeraWeekender',
+                widget.intro,
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall
