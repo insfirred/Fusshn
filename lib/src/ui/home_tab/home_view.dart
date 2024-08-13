@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fusshn/src/repositories/app_repository.dart';
 
 import '../../common/enums.dart';
 import '../../models/event_data.dart';
@@ -28,6 +30,7 @@ class HomeView extends ConsumerWidget {
             slivers: [
               const GreetingAppBar(),
               const SearchAppBar(),
+
               const SliverTitle(label: 'Trending'),
               // SliverToBoxAdapter(
               //   child: ElevatedButton(

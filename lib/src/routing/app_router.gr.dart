@@ -21,6 +21,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AuthView(),
       );
     },
+    BookingHistoryRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const BookingHistoryView(),
+      );
+    },
+    ConfirmBookingRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ConfirmBookingView(),
+      );
+    },
     EventDetailRoute.name: (routeData) {
       final args = routeData.argsAs<EventDetailRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -86,6 +98,34 @@ class AuthRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AuthRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [BookingHistoryView]
+class BookingHistoryRoute extends PageRouteInfo<void> {
+  const BookingHistoryRoute({List<PageRouteInfo>? children})
+      : super(
+          BookingHistoryRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BookingHistoryRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ConfirmBookingView]
+class ConfirmBookingRoute extends PageRouteInfo<void> {
+  const ConfirmBookingRoute({List<PageRouteInfo>? children})
+      : super(
+          ConfirmBookingRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ConfirmBookingRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

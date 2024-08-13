@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fusshn/src/models/event_data.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../services/firestore.dart';
 

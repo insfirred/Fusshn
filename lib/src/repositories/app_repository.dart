@@ -5,10 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:fusshn/src/models/user_data.dart';
-import 'package:fusshn/src/services/firestore.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
+import '../models/user_data.dart';
 import '../services/firebase_auth.dart';
+import '../services/firestore.dart';
 
 part 'app_repository.freezed.dart';
 
@@ -43,9 +45,80 @@ class AppRepository extends StateNotifier<AppState> {
               status: AppStatus.authenticated,
             );
           }
+          _fetchCurrentUserData();
+          _getCurrentPosition();
         },
       );
     }();
+  }
+
+  refreshUserData() => _fetchCurrentUserData();
+
+  _fetchCurrentUserData() async {
+    print('fetching user data from cloud....');
+    var snapshot = await firestore
+        .collection(UserData.userCollectionKey)
+        .doc(state.authUser!.uid)
+        .get();
+
+    if (snapshot.exists) {
+      UserData userData = UserData.fromJson(snapshot.data()!);
+      state = state.copyWith(userData: userData);
+    } else {
+      // TODO: HAndle this error
+    }
+  }
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition().then(
+      (Position position) async {
+        state = state.copyWith(currentPosition: position);
+        await placemarkFromCoordinates(
+          position.latitude,
+          position.longitude,
+        ).then(
+          (placemarks) {
+            state = state.copyWith(
+              currentPlacemarks: placemarks,
+            );
+          },
+        ).catchError((e) {
+          debugPrint(e);
+        });
+      },
+    ).catchError(
+      (e) {
+        debugPrint(e);
+      },
+    );
+  }
+
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      print('Location services are disabled. Please enable the services');
+
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        print('Location permissions are denied');
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      print(
+          'Location permissions are permanently denied, we cannot request permissions.');
+      return false;
+    }
+    return true;
   }
 
   // retryUserDataFetch() {
@@ -211,6 +284,8 @@ class AppState with _$AppState {
   const factory AppState({
     @Default(null) User? authUser,
     UserData? userData,
+    List<Placemark>? currentPlacemarks,
+    Position? currentPosition,
     @Default(AppStatus.initial) AppStatus status,
   }) = _AppState;
 }

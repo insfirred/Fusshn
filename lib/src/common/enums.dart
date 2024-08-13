@@ -16,3 +16,8 @@ enum EventCategories {
   Activities,
   Tourism,
 }
+
+enum BookingStatus {
+  success,
+  failure,
+}

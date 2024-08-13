@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fusshn/src/repositories/app_repository.dart';
 
-class GreetingAppBar extends StatelessWidget {
+class GreetingAppBar extends ConsumerWidget {
   const GreetingAppBar({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentCity = ref
+        .watch(
+          appRepositoryProvider.select((_) => _.currentPlacemarks),
+        )?[0]
+        .locality;
+
+    final userName = ref.watch(
+      appRepositoryProvider.select((_) => _.userData?.name),
+    );
+
     return SliverAppBar(
       collapsedHeight: 85,
       toolbarHeight: 85,
@@ -25,14 +37,14 @@ class GreetingAppBar extends StatelessWidget {
         children: [
           const SizedBox(height: 34),
           Text(
-            "Hi Garvit",
+            "Hi $userName",
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 6),
           Row(
             children: [
               Text(
-                "Delhi NCR",
+                currentCity ?? '',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(width: 6),

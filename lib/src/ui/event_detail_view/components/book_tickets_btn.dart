@@ -9,9 +9,11 @@ class BookTicketsBtn extends StatelessWidget {
   const BookTicketsBtn({
     super.key,
     required this.tickets,
+    required this.eventId,
   });
 
   final List<TicketType> tickets;
+  final String eventId;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,10 @@ class BookTicketsBtn extends StatelessWidget {
         onTap: () {
           showFusshnBottomSheet(
             context: context,
-            builder: (context) => BookTicketSheet(tickets: tickets),
+            builder: (context) => BookTicketSheet(
+              tickets: tickets,
+              eventId: eventId,
+            ),
           );
         },
       ),

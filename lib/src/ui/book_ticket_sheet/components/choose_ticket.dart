@@ -1,20 +1,20 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fusshn/src/ui/book_ticket_sheet/book_ticket_sheet_view_model.dart';
-import 'package:fusshn/src/ui/common_widgets/fusshn_btn.dart';
+import 'package:fusshn/src/routing/app_router.dart';
 import 'package:fusshn/src/utils/snackbar_utils.dart';
 
 import '../../../common/dimens.dart';
 import '../../../models/ticket_type.dart';
+import '../../common_widgets/fusshn_btn.dart';
+import '../book_ticket_sheet_view_model.dart';
 
 class ChooseTicket extends ConsumerWidget {
   const ChooseTicket({
     super.key,
-    required this.pageController,
     required this.tickets,
   });
 
-  final PageController pageController;
   final List<TicketType> tickets;
 
   @override
@@ -29,65 +29,95 @@ class ChooseTicket extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: homeTabHorizontalPadding,
-        vertical: 22,
+        vertical: 10,
       ),
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(12),
-            topRight: Radius.circular(12),
-          ),
-          color: Color.fromARGB(255, 43, 43, 43)),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+        color: Theme.of(context).scaffoldBackgroundColor,
+      ),
       width: double.maxFinite,
       child: Column(
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+                width: 40,
+                height: 2,
+              )
+            ],
+          ),
+          const SizedBox(height: 10),
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Choose your tickets',
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayLarge
-                        ?.copyWith(fontSize: 22),
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Choose your tickets',
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge
+                              ?.copyWith(fontSize: 22),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                            'View all ticket options available. Click once to select and add how many you want to buy.',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
+                                    fontSize: 12,
+                                    color: const Color(0xFF808080))),
+                        const Divider(color: Color(0xFF3F3F3F)),
+                        const SizedBox(height: 16),
+                        Column(
+                          children: tickets
+                              .map(
+                                (ticket) => _Ticket(ticket: ticket),
+                              )
+                              .toList(),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 2),
-                  Text(
-                      'View all ticket options available. Click once to select and add how many you want to buy.',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontSize: 12, color: const Color(0xFF808080))),
-                  const Divider(color: Color(0xFF3F3F3F)),
-                  const SizedBox(height: 16),
-                  Column(
-                    children: tickets
-                        .map(
-                          (ticket) => _Ticket(ticket: ticket),
-                        )
-                        .toList(),
-                  ),
-                ],
-              ),
+                ),
+                FusshnBtn(
+                  label: 'Confirm',
+                  onTap: () {
+                    if (selectedTicketType != null && selectedTicketCount > 0) {
+                      if (selectedTicketType.availableTickets <
+                          selectedTicketCount) {
+                        // CASE where quantity of available tickets are less than selected.
+                        Navigator.of(context).pop();
+                        showErrorMessage(
+                          context,
+                          selectedTicketType.availableTickets == 1
+                              ? 'Only ${selectedTicketType.availableTickets} ticket is available'
+                              : 'Only ${selectedTicketType.availableTickets} tickets are available',
+                        );
+                      } else {
+                        context.navigateTo(const ConfirmBookingRoute());
+                      }
+                    } else {
+                      print('Select Your ticket');
+                    }
+                  },
+                )
+              ],
             ),
           ),
-          FusshnBtn(
-            label: 'Confirm',
-            onTap: () {
-              if (selectedTicketType != null && selectedTicketCount > 0) {
-                ref
-                    .read(bookTicketSheetViewModelProvider.notifier)
-                    .calculateTotalPrice();
-
-                pageController.nextPage(
-                  duration: const Duration(milliseconds: 150),
-                  curve: Curves.easeIn,
-                );
-              } else {
-                print('Select Your ticket');
-              }
-            },
-          )
         ],
       ),
     );
@@ -96,11 +126,9 @@ class ChooseTicket extends ConsumerWidget {
 
 class _Ticket extends ConsumerWidget {
   const _Ticket({
-    // required this.pageController,
     required this.ticket,
   });
 
-  // final PageController pageController;
   final TicketType ticket;
 
   @override
@@ -124,7 +152,9 @@ class _Ticket extends ConsumerWidget {
           border: Border.all(
             color: const Color(0xFFFAFAFA).withOpacity(0.5),
           ),
-          color: selectedTicketType == ticket ? Colors.pink : null,
+          color: selectedTicketType == ticket
+              ? const Color.fromARGB(255, 32, 136, 53)
+              : null,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

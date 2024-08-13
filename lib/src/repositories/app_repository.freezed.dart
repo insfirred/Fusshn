@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AppState {
   User? get authUser => throw _privateConstructorUsedError;
   UserData? get userData => throw _privateConstructorUsedError;
+  List<Placemark>? get currentPlacemarks => throw _privateConstructorUsedError;
+  Position? get currentPosition => throw _privateConstructorUsedError;
   AppStatus get status => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +32,12 @@ abstract class $AppStateCopyWith<$Res> {
   factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
       _$AppStateCopyWithImpl<$Res, AppState>;
   @useResult
-  $Res call({User? authUser, UserData? userData, AppStatus status});
+  $Res call(
+      {User? authUser,
+      UserData? userData,
+      List<Placemark>? currentPlacemarks,
+      Position? currentPosition,
+      AppStatus status});
 }
 
 /// @nodoc
@@ -48,6 +55,8 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
   $Res call({
     Object? authUser = freezed,
     Object? userData = freezed,
+    Object? currentPlacemarks = freezed,
+    Object? currentPosition = freezed,
     Object? status = null,
   }) {
     return _then(_value.copyWith(
@@ -59,6 +68,14 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.userData
           : userData // ignore: cast_nullable_to_non_nullable
               as UserData?,
+      currentPlacemarks: freezed == currentPlacemarks
+          ? _value.currentPlacemarks
+          : currentPlacemarks // ignore: cast_nullable_to_non_nullable
+              as List<Placemark>?,
+      currentPosition: freezed == currentPosition
+          ? _value.currentPosition
+          : currentPosition // ignore: cast_nullable_to_non_nullable
+              as Position?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -75,7 +92,12 @@ abstract class _$$AppStateImplCopyWith<$Res>
       __$$AppStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User? authUser, UserData? userData, AppStatus status});
+  $Res call(
+      {User? authUser,
+      UserData? userData,
+      List<Placemark>? currentPlacemarks,
+      Position? currentPosition,
+      AppStatus status});
 }
 
 /// @nodoc
@@ -91,6 +113,8 @@ class __$$AppStateImplCopyWithImpl<$Res>
   $Res call({
     Object? authUser = freezed,
     Object? userData = freezed,
+    Object? currentPlacemarks = freezed,
+    Object? currentPosition = freezed,
     Object? status = null,
   }) {
     return _then(_$AppStateImpl(
@@ -102,6 +126,14 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.userData
           : userData // ignore: cast_nullable_to_non_nullable
               as UserData?,
+      currentPlacemarks: freezed == currentPlacemarks
+          ? _value._currentPlacemarks
+          : currentPlacemarks // ignore: cast_nullable_to_non_nullable
+              as List<Placemark>?,
+      currentPosition: freezed == currentPosition
+          ? _value.currentPosition
+          : currentPosition // ignore: cast_nullable_to_non_nullable
+              as Position?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -114,20 +146,38 @@ class __$$AppStateImplCopyWithImpl<$Res>
 
 class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
   const _$AppStateImpl(
-      {this.authUser = null, this.userData, this.status = AppStatus.initial});
+      {this.authUser = null,
+      this.userData,
+      final List<Placemark>? currentPlacemarks,
+      this.currentPosition,
+      this.status = AppStatus.initial})
+      : _currentPlacemarks = currentPlacemarks;
 
   @override
   @JsonKey()
   final User? authUser;
   @override
   final UserData? userData;
+  final List<Placemark>? _currentPlacemarks;
+  @override
+  List<Placemark>? get currentPlacemarks {
+    final value = _currentPlacemarks;
+    if (value == null) return null;
+    if (_currentPlacemarks is EqualUnmodifiableListView)
+      return _currentPlacemarks;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final Position? currentPosition;
   @override
   @JsonKey()
   final AppStatus status;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppState(authUser: $authUser, userData: $userData, status: $status)';
+    return 'AppState(authUser: $authUser, userData: $userData, currentPlacemarks: $currentPlacemarks, currentPosition: $currentPosition, status: $status)';
   }
 
   @override
@@ -137,6 +187,8 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
       ..add(DiagnosticsProperty('type', 'AppState'))
       ..add(DiagnosticsProperty('authUser', authUser))
       ..add(DiagnosticsProperty('userData', userData))
+      ..add(DiagnosticsProperty('currentPlacemarks', currentPlacemarks))
+      ..add(DiagnosticsProperty('currentPosition', currentPosition))
       ..add(DiagnosticsProperty('status', status));
   }
 
@@ -149,11 +201,21 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
                 other.authUser == authUser) &&
             (identical(other.userData, userData) ||
                 other.userData == userData) &&
+            const DeepCollectionEquality()
+                .equals(other._currentPlacemarks, _currentPlacemarks) &&
+            (identical(other.currentPosition, currentPosition) ||
+                other.currentPosition == currentPosition) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, authUser, userData, status);
+  int get hashCode => Object.hash(
+      runtimeType,
+      authUser,
+      userData,
+      const DeepCollectionEquality().hash(_currentPlacemarks),
+      currentPosition,
+      status);
 
   @JsonKey(ignore: true)
   @override
@@ -166,12 +228,18 @@ abstract class _AppState implements AppState {
   const factory _AppState(
       {final User? authUser,
       final UserData? userData,
+      final List<Placemark>? currentPlacemarks,
+      final Position? currentPosition,
       final AppStatus status}) = _$AppStateImpl;
 
   @override
   User? get authUser;
   @override
   UserData? get userData;
+  @override
+  List<Placemark>? get currentPlacemarks;
+  @override
+  Position? get currentPosition;
   @override
   AppStatus get status;
   @override

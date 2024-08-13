@@ -10,17 +10,22 @@ class UserData {
   static String nameKey = 'name';
   static String emailKey = 'email';
   static String phoneKey = 'phone';
+  static String allBookingsKey = 'all_bookings';
 
   final String uid;
-  final String name;
+  final String? name;
   final String email;
-  final String phone;
+  final String? phone;
+  final String? imageUrl;
+  final List<String>? bookingIdsList;
 
   const UserData({
     required this.uid,
-    required this.name,
+    this.name,
     required this.email,
-    required this.phone,
+    this.phone,
+    this.imageUrl,
+    this.bookingIdsList,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) =>

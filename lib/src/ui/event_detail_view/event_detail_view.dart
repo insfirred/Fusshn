@@ -143,7 +143,10 @@ class EventDetailView extends StatelessWidget {
               ),
 
               // BOOK_TICKETS_BUTTON
-              BookTicketsBtn(tickets: eventData.tickets),
+              BookTicketsBtn(
+                tickets: eventData.tickets,
+                eventId: eventData.id,
+              ),
             ],
           ),
         ),

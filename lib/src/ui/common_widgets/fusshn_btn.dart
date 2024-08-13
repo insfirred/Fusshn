@@ -7,10 +7,12 @@ class FusshnBtn extends StatelessWidget {
     super.key,
     this.onTap,
     required this.label,
+    this.height,
   });
 
   final void Function()? onTap;
   final String label;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class FusshnBtn extends StatelessWidget {
           child: InkWell(
             onTap: onTap,
             child: Container(
+              height: height,
               width: MediaQuery.of(context).size.width -
                   2 * homeTabHorizontalPadding,
               padding: const EdgeInsets.symmetric(vertical: 10),

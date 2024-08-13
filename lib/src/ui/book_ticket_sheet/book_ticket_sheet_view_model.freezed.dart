@@ -18,11 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$BookTicketSheetViewState {
   TicketType? get selectedTicketType => throw _privateConstructorUsedError;
   int get selectedTicketCount => throw _privateConstructorUsedError;
-  double get basePrice => throw _privateConstructorUsedError;
-  double get bookingFee => throw _privateConstructorUsedError;
-  double get gstFee => throw _privateConstructorUsedError;
-  double get grandTotalPrice => throw _privateConstructorUsedError;
-  PaymentStatus get status => throw _privateConstructorUsedError;
+  String get eventId => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -39,11 +35,7 @@ abstract class $BookTicketSheetViewStateCopyWith<$Res> {
   $Res call(
       {TicketType? selectedTicketType,
       int selectedTicketCount,
-      double basePrice,
-      double bookingFee,
-      double gstFee,
-      double grandTotalPrice,
-      PaymentStatus status,
+      String eventId,
       String? error});
 }
 
@@ -63,11 +55,7 @@ class _$BookTicketSheetViewStateCopyWithImpl<$Res,
   $Res call({
     Object? selectedTicketType = freezed,
     Object? selectedTicketCount = null,
-    Object? basePrice = null,
-    Object? bookingFee = null,
-    Object? gstFee = null,
-    Object? grandTotalPrice = null,
-    Object? status = null,
+    Object? eventId = null,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
@@ -79,26 +67,10 @@ class _$BookTicketSheetViewStateCopyWithImpl<$Res,
           ? _value.selectedTicketCount
           : selectedTicketCount // ignore: cast_nullable_to_non_nullable
               as int,
-      basePrice: null == basePrice
-          ? _value.basePrice
-          : basePrice // ignore: cast_nullable_to_non_nullable
-              as double,
-      bookingFee: null == bookingFee
-          ? _value.bookingFee
-          : bookingFee // ignore: cast_nullable_to_non_nullable
-              as double,
-      gstFee: null == gstFee
-          ? _value.gstFee
-          : gstFee // ignore: cast_nullable_to_non_nullable
-              as double,
-      grandTotalPrice: null == grandTotalPrice
-          ? _value.grandTotalPrice
-          : grandTotalPrice // ignore: cast_nullable_to_non_nullable
-              as double,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as PaymentStatus,
+      eventId: null == eventId
+          ? _value.eventId
+          : eventId // ignore: cast_nullable_to_non_nullable
+              as String,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -119,11 +91,7 @@ abstract class _$$BookTicketSheetViewStateImplCopyWith<$Res>
   $Res call(
       {TicketType? selectedTicketType,
       int selectedTicketCount,
-      double basePrice,
-      double bookingFee,
-      double gstFee,
-      double grandTotalPrice,
-      PaymentStatus status,
+      String eventId,
       String? error});
 }
 
@@ -142,11 +110,7 @@ class __$$BookTicketSheetViewStateImplCopyWithImpl<$Res>
   $Res call({
     Object? selectedTicketType = freezed,
     Object? selectedTicketCount = null,
-    Object? basePrice = null,
-    Object? bookingFee = null,
-    Object? gstFee = null,
-    Object? grandTotalPrice = null,
-    Object? status = null,
+    Object? eventId = null,
     Object? error = freezed,
   }) {
     return _then(_$BookTicketSheetViewStateImpl(
@@ -158,26 +122,10 @@ class __$$BookTicketSheetViewStateImplCopyWithImpl<$Res>
           ? _value.selectedTicketCount
           : selectedTicketCount // ignore: cast_nullable_to_non_nullable
               as int,
-      basePrice: null == basePrice
-          ? _value.basePrice
-          : basePrice // ignore: cast_nullable_to_non_nullable
-              as double,
-      bookingFee: null == bookingFee
-          ? _value.bookingFee
-          : bookingFee // ignore: cast_nullable_to_non_nullable
-              as double,
-      gstFee: null == gstFee
-          ? _value.gstFee
-          : gstFee // ignore: cast_nullable_to_non_nullable
-              as double,
-      grandTotalPrice: null == grandTotalPrice
-          ? _value.grandTotalPrice
-          : grandTotalPrice // ignore: cast_nullable_to_non_nullable
-              as double,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as PaymentStatus,
+      eventId: null == eventId
+          ? _value.eventId
+          : eventId // ignore: cast_nullable_to_non_nullable
+              as String,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -192,11 +140,7 @@ class _$BookTicketSheetViewStateImpl implements _BookTicketSheetViewState {
   const _$BookTicketSheetViewStateImpl(
       {this.selectedTicketType,
       this.selectedTicketCount = 0,
-      this.basePrice = 0,
-      this.bookingFee = 0,
-      this.gstFee = 0,
-      this.grandTotalPrice = 0,
-      this.status = PaymentStatus.initial,
+      this.eventId = '',
       this.error});
 
   @override
@@ -206,25 +150,13 @@ class _$BookTicketSheetViewStateImpl implements _BookTicketSheetViewState {
   final int selectedTicketCount;
   @override
   @JsonKey()
-  final double basePrice;
-  @override
-  @JsonKey()
-  final double bookingFee;
-  @override
-  @JsonKey()
-  final double gstFee;
-  @override
-  @JsonKey()
-  final double grandTotalPrice;
-  @override
-  @JsonKey()
-  final PaymentStatus status;
+  final String eventId;
   @override
   final String? error;
 
   @override
   String toString() {
-    return 'BookTicketSheetViewState(selectedTicketType: $selectedTicketType, selectedTicketCount: $selectedTicketCount, basePrice: $basePrice, bookingFee: $bookingFee, gstFee: $gstFee, grandTotalPrice: $grandTotalPrice, status: $status, error: $error)';
+    return 'BookTicketSheetViewState(selectedTicketType: $selectedTicketType, selectedTicketCount: $selectedTicketCount, eventId: $eventId, error: $error)';
   }
 
   @override
@@ -236,28 +168,13 @@ class _$BookTicketSheetViewStateImpl implements _BookTicketSheetViewState {
                 other.selectedTicketType == selectedTicketType) &&
             (identical(other.selectedTicketCount, selectedTicketCount) ||
                 other.selectedTicketCount == selectedTicketCount) &&
-            (identical(other.basePrice, basePrice) ||
-                other.basePrice == basePrice) &&
-            (identical(other.bookingFee, bookingFee) ||
-                other.bookingFee == bookingFee) &&
-            (identical(other.gstFee, gstFee) || other.gstFee == gstFee) &&
-            (identical(other.grandTotalPrice, grandTotalPrice) ||
-                other.grandTotalPrice == grandTotalPrice) &&
-            (identical(other.status, status) || other.status == status) &&
+            (identical(other.eventId, eventId) || other.eventId == eventId) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      selectedTicketType,
-      selectedTicketCount,
-      basePrice,
-      bookingFee,
-      gstFee,
-      grandTotalPrice,
-      status,
-      error);
+      runtimeType, selectedTicketType, selectedTicketCount, eventId, error);
 
   @JsonKey(ignore: true)
   @override
@@ -271,11 +188,7 @@ abstract class _BookTicketSheetViewState implements BookTicketSheetViewState {
   const factory _BookTicketSheetViewState(
       {final TicketType? selectedTicketType,
       final int selectedTicketCount,
-      final double basePrice,
-      final double bookingFee,
-      final double gstFee,
-      final double grandTotalPrice,
-      final PaymentStatus status,
+      final String eventId,
       final String? error}) = _$BookTicketSheetViewStateImpl;
 
   @override
@@ -283,15 +196,7 @@ abstract class _BookTicketSheetViewState implements BookTicketSheetViewState {
   @override
   int get selectedTicketCount;
   @override
-  double get basePrice;
-  @override
-  double get bookingFee;
-  @override
-  double get gstFee;
-  @override
-  double get grandTotalPrice;
-  @override
-  PaymentStatus get status;
+  String get eventId;
   @override
   String? get error;
   @override

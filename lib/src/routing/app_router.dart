@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../models/event_data.dart';
 import '../ui/auth/auth_view.dart';
+import '../ui/booking_history/booking_history_view.dart';
+import '../ui/confirm_booking/confirm_booking_view.dart';
 import '../ui/event_detail_view/event_detail_view.dart';
 import '../ui/events_tab/events_view.dart';
 import '../ui/home_tab/home_view.dart';
@@ -55,6 +57,14 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           path: '/event-detail',
           page: EventDetailRoute.page,
+        ),
+        AutoRoute(
+          path: '/confirm-booking',
+          page: ConfirmBookingRoute.page,
+        ),
+        AutoRoute(
+          path: '/booking-history',
+          page: BookingHistoryRoute.page,
         ),
       ];
 }

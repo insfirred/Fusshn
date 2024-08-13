@@ -1,42 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/ticket_type.dart';
-import 'components/confirm_booking.dart';
+import 'book_ticket_sheet_view_model.dart';
 import 'components/choose_ticket.dart';
 
-class BookTicketSheet extends StatefulWidget {
+class BookTicketSheet extends ConsumerStatefulWidget {
   const BookTicketSheet({
     required this.tickets,
+    required this.eventId,
     super.key,
   });
 
   final List<TicketType> tickets;
+  final String eventId;
 
   @override
-  State<BookTicketSheet> createState() => _BookTicketSheetState();
+  ConsumerState<BookTicketSheet> createState() => _BookTicketSheetState();
 }
 
-class _BookTicketSheetState extends State<BookTicketSheet> {
-  late final PageController pageController;
-
+class _BookTicketSheetState extends ConsumerState<BookTicketSheet> {
   @override
   void initState() {
     super.initState();
-    pageController = PageController();
+    Future.delayed(Duration.zero, () {
+      ref
+          .read(bookTicketSheetViewModelProvider.notifier)
+          .setEventId(widget.eventId);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return PageView(
-      controller: pageController,
-      physics: const NeverScrollableScrollPhysics(),
-      children: [
-        ChooseTicket(
-          pageController: pageController,
-          tickets: widget.tickets,
-        ),
-        ConfirmBooking(pageController: pageController),
-      ],
+    return DraggableScrollableSheet(
+      initialChildSize: 0.95,
+      builder: (context, scrollController) => ChooseTicket(
+        tickets: widget.tickets,
+      ),
     );
   }
 }
