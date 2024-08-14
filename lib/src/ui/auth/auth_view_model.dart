@@ -162,6 +162,10 @@ class AuthViewModel extends StateNotifier<AuthViewState> {
     }
   }
 
+  logout() {
+    firebaseAuth.signOut();
+  }
+
   bool _validatingFields({
     bool? checkName,
     bool? checkEmail,

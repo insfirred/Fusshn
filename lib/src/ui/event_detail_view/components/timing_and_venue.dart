@@ -95,7 +95,7 @@ class TimingAndVenue extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  flex: 6,
+                  flex: 3,
                   child: Row(
                     children: [
                       Image.asset(
@@ -111,7 +111,7 @@ class TimingAndVenue extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  flex: 7,
+                  flex: 5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -136,35 +136,6 @@ class TimingAndVenue extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                      // padding: EdgeInsets.symmetric(
-                      //   horizontal: 8,
-                      //   vertical: 4,
-                      // ),
-                      // decoration: BoxDecoration(
-                      //   borderRadius: BorderRadius.circular(8),
-                      //   border: Border.all(color: Color(0xFF78F894)),
-                      // ),
-                      // child: Row(
-                      //   children: [
-                      //     Image.asset(
-                      //       'assets/navigation.png',
-                      //       width: 18,
-                      //     ),
-                      //     SizedBox(width: 4),
-                      //     Text(
-                      //       'Venue',
-                      //       style: Theme.of(context)
-                      //           .textTheme
-                      //           .bodySmall
-                      //           ?.copyWith(fontSize: 8),
-                      //     ),
-                      //   ],
-                      // ),
-                      ),
                 ),
               ],
             ),

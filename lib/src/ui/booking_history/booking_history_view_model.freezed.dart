@@ -136,7 +136,9 @@ class __$$BookingHistoryViewStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BookingHistoryViewStateImpl implements _BookingHistoryViewState {
+class _$BookingHistoryViewStateImpl
+    with DiagnosticableTreeMixin
+    implements _BookingHistoryViewState {
   const _$BookingHistoryViewStateImpl(
       {final List<Booking> myBookings = const [],
       final Map<String, EventData>? eventData,
@@ -171,8 +173,19 @@ class _$BookingHistoryViewStateImpl implements _BookingHistoryViewState {
   final String? errorMessage;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'BookingHistoryViewState(myBookings: $myBookings, eventData: $eventData, status: $status, errorMessage: $errorMessage)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'BookingHistoryViewState'))
+      ..add(DiagnosticsProperty('myBookings', myBookings))
+      ..add(DiagnosticsProperty('eventData', eventData))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('errorMessage', errorMessage));
   }
 
   @override

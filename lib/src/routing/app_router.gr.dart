@@ -33,6 +33,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ConfirmBookingView(),
       );
     },
+    EditProfileRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const EditProfileView(),
+      );
+    },
     EventDetailRoute.name: (routeData) {
       final args = routeData.argsAs<EventDetailRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -126,6 +132,20 @@ class ConfirmBookingRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ConfirmBookingRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [EditProfileView]
+class EditProfileRoute extends PageRouteInfo<void> {
+  const EditProfileRoute({List<PageRouteInfo>? children})
+      : super(
+          EditProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EditProfileRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
