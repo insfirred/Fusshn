@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fusshn/src/utils/snackbar_utils.dart';
 
 import '../../common/dimens.dart';
+import '../common_widgets/fusshn_appbar.dart';
 import '../common_widgets/fusshn_btn.dart';
 import 'edit_profile_view_model.dart';
 
@@ -39,8 +41,36 @@ class EditProfileView extends ConsumerWidget {
               const EdgeInsets.symmetric(horizontal: homeTabHorizontalPadding),
           child: Column(
             children: [
-              const Text('Edit Profile View'),
+              const FusshnAppBar(label: 'Edit Profile'),
               const SizedBox(height: 50),
+              Container(
+                height: 80,
+                width: 90,
+                decoration: const BoxDecoration(
+                  color: Colors.pink,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(height: 14),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // context.navigateTo(const EditProfileRoute());
+                    },
+                    behavior: HitTestBehavior.opaque,
+                    child: Text(
+                      'Change Profile Picture',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontSize: 12,
+                            color: const Color(0xFFC395FF),
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30),
               const _AllFields(),
               const SizedBox(height: 80),
               FusshnBtn(

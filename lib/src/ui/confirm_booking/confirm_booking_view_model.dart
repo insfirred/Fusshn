@@ -1,18 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:fusshn/src/models/event_data.dart';
-import 'package:fusshn/src/models/user_data.dart';
-import 'package:fusshn/src/services/firestore.dart';
-import 'package:fusshn/src/services/razorpay_service.dart';
-import 'package:fusshn/src/ui/book_ticket_sheet/book_ticket_sheet_view_model.dart';
-import 'package:fusshn/src/utils/razorpay_checkout_options.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../common/payment.dart';
 import '../../models/booking.dart';
+import '../../models/event_data.dart';
 import '../../models/ticket_type.dart';
 import '../../repositories/app_repository.dart';
+import '../../services/firestore.dart';
+import '../../services/razorpay_service.dart';
+import '../../utils/razorpay_checkout_options.dart';
+import '../book_ticket_sheet/book_ticket_sheet_view_model.dart';
 
 part 'confirm_booking_view_model.freezed.dart';
 
@@ -66,6 +65,10 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
     );
 
     razorpay.open(options);
+  }
+
+  void deleteItAfter() async {
+    state = state.copyWith(status: PaymentStatus.success);
   }
 
   void _handlePaymentSuccessResponse(PaymentSuccessResponse response) async {

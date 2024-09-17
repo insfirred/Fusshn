@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fusshn/src/models/event_data.dart';
-import 'package:geolocator/geolocator.dart';
 
 import '../../services/firestore.dart';
 
@@ -37,6 +36,9 @@ class HomeViewModel extends StateNotifier<HomeViewState> {
 
     state = state.copyWith(events: events, status: HomeViewStatus.success);
   }
+
+  void showSuccessPopup() =>
+      state = state.copyWith(popupTrigger: state.popupTrigger + 1);
 
   // setName(String name) => state = state.copyWith(
   //       name: name,
@@ -254,6 +256,7 @@ class HomeViewModel extends StateNotifier<HomeViewState> {
 class HomeViewState with _$HomeViewState {
   const factory HomeViewState({
     @Default([]) List<EventData> events,
+    @Default(0) int popupTrigger,
     @Default(HomeViewStatus.initial) HomeViewStatus status,
     String? errorMessage,
   }) = _HomeViewState;

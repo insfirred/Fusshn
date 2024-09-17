@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 
 import '../../common/dimens.dart';
 import '../../models/booking.dart';
+import '../../routing/app_router.dart';
+import '../common_widgets/fusshn_appbar.dart';
 import 'booking_history_view_model.dart';
 
 @RoutePage()
@@ -30,10 +32,7 @@ class BookingHistoryView extends ConsumerWidget {
             ),
             child: Column(
               children: [
-                Text(
-                  'My Bookings History',
-                  style: Theme.of(context).textTheme.displaySmall,
-                ),
+                const FusshnAppBar(label: 'My Booking History'),
                 const SizedBox(height: 35),
                 status == BookingHistoryViewStatus.loading
                     ? const CircularProgressIndicator()
@@ -64,29 +63,35 @@ class _BookingItem extends ConsumerWidget {
       bookingHistoryViewModelProvider.select((_) => _.eventData),
     )?[booking.id];
 
-    return Container(
-      decoration: BoxDecoration(
-        // color: Colors.grey,
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      padding: const EdgeInsets.all(15),
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Booked on ${DateFormat('d MMM y').add_jm().format(booking.createdAt)}',
-          ),
-          event != null
-              ? Text(
-                  event.name,
-                )
-              : const Text('error fetching event'),
-          Text(
-            '${booking.ticketCount} X ${booking.ticketType.name}',
-          ),
-        ],
+    return GestureDetector(
+      onTap: () {
+        context.navigateTo(const TicketRoute());
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        decoration: BoxDecoration(
+          // color: Colors.grey,
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        padding: const EdgeInsets.all(15),
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Booked on ${DateFormat('d MMM y').add_jm().format(booking.createdAt)}',
+            ),
+            event != null
+                ? Text(
+                    event.name,
+                  )
+                : const Text('error fetching event'),
+            Text(
+              '${booking.ticketCount} X ${booking.ticketType.name}',
+            ),
+          ],
+        ),
       ),
     );
   }

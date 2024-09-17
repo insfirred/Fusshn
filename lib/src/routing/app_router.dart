@@ -11,8 +11,11 @@ import '../ui/events_tab/events_view.dart';
 import '../ui/home_tab/home_view.dart';
 import '../ui/main/main_view.dart';
 import '../ui/onboarding/onboarding_view.dart';
+import '../ui/privacy_policy/privacy_policy_view.dart';
 import '../ui/profile_tab/profile_view.dart';
 import '../ui/splash/splash_view.dart';
+import '../ui/terms_and_conditions/terms_and_conditions_view.dart';
+import '../ui/ticket/ticket_view.dart';
 import '../ui/venue_tab/venue_view.dart';
 
 part 'app_router.gr.dart';
@@ -41,10 +44,10 @@ class AppRouter extends _$AppRouter {
               path: 'events',
               page: EventsRoute.page,
             ),
-            AutoRoute(
-              path: 'venue',
-              page: VenueRoute.page,
-            ),
+            // AutoRoute(
+            //   path: 'venue',
+            //   page: VenueRoute.page,
+            // ),
             AutoRoute(
               path: 'profile',
               page: ProfileRoute.page,
@@ -70,6 +73,22 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           path: '/edit-profile',
           page: EditProfileRoute.page,
+        ),
+        AutoRoute(
+          path: '/terms-and-conditions',
+          page: TermsAndConditionsRoute.page,
+        ),
+        // AutoRoute(
+        //   path: '/refund-and-cancellation',
+        //   page: RefundAndCancellationRoute.page,
+        // ),
+        AutoRoute(
+          path: '/privacy-policy',
+          page: PrivacyPolicyRoute.page,
+        ),
+        AutoRoute(
+          path: '/ticket',
+          page: TicketRoute.page,
         ),
       ];
 }

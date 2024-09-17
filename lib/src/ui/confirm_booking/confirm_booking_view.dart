@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fusshn/src/routing/app_router.dart';
+import 'package:fusshn/src/ui/home_tab/home_view_model.dart';
 
 import '../../common/dimens.dart';
 import '../../common/strings.dart';
@@ -18,11 +20,12 @@ class ConfirmBookingView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(
       confirmBookingViewModelProvider,
-      (previous, next) {
+      (previous, next) async {
         if (next.status == PaymentStatus.failure) {
           showErrorMessage(context, "Payment Failed");
         } else if (next.status == PaymentStatus.success) {
-          showSuccessMessage(context, "Payment Successfull");
+          context.router.popUntilRoot();
+          ref.read(homeViewModelProvider.notifier).showSuccessPopup();
         }
       },
     );
@@ -88,7 +91,25 @@ class ConfirmBookingView extends ConsumerWidget {
                           const SizedBox(height: 10),
                           const _ImportantNoteBox(),
                           const SizedBox(height: 15),
+
+                          // hehehhehe
+                          ElevatedButton(
+                            onPressed: () {
+                              ref
+                                  .read(
+                                      confirmBookingViewModelProvider.notifier)
+                                  .deleteItAfter();
+                            },
+                            child: Text('Payment done'),
+                          ),
+                          const SizedBox(height: 15),
+
+                          // hehehhehe
                           const _BillSummary(),
+                          // ElevatedButton(
+                          //   onPressed: () {},
+                          //   child: const Text('alert'),
+                          // ),
                           const SizedBox(height: 18),
                           const Divider(color: Color(0xFF999999)),
                           const SizedBox(height: 10),

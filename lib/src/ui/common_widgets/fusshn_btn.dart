@@ -8,11 +8,13 @@ class FusshnBtn extends StatelessWidget {
     this.onTap,
     required this.label,
     this.height,
+    this.width,
   });
 
   final void Function()? onTap;
   final String label;
   final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +30,9 @@ class FusshnBtn extends StatelessWidget {
             onTap: onTap,
             child: Container(
               height: height,
-              width: MediaQuery.of(context).size.width -
-                  2 * homeTabHorizontalPadding,
+              width: width ??
+                  MediaQuery.of(context).size.width -
+                      2 * homeTabHorizontalPadding,
               padding: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),

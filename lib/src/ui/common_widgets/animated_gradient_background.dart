@@ -12,9 +12,9 @@ class AnimatedGradientBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: child,
-    );
+    // return Container(
+    //   child: child,
+    // );
     return AnimateGradient(
       duration: const Duration(seconds: 6),
       primaryBeginGeometry: const AlignmentDirectional(0, 1),

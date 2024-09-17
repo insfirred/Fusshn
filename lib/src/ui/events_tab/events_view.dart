@@ -20,6 +20,7 @@ class EventsView extends ConsumerWidget {
       body: SafeArea(
         child: AnimatedGradientBackground(
           child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
             slivers: [
               const HeaderEventsTab(),
               const SearchAppBar(),

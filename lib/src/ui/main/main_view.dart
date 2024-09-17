@@ -25,10 +25,10 @@ class MainView extends ConsumerWidget {
       routes: const [
         HomeRoute(),
         EventsRoute(),
-        VenueRoute(),
+        // VenueRoute(),
         ProfileRoute(),
       ],
-      bottomNavigationBuilder: (context, tabsRouter) => BottomBar(
+      bottomNavigationBuilder: (context, tabsRouter) => NewBottomBar(
         key: ValueKey(tabsRouter.activeIndex),
       ),
     );

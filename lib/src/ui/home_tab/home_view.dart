@@ -1,13 +1,15 @@
+import 'dart:ui';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fusshn/src/repositories/app_repository.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../common/enums.dart';
 import '../../models/event_data.dart';
 import '../common_widgets/animated_gradient_background.dart';
+import '../common_widgets/fusshn_btn.dart';
 import '../common_widgets/sliver_title.dart';
 import 'components/event_card.dart';
 import 'components/event_category_box.dart';
@@ -19,18 +21,80 @@ import 'home_view_model.dart';
 
 @RoutePage()
 class HomeView extends ConsumerWidget {
-  const HomeView({super.key});
+  const HomeView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var paymentSuccessAlert = BackdropFilter(
+      filter: ImageFilter.blur(
+        sigmaX: 3.5,
+        sigmaY: 3.5,
+      ),
+      child: AlertDialog(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: Center(
+          child: Column(
+            children: [
+              Lottie.asset(
+                'assets/lottie/payment_success.json',
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'Yayy',
+              ),
+            ],
+          ),
+        ),
+        titleTextStyle: Theme.of(context)
+            .textTheme
+            .displaySmall
+            ?.copyWith(fontSize: 22, fontWeight: FontWeight.w600),
+        content: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Your booking is successful",
+            ),
+          ],
+        ),
+        contentTextStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: const Color(0xFF78F894),
+            ),
+        contentPadding: const EdgeInsets.only(top: 15, bottom: 17),
+        actions: [
+          FusshnBtn(
+            height: 40,
+            width: 180,
+            onTap: () {},
+            label: 'View Ticket',
+          ),
+        ],
+        actionsAlignment: MainAxisAlignment.center,
+      ),
+    );
+
+    ref.listen(
+      homeViewModelProvider,
+      (previous, next) {
+        if (previous?.popupTrigger != next.popupTrigger) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => paymentSuccessAlert,
+          );
+        }
+      },
+    );
+
     return Scaffold(
       body: SafeArea(
         child: AnimatedGradientBackground(
           child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
             slivers: [
               const GreetingAppBar(),
               const SearchAppBar(),
-
               const SliverTitle(label: 'Trending'),
               // SliverToBoxAdapter(
               //   child: ElevatedButton(
@@ -47,6 +111,7 @@ class HomeView extends ConsumerWidget {
               //     child: const Text("Push Event Data"),
               //   ),
               // ),
+
               const SliverToBoxAdapter(child: SizedBox(height: 12)),
               SliverToBoxAdapter(
                 child: SizedBox(

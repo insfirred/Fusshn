@@ -1,7 +1,7 @@
+import 'dart:ui';
+
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fusshn/src/common/dimens.dart';
 import 'package:fusshn/src/repositories/app_repository.dart';
@@ -15,83 +15,31 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: AnimatedGradientBackground(
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: homeTabHorizontalPadding,
               ),
               child: Column(
                 children: [
-                  _UserDetails(),
-                  _ProfileMenu(),
+                  const _UserDetails(),
+                  const _ProfileMenu(),
+                  const SizedBox(height: 30),
+                  Text(
+                    'Build by Kalash and Garvit with ❣️',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 15),
                 ],
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class _ProfileMenu extends StatelessWidget {
-  const _ProfileMenu();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _ProfileItem(
-          title: 'Address Book',
-          subTitle: 'Edit and Add new locations',
-          onTap: () {},
-        ),
-        const Divider(
-          color: Color(0xFF3B3B3B),
-          height: 8,
-        ),
-        _ProfileItem(
-          title: 'Payment and Refunds',
-          subTitle: 'Refund status and payment modes',
-          onTap: () {},
-        ),
-        const Divider(
-          color: Color(0xFF3B3B3B),
-          height: 8,
-        ),
-        _ProfileItem(
-          title: 'Favourites',
-          subTitle: 'All your saved events and venues in one place',
-          onTap: () {},
-        ),
-        const Divider(
-          color: Color(0xFF3B3B3B),
-          height: 8,
-        ),
-        _ProfileItem(
-          title: 'Booking History',
-          subTitle: 'All your past booking in one place History',
-          onTap: () {
-            context.navigateTo(const BookingHistoryRoute());
-          },
-        ),
-        const Divider(
-          color: Color(0xFF3B3B3B),
-          height: 8,
-        ),
-        _ProfileItem(
-          title: 'Settings',
-          subTitle: 'Your app settings',
-          onTap: () {},
-        ),
-        const Divider(
-          color: Color(0xFF3B3B3B),
-          height: 8,
-        ),
-      ],
     );
   }
 }
@@ -103,9 +51,8 @@ class _UserDetails extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final name =
         ref.watch(appRepositoryProvider.select((_) => _.userData!.name));
-    final city = ref
-        .watch(appRepositoryProvider.select((_) => _.currentPlacemarks))?[0]
-        .locality;
+    final email =
+        ref.watch(appRepositoryProvider.select((_) => _.userData!.email));
 
     return Column(
       children: [
@@ -127,76 +74,24 @@ class _UserDetails extends ConsumerWidget {
           children: [
             Text(
               name ?? 'username',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(fontSize: 18),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 4),
-            Row(
+            Text(
+              email,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 10),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  'assets/location.png',
-                  height: 16,
-                  color: const Color(0xFF797979),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  city ?? 'Select your location',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(fontSize: 18),
-                ),
+                _EditButton(),
               ],
-            ),
-            const SizedBox(height: 22),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 80),
-              child: Row(
-                children: [
-                  _EditButton(),
-                  Spacer(),
-                  _ShareButton(),
-                ],
-              ),
             ),
           ],
         ),
         const SizedBox(height: 30),
       ],
-    );
-  }
-}
-
-class _ShareButton extends StatelessWidget {
-  const _ShareButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        // Share Flow
-      },
-      behavior: HitTestBehavior.opaque,
-      child: Row(
-        children: [
-          Image.asset(
-            'assets/share.png',
-            height: 18,
-            color: const Color(0xFFF55D78),
-          ),
-          const SizedBox(width: 5),
-          Text(
-            'Share',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: 15,
-                  color: const Color(0xFFF55D78),
-                ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -232,34 +127,395 @@ class _EditButton extends StatelessWidget {
   }
 }
 
+class _ProfileMenu extends ConsumerStatefulWidget {
+  const _ProfileMenu();
+
+  @override
+  ConsumerState<_ProfileMenu> createState() => _ProfileMenuState();
+}
+
+class _ProfileMenuState extends ConsumerState<_ProfileMenu> {
+  bool _helpDropDown = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFF1E1E1E),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      padding: const EdgeInsets.only(
+        // top: 5,
+        left: 16,
+        right: 16,
+      ),
+      child: Column(
+        children: [
+          _ProfileItem(
+            title: 'Accounts',
+            onTap: () {},
+          ),
+          const Divider(
+            color: Color(0xFF3B3B3B),
+            height: 8,
+          ),
+          _ProfileItem(
+            title: 'Booking History',
+            onTap: () {
+              context.navigateTo(const BookingHistoryRoute());
+            },
+          ),
+          const Divider(
+            color: Color(0xFF3B3B3B),
+            height: 8,
+          ),
+          _ProfileItem(
+            title: 'Notifications',
+            onTap: () {},
+          ),
+          const Divider(
+            color: Color(0xFF3B3B3B),
+            height: 8,
+          ),
+          _ProfileItem(
+            title: 'Settings',
+            onTap: () {},
+          ),
+          const Divider(
+            color: Color(0xFF3B3B3B),
+            height: 8,
+          ),
+          _ProfileItem(
+            title: 'List your Events',
+            onTap: () {},
+          ),
+          const Divider(
+            color: Color(0xFF3B3B3B),
+            height: 8,
+          ),
+          _ProfileItem(
+            title: 'Referral',
+            onTap: () {},
+          ),
+          const Divider(
+            color: Color(0xFF3B3B3B),
+            height: 8,
+          ),
+          _ProfileItem(
+            title: 'Help',
+            onTap: () {
+              _helpDropDown = !_helpDropDown;
+              setState(() {});
+            },
+            iconPath: _helpDropDown
+                ? 'assets/dropdown_inverted.png'
+                : 'assets/forward_arrow.png',
+            height: _helpDropDown ? 10 : 15,
+          ),
+          if (_helpDropDown) const _HelpDropDown(),
+          const Divider(
+            color: Color(0xFF3B3B3B),
+            height: 8,
+          ),
+          _ProfileItem(
+            title: 'Privacy Policy',
+            onTap: () {
+              context.navigateTo(const PrivacyPolicyRoute());
+            },
+          ),
+          const Divider(
+            color: Color(0xFF3B3B3B),
+            height: 8,
+          ),
+          _ProfileItem(
+            title: 'Terms and Conditions',
+            onTap: () {
+              context.navigateTo(const TermsAndConditionsRoute());
+            },
+          ),
+          const Divider(
+            color: Color(0xFF3B3B3B),
+            height: 8,
+          ),
+          _ProfileItem(
+            title: 'Logout',
+            titleTheme: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: Colors.red),
+            onTap: () {
+              // logout popup
+              var logoutAlert = BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: 3.5,
+                  sigmaY: 3.5,
+                ),
+                child: AlertDialog(
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  title: Column(
+                    children: [
+                      Image.asset('assets/gifs/delete_account.png'),
+                      const Padding(
+                        padding:
+                            EdgeInsets.only(left: 24, bottom: 24, right: 24),
+                        child: Text(
+                          'Are You really want to logout from this device?',
+                        ),
+                      ),
+                    ],
+                  ),
+                  titlePadding: const EdgeInsets.all(0),
+                  titleTextStyle: Theme.of(context).textTheme.bodyMedium,
+                  actions: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: const Color(0xFF9BFFB1),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'No',
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Material(
+                              color: const Color.fromARGB(255, 48, 185, 77),
+                              child: InkWell(
+                                onTap: () {
+                                  ref
+                                      .read(appRepositoryProvider.notifier)
+                                      .logout();
+                                },
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Yes',
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+
+              showDialog(
+                context: context,
+                builder: (context) => logoutAlert,
+              );
+
+              // showModalBottomSheet(
+              //   context: context,
+              //   builder: (context) => Container(
+              //     decoration: const BoxDecoration(
+              //       color: Color.fromARGB(255, 22, 22, 22),
+              //       borderRadius: BorderRadius.only(
+              //         topLeft: Radius.circular(20),
+              //         topRight: Radius.circular(20),
+              //       ),
+              //     ),
+              //     padding: const EdgeInsets.symmetric(
+              //       horizontal: authViewHorizontalPadding,
+              //       vertical: 20,
+              //     ),
+              //     child: Column(
+              //       mainAxisSize: MainAxisSize.min,
+              //       children: [
+              //         Text(
+              //           'Are You Really want to Log out from this device?',
+              //           style: Theme.of(context).textTheme.bodyMedium,
+              //         ),
+              //         const SizedBox(height: 20),
+              //         Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //           children: [
+              //             Expanded(
+              //               child: ClipRRect(
+              //                 borderRadius: BorderRadius.circular(8),
+              //                 child: Material(
+              //                   color: Colors.transparent,
+              //                   child: InkWell(
+              //                     onTap: () {
+              //                       Navigator.of(context).pop();
+              //                     },
+              //                     child: Container(
+              //                       height: 40,
+              //                       decoration: BoxDecoration(
+              //                         borderRadius: BorderRadius.circular(8),
+              //                         border: Border.all(
+              //                           color: const Color(0xFF9BFFB1),
+              //                         ),
+              //                       ),
+              //                       child: Center(
+              //                         child: Text(
+              //                           'No',
+              //                           style: Theme.of(context)
+              //                               .textTheme
+              //                               .bodySmall,
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //             const SizedBox(width: 20),
+              //             Expanded(
+              //               child: ClipRRect(
+              //                 borderRadius: BorderRadius.circular(8),
+              //                 child: Material(
+              //                   color: const Color(0xFFF55D78),
+              //                   child: InkWell(
+              //                     onTap: () {
+              //                       // ref
+              //                       //     .read(appRepositoryProvider.notifier)
+              //                       //     .logout();
+              //                     },
+              //                     child: Container(
+              //                       height: 40,
+              //                       decoration: BoxDecoration(
+              //                         borderRadius: BorderRadius.circular(8),
+              //                       ),
+              //                       child: Center(
+              //                         child: Text(
+              //                           'Yes',
+              //                           style: Theme.of(context)
+              //                               .textTheme
+              //                               .bodySmall,
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //         const SizedBox(height: 20),
+              //       ],
+              //     ),
+              //   ),
+              // );
+
+              // showFusshnBottomSheet(
+              //   context: context,
+              //   builder: (context) => Container(
+              //     // padding: const EdgeInsets.symmetric(
+              //     //   horizontal: homeTabHorizontalPadding,
+              //     //   vertical: 10,
+              //     // ),
+              //     // color: Theme.of(context).scaffoldBackgroundColor,
+              //     color: Colors.pink,
+              //     child: Column(
+              //       mainAxisSize: MainAxisSize.min,
+              //       children: [
+              //         Text(
+              //           'Are You Really want to Log out from this device?',
+              //           style: Theme.of(context).textTheme.bodyMedium,
+              //         ),
+              //         SizedBox(height: 20),
+              //         // Row(
+              //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         //   children: [
+              //         //     ElevatedButton(
+              //         //       onPressed: () {},
+              //         //       child: Text('Hi'),
+              //         //     ),
+              //         //   ],
+              //         // ),
+              //       ],
+              //     ),
+              //   ),
+              // );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HelpDropDown extends StatelessWidget {
+  const _HelpDropDown();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.only(left: 12),
+      child: Column(
+        children: [
+          _ProfileItem(
+            title: 'Contact Us',
+          ),
+          _ProfileItem(
+            title: 'Send Feedback',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _ProfileItem extends StatelessWidget {
   const _ProfileItem({
     required this.title,
-    this.subTitle,
+    this.titleTheme,
     this.onTap,
+    this.iconPath = 'assets/forward_arrow.png',
+    this.height = 15,
   });
 
   final String title;
-  final String? subTitle;
+  final TextStyle? titleTheme;
   final void Function()? onTap;
+  final String iconPath;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
       title: Text(title),
-      titleTextStyle: Theme.of(context).textTheme.bodyMedium,
-      subtitle: subTitle != null ? Text(subTitle!) : null,
-      subtitleTextStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: const Color(0xFFFFFFFF).withOpacity(0.5),
-          ),
+      titleTextStyle: titleTheme ?? Theme.of(context).textTheme.bodyMedium,
       trailing: Image.asset(
-        'assets/forward_arrow.png',
-        height: 15,
+        iconPath,
+        height: height,
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+      contentPadding: const EdgeInsets.all(0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     );
   }
