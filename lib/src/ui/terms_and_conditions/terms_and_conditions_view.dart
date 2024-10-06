@@ -13,6 +13,7 @@ class TermsAndConditionsView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: homeTabHorizontalPadding),

@@ -33,6 +33,7 @@ class EventDetailView extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             children: [
               CustomScrollView(
+                physics: const BouncingScrollPhysics(),
                 slivers: [
                   const SliverToBoxAdapter(child: SizedBox(height: 12)),
                   SliverAppBar(

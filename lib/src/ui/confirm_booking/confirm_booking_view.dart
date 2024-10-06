@@ -64,6 +64,7 @@ class ConfirmBookingView extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
