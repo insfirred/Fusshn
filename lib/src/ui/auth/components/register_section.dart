@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fusshn/src/ui/common_widgets/fusshn_btn.dart';
+import 'package:fusshn/src/ui/common_widgets/fusshn_loading_btn.dart';
 
 import '../auth_view_model.dart';
 import 'text_field_auth.dart';
@@ -92,6 +93,10 @@ class RegisterSectionState extends ConsumerState<RegisterSection> {
 
     final mobileError = ref.watch(
       authViewModelProvider.select((_) => _.mobileError),
+    );
+
+    final status = ref.watch(
+      authViewModelProvider.select((_) => _.status),
     );
 
     return Container(
@@ -201,12 +206,15 @@ class RegisterSectionState extends ConsumerState<RegisterSection> {
             const SizedBox(height: 18),
             const _TermsConditions(),
             const SizedBox(height: 16),
-            FusshnBtn(
-              label: 'Register',
-              onTap: () {
-                ref.read(authViewModelProvider.notifier).register();
-              },
-            ),
+            status == AuthViewStatus.loading
+                ? const FusshnLoadingBtn(height: 53)
+                : FusshnBtn(
+                    height: 53,
+                    label: 'Register',
+                    onTap: () {
+                      ref.read(authViewModelProvider.notifier).register();
+                    },
+                  ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

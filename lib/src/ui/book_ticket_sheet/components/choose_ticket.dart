@@ -1,13 +1,11 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fusshn/src/routing/app_router.dart';
-import 'package:fusshn/src/utils/snackbar_utils.dart';
 
 import '../../../common/dimens.dart';
 import '../../../models/ticket_type.dart';
+import '../../../routing/app_router.dart';
+import '../../../utils/snackbar_utils.dart';
 import '../../common_widgets/fusshn_btn.dart';
 import '../book_ticket_sheet_view_model.dart';
 
