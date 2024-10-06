@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -216,8 +218,21 @@ class _Counter extends ConsumerWidget {
       children: [
         TextButton(
           onPressed: () {
+            if (selectedTicketCount > 1) {
+              ref
+                  .read(bookTicketSheetViewModelProvider.notifier)
+                  .setTicketCount(selectedTicketCount - 1);
+            } else if (selectedTicketCount == 1) {
+              // unselects the current ticket
+              log('unselects');
+
+              ref
+                  .read(bookTicketSheetViewModelProvider.notifier)
+                  .setTicketType(null);
+            }
+
             ref.read(bookTicketSheetViewModelProvider.notifier).setTicketCount(
-                selectedTicketCount > 0 ? selectedTicketCount - 1 : 0);
+                selectedTicketCount > 1 ? selectedTicketCount - 1 : 1);
           },
           style: TextButton.styleFrom(backgroundColor: Colors.grey),
           child: const Icon(Icons.remove),

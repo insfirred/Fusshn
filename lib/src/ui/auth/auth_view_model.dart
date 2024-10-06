@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -128,13 +130,10 @@ class AuthViewModel extends StateNotifier<AuthViewState> {
               .set(userData);
         },
       );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        _setError('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        _setError('The account already exists for that email.');
-      }
-    } catch (e) {
+    }
+
+    // Add FirebaseAuthException catch (e)
+    catch (e) {
       _setError(e.toString());
     }
   }
@@ -145,19 +144,15 @@ class AuthViewModel extends StateNotifier<AuthViewState> {
       if (!(_validatingFields(checkEmail: true, checkPassword: true))) return;
 
       // logging user with email and password
+      log('logging in....................');
       await firebaseAuth.signInWithEmailAndPassword(
         email: state.email,
         password: state.password,
       );
+    }
 
-      // debugPrint(credential.user.toString());
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        _setError('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        _setError('Wrong password provided for that user.');
-      }
-    } catch (e) {
+    // Add FirebaseAuthException catch (e)
+    catch (e) {
       _setError(e.toString());
     }
   }

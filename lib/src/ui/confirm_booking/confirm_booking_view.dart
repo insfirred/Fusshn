@@ -21,7 +21,7 @@ class ConfirmBookingView extends ConsumerWidget {
       confirmBookingViewModelProvider,
       (previous, next) async {
         if (next.status == PaymentStatus.failure) {
-          showErrorMessage(context, "Payment Failed");
+          showErrorMessage(context, next.errorMessage ?? 'Payment Failed');
         } else if (next.status == PaymentStatus.success) {
           context.router.popUntilRoot();
           ref.read(homeViewModelProvider.notifier).showSuccessPopup();

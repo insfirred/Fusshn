@@ -44,10 +44,21 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
   }
 
   setIsTermsAccepted(bool val) => state = state.copyWith(
+        status: PaymentStatus.initial,
         isTermsAccepted: val,
       );
 
   openCheckout() {
+    state = state.copyWith(status: PaymentStatus.initial);
+
+    if (!state.isTermsAccepted) {
+      state = state.copyWith(
+          status: PaymentStatus.failure,
+          errorMessage: 'Please accept the terms and conditions to proceed.');
+
+      return;
+    }
+
     state = state.copyWith(status: PaymentStatus.loading);
 
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentErrorResponse);
@@ -111,6 +122,7 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
 
   void _handlePaymentErrorResponse(PaymentFailureResponse response) {
     state = state.copyWith(
+      errorMessage: '${response.message}. Error code: ${response.code}',
       status: PaymentStatus.failure,
       paymentFailureResponse: response,
     );

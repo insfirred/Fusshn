@@ -139,7 +139,7 @@ class __$$BookTicketSheetViewStateImplCopyWithImpl<$Res>
 class _$BookTicketSheetViewStateImpl implements _BookTicketSheetViewState {
   const _$BookTicketSheetViewStateImpl(
       {this.selectedTicketType,
-      this.selectedTicketCount = 0,
+      this.selectedTicketCount = 1,
       this.eventId = '',
       this.error});
 

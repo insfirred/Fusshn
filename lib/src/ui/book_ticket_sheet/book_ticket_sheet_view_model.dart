@@ -15,7 +15,7 @@ class BookTicketSheetViewModel extends StateNotifier<BookTicketSheetViewState> {
 
   setTicketType(TicketType? type) => state = state.copyWith(
         selectedTicketType: type,
-        selectedTicketCount: 0,
+        selectedTicketCount: 1,
       );
 
   setTicketCount(int count) =>
@@ -28,7 +28,7 @@ class BookTicketSheetViewModel extends StateNotifier<BookTicketSheetViewState> {
 class BookTicketSheetViewState with _$BookTicketSheetViewState {
   const factory BookTicketSheetViewState({
     TicketType? selectedTicketType,
-    @Default(0) int selectedTicketCount,
+    @Default(1) int selectedTicketCount,
     @Default('') String eventId,
     String? error,
   }) = _BookTicketSheetViewState;

@@ -6,6 +6,7 @@ import 'package:video_player/video_player.dart';
 
 import '../../repositories/app_repository.dart';
 import '../../routing/app_router.dart';
+import '../../utils/snackbar_utils.dart';
 import 'auth_view_model.dart';
 import 'components/login_section.dart';
 import 'components/register_section.dart';
@@ -50,6 +51,18 @@ class _AuthViewState extends ConsumerState<AuthView> {
         if (next.status == AppStatus.authenticated) {
           router.replace(const MainRoute());
           debugPrint('NAVIGATION: Splash replaced with Main Page');
+        }
+      },
+    );
+
+    ref.listen(
+      authViewModelProvider,
+      (previous, next) {
+        if (next.status == AuthViewStatus.error) {
+          showErrorMessage(
+            context,
+            next.errorMessage ?? 'Something went wrong',
+          );
         }
       },
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fusshn/src/ui/common_widgets/fusshn_btn.dart';
-import 'package:fusshn/src/utils/snackbar_utils.dart';
 
 import '../auth_view_model.dart';
 import 'text_field_auth.dart';
@@ -67,18 +66,6 @@ class RegisterSectionState extends ConsumerState<RegisterSection> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(
-      authViewModelProvider,
-      (previous, next) {
-        if (next.status == AuthViewStatus.error) {
-          showErrorMessage(
-            context,
-            next.errorMessage ?? 'Something went wrong',
-          );
-        }
-      },
-    );
-
     final showPassword = ref.watch(
       authViewModelProvider.select((_) => _.showPassword),
     );
