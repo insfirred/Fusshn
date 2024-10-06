@@ -109,6 +109,7 @@ class AuthViewModel extends StateNotifier<AuthViewState> {
       ))) return;
 
       // registering user with email and password
+      state = state.copyWith(status: AuthViewStatus.loading);
       await firebaseAuth
           .createUserWithEmailAndPassword(
         email: state.email,
@@ -130,6 +131,7 @@ class AuthViewModel extends StateNotifier<AuthViewState> {
               .set(userData);
         },
       );
+      state = state.copyWith(status: AuthViewStatus.success);
     }
 
     // Add FirebaseAuthException catch (e)
@@ -144,14 +146,18 @@ class AuthViewModel extends StateNotifier<AuthViewState> {
       if (!(_validatingFields(checkEmail: true, checkPassword: true))) return;
 
       // logging user with email and password
-      log('logging in....................');
+      log('User Login Initiated');
+      state = state.copyWith(status: AuthViewStatus.loading);
+      log('In loading state');
+
       await firebaseAuth.signInWithEmailAndPassword(
         email: state.email,
         password: state.password,
       );
+      state = state.copyWith(status: AuthViewStatus.success);
     }
 
-    // Add FirebaseAuthException catch (e)
+    // TODO: Add FirebaseAuthException catch (e)
     catch (e) {
       _setError(e.toString());
     }

@@ -223,9 +223,6 @@ class _Counter extends ConsumerWidget {
                   .read(bookTicketSheetViewModelProvider.notifier)
                   .setTicketCount(selectedTicketCount - 1);
             } else if (selectedTicketCount == 1) {
-              // unselects the current ticket
-              log('unselects');
-
               ref
                   .read(bookTicketSheetViewModelProvider.notifier)
                   .setTicketType(null);

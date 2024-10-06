@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fusshn/src/ui/common_widgets/fusshn_loading_btn.dart';
 
 import '../../common_widgets/fusshn_btn.dart';
 import '../auth_view_model.dart';
@@ -50,6 +51,10 @@ class LoginSectionState extends ConsumerState<LoginSection> {
 
     final passwordError = ref.watch(
       authViewModelProvider.select((_) => _.passwordError),
+    );
+
+    final status = ref.watch(
+      authViewModelProvider.select((_) => _.status),
     );
 
     return Container(
@@ -123,12 +128,16 @@ class LoginSectionState extends ConsumerState<LoginSection> {
               ],
             ),
             const SizedBox(height: 32),
-            FusshnBtn(
-              label: 'Submit',
-              onTap: () {
-                ref.read(authViewModelProvider.notifier).login();
-              },
-            ),
+
+            status == AuthViewStatus.loading
+                ? const FusshnLoadingBtn(height: 53)
+                : FusshnBtn(
+                    height: 53,
+                    label: 'Submit',
+                    onTap: () {
+                      ref.read(authViewModelProvider.notifier).login();
+                    },
+                  ),
             const SizedBox(height: 16),
             // ElevatedButton(
             //   onPressed: () {
