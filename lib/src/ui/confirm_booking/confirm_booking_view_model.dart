@@ -48,6 +48,8 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
       );
 
   openCheckout() {
+    state = state.copyWith(status: PaymentStatus.loading);
+
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentErrorResponse);
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccessResponse);
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWalletSelected);
@@ -72,10 +74,33 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
   }
 
   void _handlePaymentSuccessResponse(PaymentSuccessResponse response) async {
-    await _updateAvailableTickets();
+    /*
+    When Payment Success, we will perform the following.
+      1. Update Tickets count in db
+      2. Create Booking Data in db
+      3. Refresh (fetch again) User Data
+      4. set the state of confirmBookingViewModelProvider.
+     */
+
+    // here we are updating the ticket count and createing booking data in the customer app itself.
+    // Bad approach, shouldn't be used, switch to server side code later.
+
+    // 1. Update Tickets count in db
+    _updateAvailableTickets();
+
+    // api req to update ticket in db.
+    // await _updateAvailableTicketsApiReq();
+
+    // For testing purpose. DELETE this function later {NO-USE}
+    // await _initRouteRequest();
+
+    // 2. Create Booking Data in db
     await _createBookingData(response.paymentId ?? '');
+
+    // 3. Refresh (fetch again) User Data
     await ref.read(appRepositoryProvider.notifier).refreshUserData();
 
+    // 4. set the state of confirmBookingViewModelProvider.
     state = state.copyWith(
       status: PaymentStatus.success,
       paymentSuccessResponse: response,
@@ -130,6 +155,38 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
     return double.parse(inString);
   }
 
+  /// DELETE this function later {NO-USE}
+  printJwtToken() async {
+    final currentAuthUser = ref.read(appRepositoryProvider).authUser;
+    String idToken = await currentAuthUser?.getIdToken() ?? '';
+
+    print(idToken);
+  }
+
+  /// For testing purpose. DELETE this function later {NO-USE}
+  // _initRouteRequest() async {
+  //   final currentAuthUser = ref.read(appRepositoryProvider).authUser;
+  //   String idToken = await currentAuthUser?.getIdToken() ?? '';
+
+  //   String baseUrl = 'fusshn-server.onrender.com';
+
+  //   var url = Uri.https(baseUrl);
+  //   print(
+  //       'sending http get req..... at LOCAL HOST 3000//////////////////////////////');
+
+  //   var response = await http.get(
+  //     url,
+  //     // headers: <String, String>{
+  //     //   "Authorization": "Bearer $idToken",
+  //     // },
+  //   );
+
+  //   print('STATUSCODEEEEEEEEEEE:${response.statusCode}.......................');
+  //   print(response.body);
+  // }
+
+  // here we are updating the tickets in the customer app itself.
+  // Bad approach, shouldn't be used, switch to server side code later.
   _updateAvailableTickets() async {
     DocumentReference<Map<String, dynamic>> eventRef =
         firestore.collection('events').doc(state.eventId);
@@ -165,6 +222,48 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
       'tickets': updatedTickets.map((e) => e.toJson()).toList(),
     });
   }
+
+  // _updateAvailableTicketsApiReq() async {
+  //   final currentAuthUser = ref.read(appRepositoryProvider).authUser;
+  //   String idToken = await currentAuthUser?.getIdToken() ?? '';
+
+  //   String baseUrl = 'fusshn-server.onrender.com';
+  //   String endPoint = '/update-ticket-count';
+
+  //   var url = Uri.https(baseUrl, endPoint);
+  //   print('sending http post req.....');
+  //   var response = await http.post(
+  //     url,
+  //     headers: <String, String>{
+  //       "Authorization": "Bearer $idToken",
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     },
+  //     body: jsonEncode({
+  //       "eventId": state.eventId,
+  //       "ticketId": state.selectedTicketType!.id,
+  //       "selectedTicketCount": state.selectedTicketCount,
+  //     }),
+  //   );
+
+  //   print('STATUSCODEEEEEEEEEEE:${response.statusCode}.......................');
+
+  //   switch (response.statusCode) {
+  //     case 200:
+  //       break;
+  //     case 400:
+  //       state = state.copyWith(
+  //         status: PaymentStatus.failure,
+  //         errorMessage:
+  //             'Error 400, Invalid req body (eventId, selectedTicketType, newTicketCount)',
+  //       );
+  //       break;
+  //     default:
+  //       state = state.copyWith(
+  //         status: PaymentStatus.failure,
+  //         errorMessage: 'Something went wrong in servers!!!',
+  //       );
+  //   }
+  // }
 
   // TODO: Make it a Transaction method
   _createBookingData(String paymentId) async {
@@ -236,5 +335,6 @@ class ConfirmBookingState with _$ConfirmBookingState {
 enum PaymentStatus {
   initial,
   success,
+  loading,
   failure,
 }

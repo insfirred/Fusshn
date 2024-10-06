@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fusshn/src/common/dimens.dart';
@@ -49,10 +50,15 @@ class _UserDetails extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final name =
-        ref.watch(appRepositoryProvider.select((_) => _.userData!.name));
-    final email =
-        ref.watch(appRepositoryProvider.select((_) => _.userData!.email));
+    final name = ref.watch(
+      appRepositoryProvider.select((_) => _.userData!.name),
+    );
+    final email = ref.watch(
+      appRepositoryProvider.select((_) => _.userData!.email),
+    );
+    final imageUrl = ref.watch(
+      appRepositoryProvider.select((_) => _.userData!.imageUrl),
+    );
 
     return Column(
       children: [
@@ -61,14 +67,29 @@ class _UserDetails extends ConsumerWidget {
           style: Theme.of(context).textTheme.displaySmall,
         ),
         const SizedBox(height: 35),
-        Container(
-          height: 80,
-          width: 80,
-          decoration: const BoxDecoration(
-            color: Colors.pink,
-            shape: BoxShape.circle,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(50),
+          child: CachedNetworkImage(
+            width: 100,
+            height: 100,
+            errorWidget: (context, url, d) => Image.asset(
+              'assets/no_user_image.png',
+              fit: BoxFit.cover,
+            ),
+            placeholder: (context, url) =>
+                const Center(child: CircularProgressIndicator()),
+            imageUrl: imageUrl ?? '',
           ),
         ),
+        // SizedBox(height: 20),
+        // Container(
+        //   height: 80,
+        //   width: 80,
+        //   decoration: BoxDecoration(
+        //     color: const Color(0xFF78F894).withOpacity(0.7),
+        //     shape: BoxShape.circle,
+        //   ),
+        // ),
         const SizedBox(height: 14),
         Column(
           children: [

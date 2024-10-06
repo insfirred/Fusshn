@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fusshn/src/ui/common_widgets/fusshn_btn.dart';
 import 'package:fusshn/src/utils/snackbar_utils.dart';
 
 import '../auth_view_model.dart';
@@ -107,7 +108,6 @@ class RegisterSectionState extends ConsumerState<RegisterSection> {
     );
 
     return Container(
-      // TODO: Remove this margin in future
       margin: const EdgeInsets.only(top: 100),
       decoration: BoxDecoration(
         color: const Color(0xFF707070).withOpacity(0.25),
@@ -146,6 +146,7 @@ class RegisterSectionState extends ConsumerState<RegisterSection> {
                 width: 16,
                 height: 16,
               ),
+              maxLength: 10,
             ),
             TextFieldAuth(
               hintText: 'Email',
@@ -213,30 +214,11 @@ class RegisterSectionState extends ConsumerState<RegisterSection> {
             const SizedBox(height: 18),
             const _TermsConditions(),
             const SizedBox(height: 16),
-            Container(
-              width: double.maxFinite,
-              height: 48,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                gradient: const LinearGradient(colors: [
-                  Color(0xFF4776E6),
-                  Color(0xFF8E54E9),
-                ]),
-              ),
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    ref.read(authViewModelProvider.notifier).register();
-                  },
-                  child: Center(
-                    child: Text(
-                      'Sign up',
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                  ),
-                ),
-              ),
+            FusshnBtn(
+              label: 'Register',
+              onTap: () {
+                ref.read(authViewModelProvider.notifier).register();
+              },
             ),
             const SizedBox(height: 16),
             Row(

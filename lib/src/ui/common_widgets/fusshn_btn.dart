@@ -21,8 +21,8 @@ class FusshnBtn extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
       child: Container(
-        decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 48, 185, 77),
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
         ),
         child: Material(
           color: Colors.transparent,

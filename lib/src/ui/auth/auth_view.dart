@@ -49,7 +49,7 @@ class _AuthViewState extends ConsumerState<AuthView> {
 
         if (next.status == AppStatus.authenticated) {
           router.replace(const MainRoute());
-          debugPrint('NAVIGATION: Splash replaced with Create Prefs Page');
+          debugPrint('NAVIGATION: Splash replaced with Main Page');
         }
       },
     );

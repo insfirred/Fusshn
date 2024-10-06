@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fusshn/src/routing/app_router.dart';
 import 'package:fusshn/src/ui/home_tab/home_view_model.dart';
 
 import '../../common/dimens.dart';
@@ -101,6 +100,16 @@ class ConfirmBookingView extends ConsumerWidget {
                                   .deleteItAfter();
                             },
                             child: Text('Payment done'),
+                          ),
+
+                          ElevatedButton(
+                            onPressed: () {
+                              ref
+                                  .read(
+                                      confirmBookingViewModelProvider.notifier)
+                                  .printJwtToken();
+                            },
+                            child: Text('Curr user id'),
                           ),
                           const SizedBox(height: 15),
 
@@ -255,12 +264,18 @@ class _CompletePaymentBtn extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return FusshnBtn(
-      label: 'Proceed to Payment',
-      onTap: () {
-        ref.read(confirmBookingViewModelProvider.notifier).openCheckout();
-      },
+    final paymentStatus = ref.watch(
+      confirmBookingViewModelProvider.select((_) => _.status),
     );
+
+    return paymentStatus == PaymentStatus.loading
+        ? const CircularProgressIndicator()
+        : FusshnBtn(
+            label: 'Proceed to Payment',
+            onTap: () {
+              ref.read(confirmBookingViewModelProvider.notifier).openCheckout();
+            },
+          );
   }
 }
 

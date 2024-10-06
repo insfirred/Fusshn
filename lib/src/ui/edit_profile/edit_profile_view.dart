@@ -46,8 +46,8 @@ class EditProfileView extends ConsumerWidget {
               Container(
                 height: 80,
                 width: 90,
-                decoration: const BoxDecoration(
-                  color: Colors.pink,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF78F894).withOpacity(0.7),
                   shape: BoxShape.circle,
                 ),
               ),

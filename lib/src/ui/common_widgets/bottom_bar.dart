@@ -208,9 +208,8 @@ class _NewNavigationBarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final imagePath = 'assets/${label.toLowerCase()}_tab_unselected.png';
 
-    final imageColor = isActive
-        ? const Color(0xFF78F894).withOpacity(0.7)
-        : Colors.white.withOpacity(1);
+    final imageColor =
+        isActive ? Theme.of(context).primaryColor : Colors.white.withOpacity(1);
 
     final textColor = isActive ? Colors.white : Colors.white.withOpacity(0.5);
 

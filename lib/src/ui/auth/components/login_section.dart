@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../common_widgets/fusshn_btn.dart';
 import '../auth_view_model.dart';
 import 'text_field_auth.dart';
 
@@ -122,32 +123,19 @@ class LoginSectionState extends ConsumerState<LoginSection> {
               ],
             ),
             const SizedBox(height: 32),
-            Container(
-              width: double.maxFinite,
-              height: 48,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                gradient: const LinearGradient(colors: [
-                  Color(0xFF4776E6),
-                  Color(0xFF8E54E9),
-                ]),
-              ),
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    ref.read(authViewModelProvider.notifier).login();
-                  },
-                  child: Center(
-                    child: Text(
-                      'Submit',
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                  ),
-                ),
-              ),
+            FusshnBtn(
+              label: 'Submit',
+              onTap: () {
+                ref.read(authViewModelProvider.notifier).login();
+              },
             ),
             const SizedBox(height: 16),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     ref.read(preferenceServiceProvider).setBool(isFreshKey, true);
+            //   },
+            //   child: Text('del'),
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

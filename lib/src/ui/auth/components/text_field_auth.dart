@@ -10,6 +10,7 @@ class TextFieldAuth extends StatelessWidget {
     this.keyboardType,
     this.errorMessage,
     this.prefixIcon,
+    this.maxLength,
   });
 
   final String hintText;
@@ -19,6 +20,7 @@ class TextFieldAuth extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? errorMessage;
   final Widget? prefixIcon;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +32,13 @@ class TextFieldAuth extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextField(
+        maxLength: maxLength,
         controller: controller,
         keyboardType: keyboardType,
         obscureText: obscure ?? false,
         style: Theme.of(context).textTheme.bodySmall,
         decoration: InputDecoration(
+          counterText: "",
           border: InputBorder.none,
           icon: prefixIcon,
           hintText: hintText,

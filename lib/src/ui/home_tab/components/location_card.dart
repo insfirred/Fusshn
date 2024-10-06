@@ -168,7 +168,7 @@ class _Data extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             width: double.maxFinite,
             decoration: BoxDecoration(
-              color: const Color(0xFF78F894).withOpacity(0.7),
+              color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Center(

@@ -46,4 +46,5 @@ final myTheme = ThemeData(
       fontSize: 16,
     ),
   ),
+  primaryColor: const Color.fromARGB(255, 48, 185, 77),
 );

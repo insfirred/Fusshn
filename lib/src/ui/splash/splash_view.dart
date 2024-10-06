@@ -23,10 +23,13 @@ class _SplashViewState extends ConsumerState<SplashView> {
       _navigateBasedOnAuthStatus(next.status);
     });
 
-    return const Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.black,
       body: Center(
-        child: Text(
-          'Splash View',
+        // child: Text('Splash View'),
+        child: Image.asset(
+          'assets/app_icon.png',
+          width: 200,
         ),
       ),
     );
@@ -44,7 +47,7 @@ class _SplashViewState extends ConsumerState<SplashView> {
         debugPrint('NAVIGATION: Splash replaced with Auth Page');
       }
     } else if (authStatus == AppStatus.authenticated) {
-      router.replace(MainRoute());
+      router.replace(const MainRoute());
       debugPrint('NAVIGATION: Splash replaced with Main Page');
     }
     // else if (authStatus == AppStatus.authenticatedButNoInternetConnection) {

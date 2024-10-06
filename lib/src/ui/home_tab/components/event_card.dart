@@ -75,7 +75,6 @@ class _Gradient extends StatelessWidget {
           end: Alignment.bottomCenter,
           stops: const [0, 0.67],
         ),
-        // color: Colors.black.withOpacity(0.9),
       ),
     );
   }
@@ -152,7 +151,7 @@ class _Data extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             width: double.maxFinite,
             decoration: BoxDecoration(
-              color: const Color(0xFF78F894).withOpacity(0.7),
+              color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Center(
