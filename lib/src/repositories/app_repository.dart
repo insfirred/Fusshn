@@ -31,6 +31,7 @@ class AppRepository extends StateNotifier<AppState> {
     required this.firestore,
   }) : super(const AppState()) {
     () async {
+      // it's a duration for splash screen
       await Future.delayed(const Duration(milliseconds: 2000));
       _subscription = firebaseAuth.authStateChanges().listen(
         (user) async {

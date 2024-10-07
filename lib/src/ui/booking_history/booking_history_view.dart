@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../common/dimens.dart';
 import '../../models/booking.dart';
@@ -26,26 +27,39 @@ class BookingHistoryView extends ConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(
+            horizontal: homeTabHorizontalPadding,
+          ),
           physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: homeTabHorizontalPadding,
-            ),
-            child: Column(
-              children: [
-                const FusshnAppBar(label: 'My Booking History'),
-                const SizedBox(height: 35),
-                status == BookingHistoryViewStatus.loading
-                    ? const CircularProgressIndicator()
-                    : status == BookingHistoryViewStatus.error
-                        ? const Text('Error while fetchiing booking')
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children:
-                                myBooking.map((e) => _BookingItem(e)).toList(),
-                          ),
-              ],
-            ),
+          child: Column(
+            children: [
+              const FusshnAppBar(label: 'My Booking'),
+              const SizedBox(height: 35),
+              status == BookingHistoryViewStatus.loading
+                  ? const CircularProgressIndicator()
+                  : status == BookingHistoryViewStatus.error
+                      ? const Text('Error while fetchiing booking')
+                      : Column(
+                          children: [
+                            const Text('Upcoming'),
+                            const SizedBox(height: 21),
+                            ListView.separated(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: myBooking.length,
+                              itemBuilder: (context, index) => _BookingItem(
+                                myBooking[index],
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 17),
+                            ),
+                          ],
+                        ),
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: myBooking.map((e) => _BookingItem(e)).toList(),
+              // ),
+            ],
           ),
         ),
       ),
@@ -70,30 +84,78 @@ class _BookingItem extends ConsumerWidget {
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
-        decoration: BoxDecoration(
-          // color: Colors.grey,
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        padding: const EdgeInsets.all(15),
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Booked on ${DateFormat('d MMM y').add_jm().format(booking.createdAt)}',
-            ),
-            event != null
-                ? Text(
-                    event.name,
-                  )
-                : const Text('error fetching event'),
-            Text(
-              '${booking.ticketCount} X ${booking.ticketType.name}',
-            ),
-          ],
-        ),
-      ),
+          height: 150,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.white,
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 16,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 5,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 80,
+                      height: 80,
+                      color: Colors.red,
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'ID: 12345678',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(width: 17),
+              SvgPicture.asset('assets/vertical_divider.svg'),
+              const SizedBox(width: 17),
+              Expanded(
+                flex: 12,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      event?.name ?? "Unknown",
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      '${DateFormat('d MMM y,').add_jm().format(event!.startTime)} - ${DateFormat.jm().format(event.endTime)}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black.withOpacity(0.5),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      '${booking.ticketType.name} x ${booking.ticketCount}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )),
     );
   }
 }
