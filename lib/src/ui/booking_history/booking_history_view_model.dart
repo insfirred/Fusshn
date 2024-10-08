@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -95,6 +97,9 @@ class BookingHistoryViewModel extends StateNotifier<BookingHistoryViewState> {
       print(e);
     }
   }
+
+  setViewType(BookingHistoryViewType viewType) =>
+      state = state.copyWith(viewType: viewType);
 }
 
 @freezed
@@ -102,6 +107,7 @@ class BookingHistoryViewState with _$BookingHistoryViewState {
   const factory BookingHistoryViewState({
     @Default([]) List<Booking> myBookings,
     Map<String, EventData>? eventData,
+    @Default(BookingHistoryViewType.UPCOMING) BookingHistoryViewType viewType,
     @Default(BookingHistoryViewStatus.initial) BookingHistoryViewStatus status,
     String? errorMessage,
   }) = _BookingHistoryViewState;
@@ -112,4 +118,9 @@ enum BookingHistoryViewStatus {
   loading,
   success,
   error,
+}
+
+enum BookingHistoryViewType {
+  UPCOMING,
+  PAST_EVENTS,
 }

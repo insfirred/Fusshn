@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$BookingHistoryViewState {
   List<Booking> get myBookings => throw _privateConstructorUsedError;
   Map<String, EventData>? get eventData => throw _privateConstructorUsedError;
+  BookingHistoryViewType get viewType => throw _privateConstructorUsedError;
   BookingHistoryViewStatus get status => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -35,6 +36,7 @@ abstract class $BookingHistoryViewStateCopyWith<$Res> {
   $Res call(
       {List<Booking> myBookings,
       Map<String, EventData>? eventData,
+      BookingHistoryViewType viewType,
       BookingHistoryViewStatus status,
       String? errorMessage});
 }
@@ -55,6 +57,7 @@ class _$BookingHistoryViewStateCopyWithImpl<$Res,
   $Res call({
     Object? myBookings = null,
     Object? eventData = freezed,
+    Object? viewType = null,
     Object? status = null,
     Object? errorMessage = freezed,
   }) {
@@ -67,6 +70,10 @@ class _$BookingHistoryViewStateCopyWithImpl<$Res,
           ? _value.eventData
           : eventData // ignore: cast_nullable_to_non_nullable
               as Map<String, EventData>?,
+      viewType: null == viewType
+          ? _value.viewType
+          : viewType // ignore: cast_nullable_to_non_nullable
+              as BookingHistoryViewType,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -91,6 +98,7 @@ abstract class _$$BookingHistoryViewStateImplCopyWith<$Res>
   $Res call(
       {List<Booking> myBookings,
       Map<String, EventData>? eventData,
+      BookingHistoryViewType viewType,
       BookingHistoryViewStatus status,
       String? errorMessage});
 }
@@ -110,6 +118,7 @@ class __$$BookingHistoryViewStateImplCopyWithImpl<$Res>
   $Res call({
     Object? myBookings = null,
     Object? eventData = freezed,
+    Object? viewType = null,
     Object? status = null,
     Object? errorMessage = freezed,
   }) {
@@ -122,6 +131,10 @@ class __$$BookingHistoryViewStateImplCopyWithImpl<$Res>
           ? _value._eventData
           : eventData // ignore: cast_nullable_to_non_nullable
               as Map<String, EventData>?,
+      viewType: null == viewType
+          ? _value.viewType
+          : viewType // ignore: cast_nullable_to_non_nullable
+              as BookingHistoryViewType,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -142,6 +155,7 @@ class _$BookingHistoryViewStateImpl
   const _$BookingHistoryViewStateImpl(
       {final List<Booking> myBookings = const [],
       final Map<String, EventData>? eventData,
+      this.viewType = BookingHistoryViewType.UPCOMING,
       this.status = BookingHistoryViewStatus.initial,
       this.errorMessage})
       : _myBookings = myBookings,
@@ -168,13 +182,16 @@ class _$BookingHistoryViewStateImpl
 
   @override
   @JsonKey()
+  final BookingHistoryViewType viewType;
+  @override
+  @JsonKey()
   final BookingHistoryViewStatus status;
   @override
   final String? errorMessage;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BookingHistoryViewState(myBookings: $myBookings, eventData: $eventData, status: $status, errorMessage: $errorMessage)';
+    return 'BookingHistoryViewState(myBookings: $myBookings, eventData: $eventData, viewType: $viewType, status: $status, errorMessage: $errorMessage)';
   }
 
   @override
@@ -184,6 +201,7 @@ class _$BookingHistoryViewStateImpl
       ..add(DiagnosticsProperty('type', 'BookingHistoryViewState'))
       ..add(DiagnosticsProperty('myBookings', myBookings))
       ..add(DiagnosticsProperty('eventData', eventData))
+      ..add(DiagnosticsProperty('viewType', viewType))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('errorMessage', errorMessage));
   }
@@ -197,6 +215,8 @@ class _$BookingHistoryViewStateImpl
                 .equals(other._myBookings, _myBookings) &&
             const DeepCollectionEquality()
                 .equals(other._eventData, _eventData) &&
+            (identical(other.viewType, viewType) ||
+                other.viewType == viewType) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
@@ -207,6 +227,7 @@ class _$BookingHistoryViewStateImpl
       runtimeType,
       const DeepCollectionEquality().hash(_myBookings),
       const DeepCollectionEquality().hash(_eventData),
+      viewType,
       status,
       errorMessage);
 
@@ -222,6 +243,7 @@ abstract class _BookingHistoryViewState implements BookingHistoryViewState {
   const factory _BookingHistoryViewState(
       {final List<Booking> myBookings,
       final Map<String, EventData>? eventData,
+      final BookingHistoryViewType viewType,
       final BookingHistoryViewStatus status,
       final String? errorMessage}) = _$BookingHistoryViewStateImpl;
 
@@ -229,6 +251,8 @@ abstract class _BookingHistoryViewState implements BookingHistoryViewState {
   List<Booking> get myBookings;
   @override
   Map<String, EventData>? get eventData;
+  @override
+  BookingHistoryViewType get viewType;
   @override
   BookingHistoryViewStatus get status;
   @override

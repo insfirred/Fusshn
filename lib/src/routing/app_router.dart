@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../models/booking.dart';
 import '../models/event_data.dart';
 import '../ui/auth/auth_view.dart';
 import '../ui/booking_history/booking_history_view.dart';
