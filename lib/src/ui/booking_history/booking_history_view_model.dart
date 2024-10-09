@@ -37,8 +37,10 @@ class BookingHistoryViewModel extends StateNotifier<BookingHistoryViewState> {
       List<String> myBookingsIds =
           ref.read(appRepositoryProvider).userData!.bookingIdsList ?? [];
 
-      QuerySnapshot<Map<String, dynamic>> allBookingsSnapshot =
-          await firestore.collection('bookings').get();
+      QuerySnapshot<Map<String, dynamic>> allBookingsSnapshot = await firestore
+          .collection('bookings')
+          .orderBy('createdAt', descending: true)
+          .get();
 
       List<QueryDocumentSnapshot<Map<String, dynamic>>> bookingsSnapshotList =
           allBookingsSnapshot.docs;
@@ -106,6 +108,8 @@ class BookingHistoryViewModel extends StateNotifier<BookingHistoryViewState> {
 class BookingHistoryViewState with _$BookingHistoryViewState {
   const factory BookingHistoryViewState({
     @Default([]) List<Booking> myBookings,
+
+    // <BookindID, EventData>
     Map<String, EventData>? eventData,
     @Default(BookingHistoryViewType.UPCOMING) BookingHistoryViewType viewType,
     @Default(BookingHistoryViewStatus.initial) BookingHistoryViewStatus status,

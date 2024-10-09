@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -33,13 +35,18 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
     required this.ref,
     required this.razorpay,
     required this.firestore,
-  }) : super(ConfirmBookingState(
-          selectedTicketCount:
-              ref.read(bookTicketSheetViewModelProvider).selectedTicketCount,
-          selectedTicketType:
-              ref.read(bookTicketSheetViewModelProvider).selectedTicketType,
-          eventId: ref.read(bookTicketSheetViewModelProvider).eventId,
-        )) {
+  }) : super(
+          ConfirmBookingState(
+            selectedTicketCount:
+                ref.read(bookTicketSheetViewModelProvider).selectedTicketCount,
+            selectedTicketType:
+                ref.read(bookTicketSheetViewModelProvider).selectedTicketType,
+            eventId: ref.read(bookTicketSheetViewModelProvider).eventId,
+          ),
+        ) {
+    log('helllllooo');
+    log('${state.selectedTicketCount}');
+    log(state.selectedTicketType?.name ?? 'null hai');
     _calculateTotalPrice();
   }
 

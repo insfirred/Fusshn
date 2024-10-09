@@ -227,6 +227,8 @@ class TicketView extends StatelessWidget {
                 ],
               ),
             ),
+
+            // Download Tickket Btn
             Padding(
               padding: const EdgeInsets.only(bottom: 30),
               child: Align(
