@@ -72,6 +72,21 @@ class AppRepository extends StateNotifier<AppState> {
     }();
   }
 
+  setProfilePicUrlInFireStore(String url) async {
+    try {
+      final currentUserId = state.authUser!.uid;
+      final userCollection = firestore.collection('users');
+      await userCollection.doc(currentUserId).set(
+        {'imageUrl': url},
+        SetOptions(merge: true),
+      );
+
+      refreshUserData();
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
   refreshUserData() => _fetchCurrentUserData();
 
   void logout() {

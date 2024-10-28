@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fusshn/src/utils/snackbar_utils.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../common/dimens.dart';
+import '../../utils/snackbar_utils.dart';
 import '../common_widgets/fusshn_appbar.dart';
 import '../common_widgets/fusshn_btn.dart';
 import 'edit_profile_view_model.dart';
@@ -43,33 +46,7 @@ class EditProfileView extends ConsumerWidget {
             children: [
               const FusshnAppBar(label: 'Edit Profile'),
               const SizedBox(height: 50),
-              Container(
-                height: 80,
-                width: 90,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF78F894).withOpacity(0.7),
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(height: 14),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      // context.navigateTo(const EditProfileRoute());
-                    },
-                    behavior: HitTestBehavior.opaque,
-                    child: Text(
-                      'Change Profile Picture',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: 12,
-                            color: const Color(0xFFC395FF),
-                          ),
-                    ),
-                  ),
-                ],
-              ),
+              const EditImageSection(),
               const SizedBox(height: 30),
               const _AllFields(),
               const SizedBox(height: 80),
@@ -84,6 +61,49 @@ class EditProfileView extends ConsumerWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class EditImageSection extends ConsumerWidget {
+  const EditImageSection({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final imageUrl = ref.watch(
+      editProfileViewModelProvider.select((_) => _.imageUrl),
+    );
+    return GestureDetector(
+      onTap: () {
+        ref.read(editProfileViewModelProvider.notifier).pickImageAndUpload();
+      },
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: CachedNetworkImage(
+              width: 100,
+              height: 100,
+              errorWidget: (context, url, d) => Image.asset(
+                'assets/no_user_image.png',
+                fit: BoxFit.cover,
+              ),
+              imageUrl: imageUrl ?? '',
+              progressIndicatorBuilder: (context, url, progress) => Center(
+                child: CircularProgressIndicator(value: progress.progress),
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+          Text(
+            'Change Profile Picture',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  fontSize: 12,
+                  color: const Color(0xFFC395FF),
+                ),
+          ),
+        ],
       ),
     );
   }

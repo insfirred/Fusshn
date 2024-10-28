@@ -19,6 +19,7 @@ mixin _$EditProfileViewState {
   String get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get mobile => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
   String? get nameError => throw _privateConstructorUsedError;
   String? get mobileError => throw _privateConstructorUsedError;
   EditProfileViewStatus get status => throw _privateConstructorUsedError;
@@ -39,6 +40,7 @@ abstract class $EditProfileViewStateCopyWith<$Res> {
       {String name,
       String email,
       String mobile,
+      String? imageUrl,
       String? nameError,
       String? mobileError,
       EditProfileViewStatus status,
@@ -62,6 +64,7 @@ class _$EditProfileViewStateCopyWithImpl<$Res,
     Object? name = null,
     Object? email = null,
     Object? mobile = null,
+    Object? imageUrl = freezed,
     Object? nameError = freezed,
     Object? mobileError = freezed,
     Object? status = null,
@@ -80,6 +83,10 @@ class _$EditProfileViewStateCopyWithImpl<$Res,
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       nameError: freezed == nameError
           ? _value.nameError
           : nameError // ignore: cast_nullable_to_non_nullable
@@ -112,6 +119,7 @@ abstract class _$$EditProfileViewStateImplCopyWith<$Res>
       {String name,
       String email,
       String mobile,
+      String? imageUrl,
       String? nameError,
       String? mobileError,
       EditProfileViewStatus status,
@@ -132,6 +140,7 @@ class __$$EditProfileViewStateImplCopyWithImpl<$Res>
     Object? name = null,
     Object? email = null,
     Object? mobile = null,
+    Object? imageUrl = freezed,
     Object? nameError = freezed,
     Object? mobileError = freezed,
     Object? status = null,
@@ -150,6 +159,10 @@ class __$$EditProfileViewStateImplCopyWithImpl<$Res>
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       nameError: freezed == nameError
           ? _value.nameError
           : nameError // ignore: cast_nullable_to_non_nullable
@@ -177,6 +190,7 @@ class _$EditProfileViewStateImpl implements _EditProfileViewState {
       {this.name = '',
       this.email = '',
       this.mobile = '',
+      this.imageUrl,
       this.nameError,
       this.mobileError,
       this.status = EditProfileViewStatus.initial,
@@ -192,6 +206,8 @@ class _$EditProfileViewStateImpl implements _EditProfileViewState {
   @JsonKey()
   final String mobile;
   @override
+  final String? imageUrl;
+  @override
   final String? nameError;
   @override
   final String? mobileError;
@@ -203,7 +219,7 @@ class _$EditProfileViewStateImpl implements _EditProfileViewState {
 
   @override
   String toString() {
-    return 'EditProfileViewState(name: $name, email: $email, mobile: $mobile, nameError: $nameError, mobileError: $mobileError, status: $status, errorMessage: $errorMessage)';
+    return 'EditProfileViewState(name: $name, email: $email, mobile: $mobile, imageUrl: $imageUrl, nameError: $nameError, mobileError: $mobileError, status: $status, errorMessage: $errorMessage)';
   }
 
   @override
@@ -214,6 +230,8 @@ class _$EditProfileViewStateImpl implements _EditProfileViewState {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.mobile, mobile) || other.mobile == mobile) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
             (identical(other.nameError, nameError) ||
                 other.nameError == nameError) &&
             (identical(other.mobileError, mobileError) ||
@@ -224,8 +242,8 @@ class _$EditProfileViewStateImpl implements _EditProfileViewState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, email, mobile, nameError,
-      mobileError, status, errorMessage);
+  int get hashCode => Object.hash(runtimeType, name, email, mobile, imageUrl,
+      nameError, mobileError, status, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -241,6 +259,7 @@ abstract class _EditProfileViewState implements EditProfileViewState {
       {final String name,
       final String email,
       final String mobile,
+      final String? imageUrl,
       final String? nameError,
       final String? mobileError,
       final EditProfileViewStatus status,
@@ -252,6 +271,8 @@ abstract class _EditProfileViewState implements EditProfileViewState {
   String get email;
   @override
   String get mobile;
+  @override
+  String? get imageUrl;
   @override
   String? get nameError;
   @override

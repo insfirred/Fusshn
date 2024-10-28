@@ -1,10 +1,16 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:fusshn/src/repositories/app_repository.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:string_validator/string_validator.dart';
 
 import '../../models/user_data.dart';
+import '../../repositories/app_repository.dart';
+import '../../services/firebase_storage_provider.dart';
 import '../../services/firestore.dart';
 
 part 'edit_profile_view_model.freezed.dart';
@@ -13,19 +19,43 @@ final editProfileViewModelProvider = StateNotifierProvider.autoDispose<
     EditProfileViewModel, EditProfileViewState>(
   (ref) => EditProfileViewModel(
     firestore: ref.watch(firestoreProvider),
+    storage: ref.watch(firebaseStorageProvider),
     ref: ref,
   ),
 );
 
 class EditProfileViewModel extends StateNotifier<EditProfileViewState> {
   final FirebaseFirestore firestore;
+  final FirebaseStorage storage;
   final AutoDisposeStateNotifierProviderRef ref;
 
   EditProfileViewModel({
     required this.firestore,
+    required this.storage,
     required this.ref,
   }) : super(const EditProfileViewState()) {
     _settingUserDataInState();
+  }
+
+  pickImageAndUpload() async {
+    ImagePicker imagePicker = ImagePicker();
+    XFile? image = await imagePicker.pickImage(source: ImageSource.camera);
+
+    if (image != null) {
+      final Reference storageReference = storage.ref().child(
+            'images/${ref.read(appRepositoryProvider).authUser!.uid}/user_profile_image',
+          );
+      UploadTask? uploadTask = storageReference.putFile(
+        File(image.path),
+      );
+
+      final TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
+      final String url = await snapshot.ref.getDownloadURL();
+      state = state.copyWith(imageUrl: url);
+      ref.read(appRepositoryProvider.notifier).setProfilePicUrlInFireStore(url);
+    } else {
+      log('No Image selected');
+    }
   }
 
   setName(String name) => state = state.copyWith(
@@ -51,6 +81,7 @@ class EditProfileViewModel extends StateNotifier<EditProfileViewState> {
       name: user.name ?? '',
       email: user.email,
       mobile: user.phone ?? '',
+      imageUrl: user.imageUrl,
     );
   }
 
@@ -106,6 +137,7 @@ class EditProfileViewState with _$EditProfileViewState {
     @Default('') String name,
     @Default('') String email,
     @Default('') String mobile,
+    String? imageUrl,
     String? nameError,
     String? mobileError,
     @Default(EditProfileViewStatus.initial) EditProfileViewStatus status,
