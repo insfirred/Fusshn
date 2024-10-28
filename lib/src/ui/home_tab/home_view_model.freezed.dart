@@ -17,7 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$HomeViewState {
   List<EventData> get events => throw _privateConstructorUsedError;
-  int get popupTrigger => throw _privateConstructorUsedError;
+  int get paymentSuccessPopupTrigger => throw _privateConstructorUsedError;
+  int get locationServicePopupTrigger => throw _privateConstructorUsedError;
+  int get locationPermissionPopuptrigger => throw _privateConstructorUsedError;
   HomeViewStatus get status => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -34,7 +36,9 @@ abstract class $HomeViewStateCopyWith<$Res> {
   @useResult
   $Res call(
       {List<EventData> events,
-      int popupTrigger,
+      int paymentSuccessPopupTrigger,
+      int locationServicePopupTrigger,
+      int locationPermissionPopuptrigger,
       HomeViewStatus status,
       String? errorMessage});
 }
@@ -53,7 +57,9 @@ class _$HomeViewStateCopyWithImpl<$Res, $Val extends HomeViewState>
   @override
   $Res call({
     Object? events = null,
-    Object? popupTrigger = null,
+    Object? paymentSuccessPopupTrigger = null,
+    Object? locationServicePopupTrigger = null,
+    Object? locationPermissionPopuptrigger = null,
     Object? status = null,
     Object? errorMessage = freezed,
   }) {
@@ -62,9 +68,17 @@ class _$HomeViewStateCopyWithImpl<$Res, $Val extends HomeViewState>
           ? _value.events
           : events // ignore: cast_nullable_to_non_nullable
               as List<EventData>,
-      popupTrigger: null == popupTrigger
-          ? _value.popupTrigger
-          : popupTrigger // ignore: cast_nullable_to_non_nullable
+      paymentSuccessPopupTrigger: null == paymentSuccessPopupTrigger
+          ? _value.paymentSuccessPopupTrigger
+          : paymentSuccessPopupTrigger // ignore: cast_nullable_to_non_nullable
+              as int,
+      locationServicePopupTrigger: null == locationServicePopupTrigger
+          ? _value.locationServicePopupTrigger
+          : locationServicePopupTrigger // ignore: cast_nullable_to_non_nullable
+              as int,
+      locationPermissionPopuptrigger: null == locationPermissionPopuptrigger
+          ? _value.locationPermissionPopuptrigger
+          : locationPermissionPopuptrigger // ignore: cast_nullable_to_non_nullable
               as int,
       status: null == status
           ? _value.status
@@ -88,7 +102,9 @@ abstract class _$$HomeViewStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {List<EventData> events,
-      int popupTrigger,
+      int paymentSuccessPopupTrigger,
+      int locationServicePopupTrigger,
+      int locationPermissionPopuptrigger,
       HomeViewStatus status,
       String? errorMessage});
 }
@@ -105,7 +121,9 @@ class __$$HomeViewStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? events = null,
-    Object? popupTrigger = null,
+    Object? paymentSuccessPopupTrigger = null,
+    Object? locationServicePopupTrigger = null,
+    Object? locationPermissionPopuptrigger = null,
     Object? status = null,
     Object? errorMessage = freezed,
   }) {
@@ -114,9 +132,17 @@ class __$$HomeViewStateImplCopyWithImpl<$Res>
           ? _value._events
           : events // ignore: cast_nullable_to_non_nullable
               as List<EventData>,
-      popupTrigger: null == popupTrigger
-          ? _value.popupTrigger
-          : popupTrigger // ignore: cast_nullable_to_non_nullable
+      paymentSuccessPopupTrigger: null == paymentSuccessPopupTrigger
+          ? _value.paymentSuccessPopupTrigger
+          : paymentSuccessPopupTrigger // ignore: cast_nullable_to_non_nullable
+              as int,
+      locationServicePopupTrigger: null == locationServicePopupTrigger
+          ? _value.locationServicePopupTrigger
+          : locationServicePopupTrigger // ignore: cast_nullable_to_non_nullable
+              as int,
+      locationPermissionPopuptrigger: null == locationPermissionPopuptrigger
+          ? _value.locationPermissionPopuptrigger
+          : locationPermissionPopuptrigger // ignore: cast_nullable_to_non_nullable
               as int,
       status: null == status
           ? _value.status
@@ -132,10 +158,14 @@ class __$$HomeViewStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeViewStateImpl implements _HomeViewState {
+class _$HomeViewStateImpl
+    with DiagnosticableTreeMixin
+    implements _HomeViewState {
   const _$HomeViewStateImpl(
       {final List<EventData> events = const [],
-      this.popupTrigger = 0,
+      this.paymentSuccessPopupTrigger = 0,
+      this.locationServicePopupTrigger = 0,
+      this.locationPermissionPopuptrigger = 0,
       this.status = HomeViewStatus.initial,
       this.errorMessage})
       : _events = events;
@@ -151,7 +181,13 @@ class _$HomeViewStateImpl implements _HomeViewState {
 
   @override
   @JsonKey()
-  final int popupTrigger;
+  final int paymentSuccessPopupTrigger;
+  @override
+  @JsonKey()
+  final int locationServicePopupTrigger;
+  @override
+  @JsonKey()
+  final int locationPermissionPopuptrigger;
   @override
   @JsonKey()
   final HomeViewStatus status;
@@ -159,8 +195,24 @@ class _$HomeViewStateImpl implements _HomeViewState {
   final String? errorMessage;
 
   @override
-  String toString() {
-    return 'HomeViewState(events: $events, popupTrigger: $popupTrigger, status: $status, errorMessage: $errorMessage)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'HomeViewState(events: $events, paymentSuccessPopupTrigger: $paymentSuccessPopupTrigger, locationServicePopupTrigger: $locationServicePopupTrigger, locationPermissionPopuptrigger: $locationPermissionPopuptrigger, status: $status, errorMessage: $errorMessage)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'HomeViewState'))
+      ..add(DiagnosticsProperty('events', events))
+      ..add(DiagnosticsProperty(
+          'paymentSuccessPopupTrigger', paymentSuccessPopupTrigger))
+      ..add(DiagnosticsProperty(
+          'locationServicePopupTrigger', locationServicePopupTrigger))
+      ..add(DiagnosticsProperty(
+          'locationPermissionPopuptrigger', locationPermissionPopuptrigger))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('errorMessage', errorMessage));
   }
 
   @override
@@ -169,8 +221,18 @@ class _$HomeViewStateImpl implements _HomeViewState {
         (other.runtimeType == runtimeType &&
             other is _$HomeViewStateImpl &&
             const DeepCollectionEquality().equals(other._events, _events) &&
-            (identical(other.popupTrigger, popupTrigger) ||
-                other.popupTrigger == popupTrigger) &&
+            (identical(other.paymentSuccessPopupTrigger,
+                    paymentSuccessPopupTrigger) ||
+                other.paymentSuccessPopupTrigger ==
+                    paymentSuccessPopupTrigger) &&
+            (identical(other.locationServicePopupTrigger,
+                    locationServicePopupTrigger) ||
+                other.locationServicePopupTrigger ==
+                    locationServicePopupTrigger) &&
+            (identical(other.locationPermissionPopuptrigger,
+                    locationPermissionPopuptrigger) ||
+                other.locationPermissionPopuptrigger ==
+                    locationPermissionPopuptrigger) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
@@ -180,7 +242,9 @@ class _$HomeViewStateImpl implements _HomeViewState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_events),
-      popupTrigger,
+      paymentSuccessPopupTrigger,
+      locationServicePopupTrigger,
+      locationPermissionPopuptrigger,
       status,
       errorMessage);
 
@@ -194,14 +258,20 @@ class _$HomeViewStateImpl implements _HomeViewState {
 abstract class _HomeViewState implements HomeViewState {
   const factory _HomeViewState(
       {final List<EventData> events,
-      final int popupTrigger,
+      final int paymentSuccessPopupTrigger,
+      final int locationServicePopupTrigger,
+      final int locationPermissionPopuptrigger,
       final HomeViewStatus status,
       final String? errorMessage}) = _$HomeViewStateImpl;
 
   @override
   List<EventData> get events;
   @override
-  int get popupTrigger;
+  int get paymentSuccessPopupTrigger;
+  @override
+  int get locationServicePopupTrigger;
+  @override
+  int get locationPermissionPopuptrigger;
   @override
   HomeViewStatus get status;
   @override

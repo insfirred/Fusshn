@@ -24,7 +24,7 @@ class ConfirmBookingView extends ConsumerWidget {
           showErrorMessage(context, next.errorMessage ?? 'Payment Failed');
         } else if (next.status == PaymentStatus.success) {
           context.router.popUntilRoot();
-          ref.read(homeViewModelProvider.notifier).showSuccessPopup();
+          ref.read(homeViewModelProvider.notifier).showPaymentSuccessPopup();
         }
       },
     );

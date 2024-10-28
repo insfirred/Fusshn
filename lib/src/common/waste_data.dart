@@ -39,7 +39,41 @@ Tickets are expected to sell out fast. Make sure to grab yours early and secure 
   startTime: DateTime(2024, 2, 25, 16),
   endTime: DateTime(2024, 2, 25, 22),
   gateCloseTime: DateTime(2024, 2, 25, 20),
-  tickets: _tickets,
+  tickets: [
+    const TicketType(
+      id: 'fp',
+      name: 'Female Pass',
+      price: 2900,
+      personAllowed: 1,
+      personGender: Gender.female,
+      description: 'One female entry pass',
+      isRefundable: false,
+      totalTickets: 100,
+      availableTickets: 100,
+    ),
+    const TicketType(
+      id: 'mp',
+      name: 'Male Pass',
+      personGender: Gender.male,
+      price: 5900,
+      personAllowed: 1,
+      description: 'One male entry pass',
+      isRefundable: false,
+      totalTickets: 100,
+      availableTickets: 100,
+    ),
+    const TicketType(
+      id: 'cp',
+      name: 'Couple Pass',
+      personGender: Gender.male,
+      price: 7080,
+      personAllowed: 2,
+      description: 'One couple entry pass',
+      isRefundable: false,
+      totalTickets: 50,
+      availableTickets: 50,
+    ),
+  ],
   ageRestrictions: 16,
   organiserName: 'Martin Garrix Team',
   termsAndConditions: [
@@ -54,45 +88,4 @@ Tickets are expected to sell out fast. Make sure to grab yours early and secure 
     'The ticket holder may not bring outside food, drink, or illegal substances to the festival.',
     'The ticket holder may not resell or transfer their ticket without the express written consent of the event promoter.',
   ],
-);
-
-// Tickets
-const _tickets = [
-  _ticket1,
-  _ticket2,
-  _ticket3,
-];
-
-const TicketType _ticket1 = TicketType(
-  id: 'fp',
-  name: 'Female Pass',
-  price: 2900,
-  personAllowed: 1,
-  personGender: Gender.female,
-  description: 'One female entry pass',
-  isRefundable: false,
-  totalTickets: 100,
-  availableTickets: 100,
-);
-const TicketType _ticket2 = TicketType(
-  id: 'mp',
-  name: 'Male Pass',
-  personGender: Gender.male,
-  price: 5900,
-  personAllowed: 1,
-  description: 'One male entry pass',
-  isRefundable: false,
-  totalTickets: 100,
-  availableTickets: 100,
-);
-const TicketType _ticket3 = TicketType(
-  id: 'cp',
-  name: 'Couple Pass',
-  personGender: Gender.male,
-  price: 7080,
-  personAllowed: 2,
-  description: 'One couple entry pass',
-  isRefundable: false,
-  totalTickets: 50,
-  availableTickets: 50,
 );

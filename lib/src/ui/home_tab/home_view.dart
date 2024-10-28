@@ -4,18 +4,18 @@ import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lottie/lottie.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../common/enums.dart';
 import '../../models/event_data.dart';
 import '../common_widgets/animated_gradient_background.dart';
-import '../common_widgets/fusshn_btn.dart';
 import '../common_widgets/sliver_title.dart';
 import 'components/event_card.dart';
 import 'components/event_category_box.dart';
 import 'components/greetings_appbar.dart';
 import 'components/home_banner.dart';
 import 'components/location_card.dart';
+import 'components/payment_success_alert.dart';
 import 'components/search_appbar.dart';
 import 'home_view_model.dart';
 
@@ -27,63 +27,56 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var paymentSuccessAlert = BackdropFilter(
-      filter: ImageFilter.blur(
-        sigmaX: 3.5,
-        sigmaY: 3.5,
-      ),
-      child: AlertDialog(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: Center(
-          child: Column(
-            children: [
-              Lottie.asset(
-                'assets/lottie/payment_success.json',
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                'Yayy',
-              ),
-            ],
-          ),
-        ),
-        titleTextStyle: Theme.of(context)
-            .textTheme
-            .displaySmall
-            ?.copyWith(fontSize: 22, fontWeight: FontWeight.w600),
-        content: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Your booking is successful",
-            ),
-          ],
-        ),
-        contentTextStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: const Color(0xFF78F894),
-            ),
-        contentPadding: const EdgeInsets.only(top: 15, bottom: 17),
-        actions: [
-          FusshnBtn(
-            height: 40,
-            width: 180,
-            onTap: () {},
-            label: 'View Ticket',
-          ),
-        ],
-        actionsAlignment: MainAxisAlignment.center,
-      ),
-    );
-
     ref.listen(
       homeViewModelProvider,
       (previous, next) {
-        if (previous?.popupTrigger != next.popupTrigger) {
+        if (previous?.paymentSuccessPopupTrigger !=
+            next.paymentSuccessPopupTrigger) {
           showDialog(
             context: context,
-            builder: (BuildContext context) => paymentSuccessAlert,
+            builder: (BuildContext context) => paymentSuccessAlert(context),
           );
         }
+
+        // if (previous?.locationServicePopupTrigger !=
+        //     next.locationServicePopupTrigger) {
+        //   showDialog(
+        //     context: context,
+        //     builder: (BuildContext context) => AlertDialog(
+        //       title: const Text(
+        //           'Please turn on the location service to see nearby events'),
+        //       actions: [
+        //         ElevatedButton(
+        //           onPressed: () {
+        //             Geolocator.openLocationSettings();
+        //             Navigator.pop(context);
+        //           },
+        //           child: const Text('Enable Location'),
+        //         ),
+        //       ],
+        //     ),
+        //   );
+        // }
+
+        // if (previous?.locationPermissionPopuptrigger !=
+        //     next.locationPermissionPopuptrigger) {
+        //   showDialog(
+        //     context: context,
+        //     builder: (BuildContext context) => AlertDialog(
+        //       title: const Text(
+        //           'Location permission is turn off for this app, please give permission to see nearby events'),
+        //       actions: [
+        //         ElevatedButton(
+        //           onPressed: () {
+        //             Geolocator.openAppSettings();
+        //             Navigator.pop(context);
+        //           },
+        //           child: const Text('Give Permission'),
+        //         ),
+        //       ],
+        //     ),
+        //   );
+        // }
       },
     );
 

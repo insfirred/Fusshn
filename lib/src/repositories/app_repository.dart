@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,6 +26,7 @@ class AppRepository extends StateNotifier<AppState> {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firestore;
   late final StreamSubscription _subscription;
+  late final StreamSubscription _locationServiceSubscription;
 
   AppRepository({
     required this.firebaseAuth,
@@ -33,6 +35,8 @@ class AppRepository extends StateNotifier<AppState> {
     () async {
       // it's a duration for splash screen
       await Future.delayed(const Duration(milliseconds: 2000));
+
+      // listens to auth changes and redirects accordingly.
       _subscription = firebaseAuth.authStateChanges().listen(
         (user) async {
           debugPrint('authStateChanges() triggered');
@@ -47,13 +51,32 @@ class AppRepository extends StateNotifier<AppState> {
             );
           }
           _fetchCurrentUserData();
-          _getCurrentPosition();
+          getCurrentPosition();
+        },
+      );
+
+      // listens to location service and sets in app repo
+      _locationServiceSubscription = Geolocator.getServiceStatusStream().listen(
+        (ServiceStatus locStatus) {
+          if (locStatus == ServiceStatus.enabled) {
+            state = state.copyWith(isLocationServiceEnabled: true);
+          } else {
+            state = state.copyWith(
+              isLocationServiceEnabled: false,
+              locationServicePopupTrigger:
+                  state.locationServicePopupTrigger + 1,
+            );
+          }
         },
       );
     }();
   }
 
   refreshUserData() => _fetchCurrentUserData();
+
+  void logout() {
+    firebaseAuth.signOut();
+  }
 
   _fetchCurrentUserData() async {
     print('fetching user data from cloud....');
@@ -70,20 +93,33 @@ class AppRepository extends StateNotifier<AppState> {
     }
   }
 
-  Future<void> _getCurrentPosition() async {
-    final hasPermission = await _handleLocationPermission();
-    if (!hasPermission) return;
+  Future<void> getCurrentPosition() async {
+    bool serviceEnabled;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    // Checking if the device location is ON or OFF.
+    if (!serviceEnabled) {
+      state = state.copyWith(isLocationServiceEnabled: false);
+      return;
+    }
+
+    state = state.copyWith(isLocationServiceEnabled: serviceEnabled);
+
+    final hasLocationPermission = await _handleLocationPermission();
+
+    if (!hasLocationPermission) return;
+
+    state = state.copyWith(haveLocationPermission: hasLocationPermission);
+
     await Geolocator.getCurrentPosition().then(
       (Position position) async {
-        state = state.copyWith(currentPosition: position);
+        _setCurrentPosition(position);
         await placemarkFromCoordinates(
           position.latitude,
           position.longitude,
         ).then(
           (placemarks) {
-            state = state.copyWith(
-              currentPlacemarks: placemarks,
-            );
+            _setCurrentPlacemarks(placemarks);
           },
         ).catchError((e) {
           debugPrint(e);
@@ -91,192 +127,57 @@ class AppRepository extends StateNotifier<AppState> {
       },
     ).catchError(
       (e) {
-        debugPrint(e);
+        log(e.toString());
       },
     );
   }
 
   Future<bool> _handleLocationPermission() async {
-    bool serviceEnabled;
     LocationPermission permission;
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      print('Location services are disabled. Please enable the services');
-
-      return false;
-    }
+    // Checking whats the status of location permission...
+    // return true if location access is there for this time else false.
     permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        print('Location permissions are denied');
+    switch (permission) {
+      case LocationPermission.always:
+        return true;
+
+      case LocationPermission.whileInUse:
+        return true;
+
+      case LocationPermission.denied:
         return false;
-      }
+
+      case LocationPermission.deniedForever:
+        return false;
+
+      case LocationPermission.unableToDetermine:
+        return false;
     }
-    if (permission == LocationPermission.deniedForever) {
-      print(
-          'Location permissions are permanently denied, we cannot request permissions.');
-      return false;
-    }
-    return true;
   }
 
-  // retryUserDataFetch() {
-  //   _fetchUserDataAndSetState(state.authUser);
-  // }
+  _setCurrentPlacemarks(List<Placemark>? val) => state = state.copyWith(
+        currentPlacemarks: val,
+      );
 
-  // Future<ApiResponse> createUser({
-  //   required String username,
-  // }) async {
-  //   // TODO: generate an avatar for the user, and upload it
-  //   final response = await apiService.createUser(
-  //     username: username,
-  //     profilePicUrl: '',
-  //     authToken: (await getIdToken()) ?? '',
-  //     mobileNumber: state.authUser?.phoneNumber ?? '',
-  //     fullName: '',
-  //   );
+  _setCurrentPosition(Position? val) => state = state.copyWith(
+        currentPosition: val,
+      );
 
-  //   if (response.status == ApiStatus.success) {
-  //     // update status of the user to authenticatedWithUserData
-  //     state = state.copyWith(
-  //       status: AppStatus.authenticatedWithUserData,
-  //       // TODO: review and modify it
-  //       userData: UserResponse(
-  //         username: username,
-  //         fullName: '',
-  //         isSubscribed: false,
-  //         profilePicUrl: '',
-  //         fcmToken: null,
-  //       ),
+  void _showLocationServicePopup() => state = state.copyWith(
+        locationServicePopupTrigger: state.locationServicePopupTrigger + 1,
+      );
+
+  // void _showLocationPermissionPopup() => state = state.copyWith(
+  //       locationPermissionPopuptrigger:
+  //           state.locationPermissionPopuptrigger + 1,
   //     );
-  //   }
-  //   return response;
-  // }
-
-  // Future<ApiResponse> deleteUser() async {
-  //   final response = await apiService.deleteUser(
-  //     authToken: await getIdToken() ?? '',
-  //   );
-  //   if (response.status == ApiStatus.success) {
-  //     state = state.copyWith(
-  //       status: AppStatus.unauthenticated,
-  //     );
-  //   }
-  //   return response;
-  // }
-
-  // /// returns the idToken to be used for any 'private' API calls
-  // /// if token gets expired, it refreshes the token and returns a new one
-  // Future<String?> getIdToken({User? user}) async {
-  //   final currentUser = user ?? firebaseAuth.currentUser;
-  //   if (currentUser == null) return null;
-  //   final idTokenResult = await currentUser.getIdTokenResult();
-  //   // debugPrint(idTokenResult.toString());
-  //   final String idToken;
-
-  //   // check if token is null or is expired, then get the refreshed token
-  //   if (idTokenResult.token == null ||
-  //       (idTokenResult.expirationTime != null &&
-  //           idTokenResult.expirationTime!.isBefore(DateTime.now()))) {
-  //     debugPrint('token expired...refreshing token');
-  //     // refresh the ID Token
-  //     idToken = await currentUser.getIdToken(true);
-  //   } else {
-  //     // else, get the token from result
-  //     idToken = idTokenResult.token!;
-  //   }
-  //   // debugPrint(idToken);
-  //   return idToken;
-  // }
-
-  void logout() {
-    firebaseAuth.signOut();
-  }
-
-  // Future<AppStatus> _fetchUserDataAndNavigate() async {
-  //   AppStatus currentStatus = AppStatus.initial;
-  //   try {
-  //     final String currentUserId = state.authUser!.uid;
-  //     print('current userId: $currentUserId');
-  //     final CollectionReference<Map<String, dynamic>> usersCollection =
-  //         firestore.collection(UserData.userCollectionKey);
-
-  //     await usersCollection.doc(currentUserId).get().then(
-  //       (json) {
-  //         // here we checking if the current users have selected preferences or not
-  //         // based on the result we are setting the corresponding state
-  //         if (json.data()?[UserData.preferencesKey].length == 0) {
-  //           print("Preferences not present");
-  //           currentStatus = AppStatus.authenticatedWithNoPrefs;
-  //         } else {
-  //           currentStatus = AppStatus.authenticatedWithPrefs;
-  //         }
-  //       },
-  //     );
-  //   } catch (e) {
-  //     print(e);
-  //   }
-
-  //   return currentStatus;
-  // }
-
-  // /// fetches user data from server & sets the state
-  // _fetchUserDataAndSetState(User? user) async {
-  //   final idToken = await user?.getIdToken();
-  //   debugPrint(idToken);
-
-  //   if (idToken == null) {
-  //     state = state.copyWith(
-  //       status: AppStatus.unauthenticated,
-  //     );
-  //   } else {
-  //     final response = await apiService.getUserData(
-  //       authToken: await user?.getIdToken() ?? '',
-  //     );
-  //     if (response.status == ApiStatus.success) {
-  //       state = state.copyWith(
-  //         authUser: user,
-  //         userData: response.data!,
-  //         status: AppStatus.authenticatedWithUserData,
-  //       );
-  //       final fcmToken = await firebaseMessaging.getToken();
-  //       debugPrint('fcmToken: $fcmToken');
-
-  //       if (response.data!.fcmToken != fcmToken) {
-  //         apiService.updateUserData(
-  //           updateUserData: UpdateUserRequest(
-  //             fcmToken: fcmToken,
-  //           ),
-  //           authToken: idToken,
-  //         );
-  //       }
-  //     } else if (response.errorMessage == 'User not found!') {
-  //       // user is authenticated, but user data is not present
-  //       state = state.copyWith(
-  //         authUser: user,
-  //         status: AppStatus.authenticatedWithNoUserData,
-  //       );
-  //     } else if (response.errorMessage == noInternetErrorString) {
-  //       // user is authenticated, but couldn't fetch user data as there's no internet connection
-  //       state = state.copyWith(
-  //         authUser: user,
-  //         status: AppStatus.authenticatedButNoInternetConnection,
-  //       );
-  //     } else {
-  //       // handle any other error here
-  //       // TODO: handle error
-  //       debugPrint('Error while fetching user data');
-  //       debugPrint(response.toString());
-  //     }
-  //   }
-  // }
 
   @override
   void dispose() {
     super.dispose();
     _subscription.cancel();
+    _locationServiceSubscription.cancel();
   }
 }
 
@@ -285,6 +186,10 @@ class AppState with _$AppState {
   const factory AppState({
     @Default(null) User? authUser,
     UserData? userData,
+    @Default(false) bool isLocationServiceEnabled,
+    @Default(false) bool haveLocationPermission,
+    @Default(0) int locationServicePopupTrigger,
+    @Default(0) int locationPermissionPopuptrigger,
     List<Placemark>? currentPlacemarks,
     Position? currentPosition,
     @Default(AppStatus.initial) AppStatus status,
@@ -297,3 +202,150 @@ enum AppStatus {
   // authenticatedButNoInternetConnection,
   authenticated,
 }
+
+// retryUserDataFetch() {
+//   _fetchUserDataAndSetState(state.authUser);
+// }
+
+// Future<ApiResponse> createUser({
+//   required String username,
+// }) async {
+//   // TODO: generate an avatar for the user, and upload it
+//   final response = await apiService.createUser(
+//     username: username,
+//     profilePicUrl: '',
+//     authToken: (await getIdToken()) ?? '',
+//     mobileNumber: state.authUser?.phoneNumber ?? '',
+//     fullName: '',
+//   );
+
+//   if (response.status == ApiStatus.success) {
+//     // update status of the user to authenticatedWithUserData
+//     state = state.copyWith(
+//       status: AppStatus.authenticatedWithUserData,
+//       // TODO: review and modify it
+//       userData: UserResponse(
+//         username: username,
+//         fullName: '',
+//         isSubscribed: false,
+//         profilePicUrl: '',
+//         fcmToken: null,
+//       ),
+//     );
+//   }
+//   return response;
+// }
+
+// Future<ApiResponse> deleteUser() async {
+//   final response = await apiService.deleteUser(
+//     authToken: await getIdToken() ?? '',
+//   );
+//   if (response.status == ApiStatus.success) {
+//     state = state.copyWith(
+//       status: AppStatus.unauthenticated,
+//     );
+//   }
+//   return response;
+// }
+
+// /// returns the idToken to be used for any 'private' API calls
+// /// if token gets expired, it refreshes the token and returns a new one
+// Future<String?> getIdToken({User? user}) async {
+//   final currentUser = user ?? firebaseAuth.currentUser;
+//   if (currentUser == null) return null;
+//   final idTokenResult = await currentUser.getIdTokenResult();
+//   // debugPrint(idTokenResult.toString());
+//   final String idToken;
+
+//   // check if token is null or is expired, then get the refreshed token
+//   if (idTokenResult.token == null ||
+//       (idTokenResult.expirationTime != null &&
+//           idTokenResult.expirationTime!.isBefore(DateTime.now()))) {
+//     debugPrint('token expired...refreshing token');
+//     // refresh the ID Token
+//     idToken = await currentUser.getIdToken(true);
+//   } else {
+//     // else, get the token from result
+//     idToken = idTokenResult.token!;
+//   }
+//   // debugPrint(idToken);
+//   return idToken;
+// }
+
+// Future<AppStatus> _fetchUserDataAndNavigate() async {
+//   AppStatus currentStatus = AppStatus.initial;
+//   try {
+//     final String currentUserId = state.authUser!.uid;
+//     print('current userId: $currentUserId');
+//     final CollectionReference<Map<String, dynamic>> usersCollection =
+//         firestore.collection(UserData.userCollectionKey);
+
+//     await usersCollection.doc(currentUserId).get().then(
+//       (json) {
+//         // here we checking if the current users have selected preferences or not
+//         // based on the result we are setting the corresponding state
+//         if (json.data()?[UserData.preferencesKey].length == 0) {
+//           print("Preferences not present");
+//           currentStatus = AppStatus.authenticatedWithNoPrefs;
+//         } else {
+//           currentStatus = AppStatus.authenticatedWithPrefs;
+//         }
+//       },
+//     );
+//   } catch (e) {
+//     print(e);
+//   }
+
+//   return currentStatus;
+// }
+
+// /// fetches user data from server & sets the state
+// _fetchUserDataAndSetState(User? user) async {
+//   final idToken = await user?.getIdToken();
+//   debugPrint(idToken);
+
+//   if (idToken == null) {
+//     state = state.copyWith(
+//       status: AppStatus.unauthenticated,
+//     );
+//   } else {
+//     final response = await apiService.getUserData(
+//       authToken: await user?.getIdToken() ?? '',
+//     );
+//     if (response.status == ApiStatus.success) {
+//       state = state.copyWith(
+//         authUser: user,
+//         userData: response.data!,
+//         status: AppStatus.authenticatedWithUserData,
+//       );
+//       final fcmToken = await firebaseMessaging.getToken();
+//       debugPrint('fcmToken: $fcmToken');
+
+//       if (response.data!.fcmToken != fcmToken) {
+//         apiService.updateUserData(
+//           updateUserData: UpdateUserRequest(
+//             fcmToken: fcmToken,
+//           ),
+//           authToken: idToken,
+//         );
+//       }
+//     } else if (response.errorMessage == 'User not found!') {
+//       // user is authenticated, but user data is not present
+//       state = state.copyWith(
+//         authUser: user,
+//         status: AppStatus.authenticatedWithNoUserData,
+//       );
+//     } else if (response.errorMessage == noInternetErrorString) {
+//       // user is authenticated, but couldn't fetch user data as there's no internet connection
+//       state = state.copyWith(
+//         authUser: user,
+//         status: AppStatus.authenticatedButNoInternetConnection,
+//       );
+//     } else {
+//       // handle any other error here
+//       // TODO: handle error
+//       debugPrint('Error while fetching user data');
+//       debugPrint(response.toString());
+//     }
+//   }
+// }

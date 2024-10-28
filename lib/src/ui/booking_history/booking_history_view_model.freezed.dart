@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$BookingHistoryViewState {
-  List<Booking> get myBookings => throw _privateConstructorUsedError;
+  List<Booking> get myBookings =>
+      throw _privateConstructorUsedError; // <BookindID, EventData>
   Map<String, EventData>? get eventData => throw _privateConstructorUsedError;
   BookingHistoryViewType get viewType => throw _privateConstructorUsedError;
   BookingHistoryViewStatus get status => throw _privateConstructorUsedError;
@@ -170,7 +171,9 @@ class _$BookingHistoryViewStateImpl
     return EqualUnmodifiableListView(_myBookings);
   }
 
+// <BookindID, EventData>
   final Map<String, EventData>? _eventData;
+// <BookindID, EventData>
   @override
   Map<String, EventData>? get eventData {
     final value = _eventData;
@@ -249,7 +252,7 @@ abstract class _BookingHistoryViewState implements BookingHistoryViewState {
 
   @override
   List<Booking> get myBookings;
-  @override
+  @override // <BookindID, EventData>
   Map<String, EventData>? get eventData;
   @override
   BookingHistoryViewType get viewType;
