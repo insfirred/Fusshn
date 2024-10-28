@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../common/dimens.dart';
+import '../../utils/bottom_sheet_util.dart';
 import '../../utils/snackbar_utils.dart';
 import '../common_widgets/fusshn_appbar.dart';
 import '../common_widgets/fusshn_btn.dart';
@@ -76,7 +75,33 @@ class EditImageSection extends ConsumerWidget {
     );
     return GestureDetector(
       onTap: () {
-        ref.read(editProfileViewModelProvider.notifier).pickImageAndUpload();
+        showFusshnBottomSheet(
+          context: context,
+          builder: (context) => const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 18.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Select your profile picture'),
+                SizedBox(height: 30),
+                Row(
+                  children: [
+                    _ImageSelectionOption(
+                      label: 'Camera',
+                      imageSource: ImageSource.camera,
+                    ),
+                    SizedBox(width: 10),
+                    _ImageSelectionOption(
+                      label: 'Gallery',
+                      imageSource: ImageSource.gallery,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+              ],
+            ),
+          ),
+        );
       },
       child: Column(
         children: [
@@ -104,6 +129,41 @@ class EditImageSection extends ConsumerWidget {
                 ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ImageSelectionOption extends ConsumerWidget {
+  const _ImageSelectionOption({
+    required this.label,
+    required this.imageSource,
+  });
+
+  final String label;
+  final ImageSource imageSource;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          ref
+              .read(editProfileViewModelProvider.notifier)
+              .pickImageAndUpload(imageSource);
+          Navigator.pop(context);
+        },
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade700,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          padding: const EdgeInsets.all(10),
+          child: Center(
+            child: Text(label),
+          ),
+        ),
       ),
     );
   }

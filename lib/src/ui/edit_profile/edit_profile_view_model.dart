@@ -37,9 +37,9 @@ class EditProfileViewModel extends StateNotifier<EditProfileViewState> {
     _settingUserDataInState();
   }
 
-  pickImageAndUpload() async {
+  pickImageAndUpload(ImageSource imagesource) async {
     ImagePicker imagePicker = ImagePicker();
-    XFile? image = await imagePicker.pickImage(source: ImageSource.camera);
+    XFile? image = await imagePicker.pickImage(source: imagesource);
 
     if (image != null) {
       final Reference storageReference = storage.ref().child(
