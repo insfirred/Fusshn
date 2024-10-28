@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fusshn/src/routing/app_router.dart';
 
 import '../../common/enums.dart';
 import '../../models/event_data.dart';
@@ -77,6 +78,10 @@ class HomeView extends ConsumerWidget {
       },
     );
 
+    final List<EventData> eventDataList = ref.watch(
+      homeViewModelProvider.select((_) => _.events),
+    );
+
     return Scaffold(
       body: SafeArea(
         child: AnimatedGradientBackground(
@@ -136,7 +141,11 @@ class HomeView extends ConsumerWidget {
               const SliverToBoxAdapter(child: SizedBox(height: 26)),
               SliverTitle(
                 label: 'Happening near you!',
-                onTap: () {},
+                onTap: () {
+                  context.navigateTo(
+                    SeeAllEventRoute(events: eventDataList),
+                  );
+                },
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 8)),
               const SliverToBoxAdapter(
@@ -145,7 +154,11 @@ class HomeView extends ConsumerWidget {
               const SliverToBoxAdapter(child: SizedBox(height: 20)),
               SliverTitle(
                 label: 'Music Events',
-                onTap: () {},
+                onTap: () {
+                  context.navigateTo(
+                    SeeAllEventRoute(events: eventDataList),
+                  );
+                },
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 8)),
               const SliverToBoxAdapter(

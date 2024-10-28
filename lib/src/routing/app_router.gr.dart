@@ -85,6 +85,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ProfileView(),
       );
     },
+    SeeAllEventRoute.name: (routeData) {
+      final args = routeData.argsAs<SeeAllEventRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SeeAllEventView(
+          events: args.events,
+          key: args.key,
+        ),
+      );
+    },
     SplashRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -293,6 +303,44 @@ class ProfileRoute extends PageRouteInfo<void> {
   static const String name = 'ProfileRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SeeAllEventView]
+class SeeAllEventRoute extends PageRouteInfo<SeeAllEventRouteArgs> {
+  SeeAllEventRoute({
+    required List<EventData> events,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          SeeAllEventRoute.name,
+          args: SeeAllEventRouteArgs(
+            events: events,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SeeAllEventRoute';
+
+  static const PageInfo<SeeAllEventRouteArgs> page =
+      PageInfo<SeeAllEventRouteArgs>(name);
+}
+
+class SeeAllEventRouteArgs {
+  const SeeAllEventRouteArgs({
+    required this.events,
+    this.key,
+  });
+
+  final List<EventData> events;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SeeAllEventRouteArgs{events: $events, key: $key}';
+  }
 }
 
 /// generated route for

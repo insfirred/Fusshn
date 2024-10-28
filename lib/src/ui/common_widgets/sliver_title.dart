@@ -44,7 +44,7 @@ class SliverTitle extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    'View All',
+                    'See All',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: const Color(0xFF78F894).withOpacity(0.7)),
                   ),
