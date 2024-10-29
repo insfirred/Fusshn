@@ -3,8 +3,10 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:string_validator/string_validator.dart';
 
@@ -42,17 +44,32 @@ class EditProfileViewModel extends StateNotifier<EditProfileViewState> {
     XFile? image = await imagePicker.pickImage(source: imagesource);
 
     if (image != null) {
-      final Reference storageReference = storage.ref().child(
-            'images/${ref.read(appRepositoryProvider).authUser!.uid}/user_profile_image',
-          );
-      UploadTask? uploadTask = storageReference.putFile(
-        File(image.path),
+      ImageCropper imageCropper = ImageCropper();
+      var croppedFile = await imageCropper.cropImage(
+        sourcePath: image.path,
+        aspectRatio: const CropAspectRatio(
+          ratioX: 1,
+          ratioY: 1,
+        ),
       );
 
-      final TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
-      final String url = await snapshot.ref.getDownloadURL();
-      state = state.copyWith(imageUrl: url);
-      ref.read(appRepositoryProvider.notifier).setProfilePicUrlInFireStore(url);
+      if (croppedFile != null) {
+        final Reference storageReference = storage.ref().child(
+              'images/${ref.read(appRepositoryProvider).authUser!.uid}/user_profile_image',
+            );
+        UploadTask? uploadTask = storageReference.putFile(
+          File(croppedFile.path),
+        );
+
+        final TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
+        final String url = await snapshot.ref.getDownloadURL();
+        state = state.copyWith(imageUrl: url);
+        ref
+            .read(appRepositoryProvider.notifier)
+            .setProfilePicUrlInFireStore(url);
+      } else {
+        log('no cropping done');
+      }
     } else {
       log('No Image selected');
     }
