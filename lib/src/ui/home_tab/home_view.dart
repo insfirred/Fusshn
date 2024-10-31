@@ -2,10 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fusshn/src/routing/app_router.dart';
 
 import '../../common/enums.dart';
 import '../../models/event_data.dart';
+import '../../routing/app_router.dart';
 import '../common_widgets/animated_gradient_background.dart';
 import '../common_widgets/sliver_title.dart';
 import 'components/event_card.dart';

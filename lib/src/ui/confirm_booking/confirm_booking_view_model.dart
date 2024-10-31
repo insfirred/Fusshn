@@ -207,39 +207,48 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
   // here we are updating the tickets in the customer app itself.
   // Bad approach, shouldn't be used, switch to server side code later.
   _updateAvailableTickets() async {
-    DocumentReference<Map<String, dynamic>> eventRef =
-        firestore.collection('events').doc(state.eventId);
+    try {
+      DocumentReference<Map<String, dynamic>> eventRef =
+          firestore.collection('events').doc(state.eventId);
 
-    DocumentSnapshot<Map<String, dynamic>> eventSnapshot = await eventRef.get();
+      log('hellooooo');
+      DocumentSnapshot<Map<String, dynamic>> eventSnapshot =
+          await eventRef.get();
+      log('hellooooo2');
 
-    List<TicketType> tickets =
-        EventData.fromJson(eventSnapshot.data()!).tickets;
+      log('eventData: ${eventSnapshot.exists}');
 
-    List<TicketType> updatedTickets = tickets.map(
-      (ticket) {
-        if (ticket.id == state.selectedTicketType!.id) {
-          TicketType newTicket = TicketType(
-            id: ticket.id,
-            name: ticket.name,
-            price: ticket.price,
-            personAllowed: ticket.personAllowed,
-            personGender: ticket.personGender,
-            description: ticket.description,
-            isRefundable: ticket.isRefundable,
-            totalTickets: ticket.totalTickets,
-            availableTickets:
-                ticket.availableTickets - state.selectedTicketCount,
-          );
-          return newTicket;
-        }
+      List<TicketType> tickets =
+          EventData.fromJson(eventSnapshot.data()!).tickets;
 
-        return ticket;
-      },
-    ).toList();
+      List<TicketType> updatedTickets = tickets.map(
+        (ticket) {
+          if (ticket.id == state.selectedTicketType!.id) {
+            TicketType newTicket = TicketType(
+              id: ticket.id,
+              name: ticket.name,
+              price: ticket.price,
+              personAllowed: ticket.personAllowed,
+              personGender: ticket.personGender,
+              description: ticket.description,
+              isRefundable: ticket.isRefundable,
+              totalTickets: ticket.totalTickets,
+              availableTickets:
+                  ticket.availableTickets - state.selectedTicketCount,
+            );
+            return newTicket;
+          }
 
-    await eventRef.update({
-      'tickets': updatedTickets.map((e) => e.toJson()).toList(),
-    });
+          return ticket;
+        },
+      ).toList();
+
+      await eventRef.update({
+        'tickets': updatedTickets.map((e) => e.toJson()).toList(),
+      });
+    } catch (e) {
+      log('error in _updateAvailableTickets(): $e');
+    }
   }
 
   // _updateAvailableTicketsApiReq() async {
