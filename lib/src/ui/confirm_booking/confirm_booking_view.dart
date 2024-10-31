@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +9,7 @@ import 'package:fusshn/src/ui/home_tab/home_view_model.dart';
 import '../../common/dimens.dart';
 import '../../common/strings.dart';
 import '../../utils/snackbar_utils.dart';
+import '../common_widgets/fusshn_appbar.dart';
 import '../common_widgets/fusshn_btn.dart';
 import 'confirm_booking_view_model.dart';
 
@@ -29,124 +33,77 @@ class ConfirmBookingView extends ConsumerWidget {
       },
     );
 
+    final paymentStatus = ref.watch(
+      confirmBookingViewModelProvider.select((_) => _.status),
+    );
+
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: homeTabHorizontalPadding,
-          vertical: 22,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(12),
-            topRight: Radius.circular(12),
-          ),
-          color: Theme.of(context).scaffoldBackgroundColor,
-        ),
-        width: double.maxFinite,
-        child: Column(
+      body: SafeArea(
+        child: Stack(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                  width: 40,
-                  height: 2,
-                )
-              ],
-            ),
-            const SizedBox(height: 10),
-            Expanded(
+            SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(
+                horizontal: homeTabHorizontalPadding,
+              ),
+              physics: const BouncingScrollPhysics(),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  context.router.maybePop();
-                                },
-                                child: Image.asset(
-                                  'assets/back.png',
-                                  width: 30,
-                                ),
-                              ),
-                              Text(
-                                'Confirm Booking',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              const SizedBox(width: 30),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          const _ImportantNoteBox(),
-                          const SizedBox(height: 15),
-
-                          // hehehhehe
-                          ElevatedButton(
-                            onPressed: () {
-                              ref
-                                  .read(
-                                      confirmBookingViewModelProvider.notifier)
-                                  .deleteItAfter();
-                            },
-                            child: Text('Payment done'),
-                          ),
-
-                          ElevatedButton(
-                            onPressed: () {
-                              ref
-                                  .read(
-                                      confirmBookingViewModelProvider.notifier)
-                                  .printJwtToken();
-                            },
-                            child: Text('Curr user id'),
-                          ),
-                          const SizedBox(height: 15),
-
-                          // hehehhehe
-                          const _BillSummary(),
-                          // ElevatedButton(
-                          //   onPressed: () {},
-                          //   child: const Text('alert'),
-                          // ),
-                          const SizedBox(height: 18),
-                          const Divider(color: Color(0xFF999999)),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Got Code?',
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              Image.asset(
-                                'assets/lock.png',
-                                width: 15,
-                              )
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          const Divider(color: Color(0xFF999999)),
-                          const _TermsConditionsBox(),
-                        ],
+                  const FusshnAppBar(label: 'Confirm Booking'),
+                  const SizedBox(height: 10),
+                  const _ImportantNoteBox(),
+                  const SizedBox(height: 15),
+                  const _BillSummary(),
+                  const SizedBox(height: 18),
+                  const Divider(color: Color(0xFF999999)),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Got Code?',
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
-                    ),
+                      Image.asset(
+                        'assets/lock.png',
+                        width: 15,
+                      )
+                    ],
                   ),
+                  const SizedBox(height: 10),
+                  const Divider(color: Color(0xFF999999)),
+                  const _TermsConditionsBox(),
+                  const SizedBox(height: 15),
                   const _CompletePaymentBtn(),
                 ],
               ),
             ),
+            if (paymentStatus == PaymentStatus.loading) ...[
+              BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: 3,
+                  sigmaY: 3,
+                ),
+                child: Center(
+                  child: DefaultTextStyle(
+                    style: const TextStyle(
+                      fontSize: 18,
+                    ),
+                    child: AnimatedTextKit(
+                      animatedTexts: [
+                        WavyAnimatedText('Confirming your payment ...'),
+                      ],
+                      repeatForever: true,
+                      isRepeatingAnimation: true,
+                      onTap: () {
+                        print("Tap Event");
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),
@@ -265,18 +222,12 @@ class _CompletePaymentBtn extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final paymentStatus = ref.watch(
-      confirmBookingViewModelProvider.select((_) => _.status),
+    return FusshnBtn(
+      label: 'Proceed to Payment',
+      onTap: () {
+        ref.read(confirmBookingViewModelProvider.notifier).openCheckout();
+      },
     );
-
-    return paymentStatus == PaymentStatus.loading
-        ? const CircularProgressIndicator()
-        : FusshnBtn(
-            label: 'Proceed to Payment',
-            onTap: () {
-              ref.read(confirmBookingViewModelProvider.notifier).openCheckout();
-            },
-          );
   }
 }
 
