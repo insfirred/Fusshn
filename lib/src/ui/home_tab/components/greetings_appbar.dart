@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fusshn/src/repositories/app_repository.dart';
+import 'package:fusshn/src/routing/app_router.dart';
 
 class GreetingAppBar extends ConsumerWidget {
   const GreetingAppBar({
@@ -40,20 +42,37 @@ class GreetingAppBar extends ConsumerWidget {
             "Hi $userName",
             style: Theme.of(context).textTheme.bodyMedium,
           ),
-          const SizedBox(height: 6),
-          Row(
-            children: [
-              Text(
-                currentCity ?? '',
-                style: Theme.of(context).textTheme.bodySmall,
+          const SizedBox(height: 8),
+          if (currentCity != null)
+            Row(
+              children: [
+                Text(
+                  currentCity,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(width: 6),
+                Image.asset(
+                  'assets/dropdown.png',
+                  width: 12,
+                ),
+              ],
+            )
+          else
+            GestureDetector(
+              onTap: () {
+                context.navigateTo(
+                  const SelectLocationRoute(),
+                );
+              },
+              behavior: HitTestBehavior.opaque,
+              child: Text(
+                'Tap to select your city',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: Colors.grey.shade600),
               ),
-              const SizedBox(width: 6),
-              Image.asset(
-                'assets/dropdown.png',
-                width: 12,
-              ),
-            ],
-          ),
+            ),
         ],
       ),
     );

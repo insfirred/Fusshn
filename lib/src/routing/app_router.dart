@@ -15,6 +15,7 @@ import '../ui/onboarding/onboarding_view.dart';
 import '../ui/privacy_policy/privacy_policy_view.dart';
 import '../ui/profile_tab/profile_view.dart';
 import '../ui/see_all_event/see_all_event.dart';
+import '../ui/select_location/select_location_view.dart';
 import '../ui/splash/splash_view.dart';
 import '../ui/terms_and_conditions/terms_and_conditions_view.dart';
 import '../ui/ticket/ticket_view.dart';
@@ -95,6 +96,12 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           path: '/see-all-event',
           page: SeeAllEventRoute.page,
+        ),
+        CustomRoute(
+          path: '/select-location',
+          page: SelectLocationRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideBottom,
+          durationInMilliseconds: 200,
         ),
       ];
 }

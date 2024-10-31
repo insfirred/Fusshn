@@ -95,6 +95,12 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    SelectLocationRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SelectLocationView(),
+      );
+    },
     SplashRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -341,6 +347,20 @@ class SeeAllEventRouteArgs {
   String toString() {
     return 'SeeAllEventRouteArgs{events: $events, key: $key}';
   }
+}
+
+/// generated route for
+/// [SelectLocationView]
+class SelectLocationRoute extends PageRouteInfo<void> {
+  const SelectLocationRoute({List<PageRouteInfo>? children})
+      : super(
+          SelectLocationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SelectLocationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

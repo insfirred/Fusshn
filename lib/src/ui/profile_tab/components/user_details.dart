@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../common/hero_tags.dart';
 import '../../../repositories/app_repository.dart';
 import 'edit_profile_button.dart';
 
@@ -27,18 +28,21 @@ class UserDetails extends ConsumerWidget {
           style: Theme.of(context).textTheme.displaySmall,
         ),
         const SizedBox(height: 35),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-          child: CachedNetworkImage(
-            width: 100,
-            height: 100,
-            errorWidget: (context, url, d) => Image.asset(
-              'assets/no_user_image.png',
-              fit: BoxFit.cover,
-            ),
-            imageUrl: imageUrl ?? '',
-            progressIndicatorBuilder: (context, url, progress) => Center(
-              child: CircularProgressIndicator(value: progress.progress),
+        Hero(
+          tag: HeroTags.userProfileImage,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: CachedNetworkImage(
+              width: 100,
+              height: 100,
+              errorWidget: (context, url, d) => Image.asset(
+                'assets/no_user_image.png',
+                fit: BoxFit.cover,
+              ),
+              imageUrl: imageUrl ?? '',
+              progressIndicatorBuilder: (context, url, progress) => Center(
+                child: CircularProgressIndicator(value: progress.progress),
+              ),
             ),
           ),
         ),

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../common/dimens.dart';
+import '../../common/hero_tags.dart';
 import '../../utils/bottom_sheet_util.dart';
 import '../../utils/snackbar_utils.dart';
 import '../common_widgets/fusshn_appbar.dart';
@@ -105,18 +106,21 @@ class EditImageSection extends ConsumerWidget {
       },
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: CachedNetworkImage(
-              width: 100,
-              height: 100,
-              errorWidget: (context, url, d) => Image.asset(
-                'assets/no_user_image.png',
-                fit: BoxFit.cover,
-              ),
-              imageUrl: imageUrl ?? '',
-              progressIndicatorBuilder: (context, url, progress) => Center(
-                child: CircularProgressIndicator(value: progress.progress),
+          Hero(
+            tag: HeroTags.userProfileImage,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: CachedNetworkImage(
+                width: 100,
+                height: 100,
+                errorWidget: (context, url, d) => Image.asset(
+                  'assets/no_user_image.png',
+                  fit: BoxFit.cover,
+                ),
+                imageUrl: imageUrl ?? '',
+                progressIndicatorBuilder: (context, url, progress) => Center(
+                  child: CircularProgressIndicator(value: progress.progress),
+                ),
               ),
             ),
           ),
