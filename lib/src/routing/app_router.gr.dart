@@ -85,6 +85,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ProfileView(),
       );
     },
+    SearchEventRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SearchEventView(),
+      );
+    },
     SeeAllEventRoute.name: (routeData) {
       final args = routeData.argsAs<SeeAllEventRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -307,6 +313,20 @@ class ProfileRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ProfileRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SearchEventView]
+class SearchEventRoute extends PageRouteInfo<void> {
+  const SearchEventRoute({List<PageRouteInfo>? children})
+      : super(
+          SearchEventRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SearchEventRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

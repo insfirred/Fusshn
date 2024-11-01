@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fusshn/src/routing/app_router.dart';
 
 class SearchAppBar extends StatelessWidget {
   const SearchAppBar({
@@ -16,35 +18,47 @@ class SearchAppBar extends StatelessWidget {
       pinned: true,
       collapsedHeight: 80,
       toolbarHeight: 80,
+      // leading: null,
       centerTitle: true,
-      title: ClipRRect(
-        borderRadius: BorderRadius.circular(32),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 10,
-            sigmaY: 10,
-          ),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              color: const Color(0xFF404040).withOpacity(0.5),
-              borderRadius: BorderRadius.circular(32),
+      title: Hero(
+        tag: 'search-event-textfield',
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(32),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 10,
+              sigmaY: 10,
             ),
-            child: TextField(
-              style: Theme.of(context).textTheme.bodyMedium,
-              decoration: InputDecoration(
-                hintFadeDuration: const Duration(milliseconds: 200),
-                icon: Image.asset(
-                  'assets/search.png',
-                  width: 14,
-                  color: const Color(0xFF78F894).withOpacity(0.7),
+            child: GestureDetector(
+              onTap: () => context.navigateTo(const SearchEventRoute()),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF404040).withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(32),
                 ),
-                border: InputBorder.none,
-                hintText: 'Search',
-                hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: const Color(0xFFFFFFFF).withOpacity(0.7),
+                child: Material(
+                  color: Colors.transparent,
+                  child: TextField(
+                    enabled: false,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    decoration: InputDecoration(
+                      hintFadeDuration: const Duration(milliseconds: 200),
+                      icon: Image.asset(
+                        'assets/search.png',
+                        width: 14,
+                        color: const Color(0xFF78F894).withOpacity(0.7),
+                      ),
+                      border: InputBorder.none,
+                      hintText: 'Search',
+                      hintStyle:
+                          Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
+                              ),
                     ),
+                  ),
+                ),
               ),
             ),
           ),

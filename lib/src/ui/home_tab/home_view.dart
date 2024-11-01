@@ -8,10 +8,10 @@ import '../../models/event_data.dart';
 import '../../routing/app_router.dart';
 import '../common_widgets/animated_gradient_background.dart';
 import '../common_widgets/sliver_title.dart';
-import 'components/event_card.dart';
 import 'components/event_category_box.dart';
 import 'components/greetings_appbar.dart';
 import 'components/home_banner.dart';
+import 'components/horizontal_event_slider.dart';
 import 'components/location_card.dart';
 import 'components/payment_success_alert.dart';
 import 'components/search_appbar.dart';
@@ -91,22 +91,6 @@ class HomeView extends ConsumerWidget {
               const GreetingAppBar(),
               const SearchAppBar(),
               const SliverTitle(label: 'Trending'),
-              // SliverToBoxAdapter(
-              //   child: ElevatedButton(
-              //     onPressed: () {
-              //       FirebaseFirestore.instance
-              //           .collection('events')
-              //           .add(eventWasteData.toJson())
-              //           .then(
-              //         (doc) {
-              //           doc.update({"id": doc.id});
-              //         },
-              //       );
-              //     },
-              //     child: const Text("Push Event Data"),
-              //   ),
-              // ),
-
               const SliverToBoxAdapter(child: SizedBox(height: 12)),
               SliverToBoxAdapter(
                 child: SizedBox(
@@ -221,32 +205,6 @@ class HomeView extends ConsumerWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class HorizontalEventSlider extends ConsumerWidget {
-  const HorizontalEventSlider({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final List<EventData> eventDataList = ref.watch(
-      homeViewModelProvider.select((_) => _.events),
-    );
-
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      height: 300,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: eventDataList.length,
-        itemBuilder: (context, index) => EventCard(
-          eventData: eventDataList[index],
-          index: index,
         ),
       ),
     );
