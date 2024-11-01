@@ -109,7 +109,7 @@ class EditImageSection extends ConsumerWidget {
           Hero(
             tag: HeroTags.userProfileImage,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: BorderRadius.circular(15),
               child: CachedNetworkImage(
                 width: 100,
                 height: 100,

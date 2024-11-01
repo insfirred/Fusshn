@@ -25,26 +25,26 @@ class MainView extends ConsumerWidget {
       }
 
       // for constantly listening changes in location service.
-      if (previous?.locationServicePopupTrigger !=
-              next.locationServicePopupTrigger &&
-          !(next.isLocationServiceEnabled)) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text(
-                'Please turn on the location service to see nearby events'),
-            actions: [
-              ElevatedButton(
-                onPressed: () {
-                  Geolocator.openLocationSettings();
-                  Navigator.pop(context);
-                },
-                child: const Text('Enable Location'),
-              ),
-            ],
-          ),
-        );
-      }
+      // if (previous?.locationServicePopupTrigger !=
+      //         next.locationServicePopupTrigger &&
+      //     !(next.isLocationServiceEnabled)) {
+      //   showDialog(
+      //     context: context,
+      //     builder: (BuildContext context) => AlertDialog(
+      //       title: const Text(
+      //           'Please turn on the location service to see nearby events'),
+      //       actions: [
+      //         ElevatedButton(
+      //           onPressed: () {
+      //             Geolocator.openLocationSettings();
+      //             Navigator.pop(context);
+      //           },
+      //           child: const Text('Enable Location'),
+      //         ),
+      //       ],
+      //     ),
+      //   );
+      // }
 
       // if (previous?.locationPermissionPopuptrigger !=
       //     next.locationPermissionPopuptrigger) {

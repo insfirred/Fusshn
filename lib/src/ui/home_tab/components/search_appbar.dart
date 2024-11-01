@@ -4,6 +4,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fusshn/src/routing/app_router.dart';
 
+import '../../../common/hero_tags.dart';
+
 class SearchAppBar extends StatelessWidget {
   const SearchAppBar({
     super.key,
@@ -21,7 +23,7 @@ class SearchAppBar extends StatelessWidget {
       // leading: null,
       centerTitle: true,
       title: Hero(
-        tag: 'search-event-textfield',
+        tag: HeroTags.searchEventTextfield,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(32),
           child: BackdropFilter(
@@ -31,15 +33,15 @@ class SearchAppBar extends StatelessWidget {
             ),
             child: GestureDetector(
               onTap: () => context.navigateTo(const SearchEventRoute()),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF404040).withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                child: Material(
-                  color: Colors.transparent,
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF404040).withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(32),
+                  ),
                   child: TextField(
                     enabled: false,
                     style: Theme.of(context).textTheme.bodyMedium,
