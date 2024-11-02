@@ -1,18 +1,24 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fusshn/src/common/dimens.dart';
+import 'package:fusshn/src/ui/search_events/search_event_view_model.dart';
 
-import '../../common/dimens.dart';
-import '../../common/hero_tags.dart';
-import 'components/artist_search_result.dart';
-import 'components/event_search_result.dart';
+import 'components/artist_top_search_result.dart';
+import 'components/event_top_search_result.dart';
+import 'components/heading_with_divider.dart';
 import 'components/search_event_textfield.dart';
 
 @RoutePage()
-class SearchEventView extends StatelessWidget {
+class SearchEventView extends ConsumerWidget {
   const SearchEventView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final filteredList = ref.watch(
+      searchEventViewModelProvider.select((_) => _.filteredEvents),
+    );
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -25,39 +31,18 @@ class SearchEventView extends StatelessWidget {
               const SizedBox(height: 30),
               const SearchEventTextfield(),
               const SizedBox(height: 20),
-              Row(
-                children: [
-                  Text(
-                    'Events',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(fontSize: 12),
-                  ),
-                  const SizedBox(width: 8),
-                  const Expanded(child: Divider(color: Color(0xFF3B3B3B))),
-                ],
-              ),
+              const HeadingWithDivider('Events'),
               const SizedBox(height: 10),
-              const EventSearchResult(),
-              const EventSearchResult(),
+              Column(
+                children: filteredList
+                    .map((event) => EventTopSearchResult(event))
+                    .toList(),
+              ),
               const SizedBox(height: 20),
-              Row(
-                children: [
-                  Text(
-                    'Artists',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(fontSize: 12),
-                  ),
-                  const SizedBox(width: 8),
-                  const Expanded(child: Divider(color: Color(0xFF3B3B3B))),
-                ],
-              ),
+              const HeadingWithDivider('Artists'),
               const SizedBox(height: 10),
-              const ArtistSearchResult(),
-              const ArtistSearchResult(),
+              const ArtistTopSearchResult(),
+              const ArtistTopSearchResult(),
             ],
           ),
         ),

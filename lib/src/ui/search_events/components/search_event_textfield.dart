@@ -1,19 +1,22 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fusshn/src/ui/search_events/search_event_view_model.dart';
 
 import '../../../common/hero_tags.dart';
 
-class SearchEventTextfield extends StatefulWidget {
+class SearchEventTextfield extends ConsumerStatefulWidget {
   const SearchEventTextfield({
     super.key,
   });
 
   @override
-  State<SearchEventTextfield> createState() => _SearchEventTextfieldState();
+  ConsumerState<SearchEventTextfield> createState() =>
+      _SearchEventTextfieldState();
 }
 
-class _SearchEventTextfieldState extends State<SearchEventTextfield> {
+class _SearchEventTextfieldState extends ConsumerState<SearchEventTextfield> {
   TextEditingController controller = TextEditingController();
 
   FocusNode focusNode = FocusNode();
@@ -21,11 +24,19 @@ class _SearchEventTextfieldState extends State<SearchEventTextfield> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Added delay so that focus request does not interfere with Hero animation.
-      Future.delayed(const Duration(milliseconds: 300), () {
-        FocusScope.of(context).requestFocus(focusNode);
-      });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        // Added delay so that focus request does not interfere with Hero animation.
+        Future.delayed(const Duration(milliseconds: 300), () {
+          FocusScope.of(context).requestFocus(focusNode);
+        });
+      },
+    );
+
+    controller.addListener(() {
+      ref
+          .read(searchEventViewModelProvider.notifier)
+          .setSearchQuery(controller.text);
     });
   }
 

@@ -1,27 +1,35 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fusshn/src/models/event_data.dart';
+import 'package:fusshn/src/routing/app_router.dart';
+import 'package:intl/intl.dart';
 
-class ArtistSearchResult extends StatelessWidget {
-  const ArtistSearchResult({
+class EventTopSearchResult extends StatelessWidget {
+  const EventTopSearchResult(
+    this.eventData, {
     super.key,
   });
+
+  final EventData eventData;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: ListTile(
-        title: const Text('Seedhe Maut'),
+        onTap: () => context.navigateTo(EventDetailRoute(eventData: eventData)),
+        title: Text(eventData.name),
         titleTextStyle:
             Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14),
         subtitle: Text(
-          'Desi HipHop',
+          '${DateFormat().add_jm().format(eventData.startTime)}, ${DateFormat('d MMMM y').format(eventData.startTime)}',
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 12),
         ),
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(6),
           child: Image.network(
-            'https://firebasestorage.googleapis.com/v0/b/fusshn-aef8e.appspot.com/o/test_data%2Fseedhe_maut.jpg?alt=media&token=856ad4d9-1e31-4bf2-acc8-fc4d4aaf4326',
+            eventData.posterUrl,
             width: 40,
             height: 40,
             cacheWidth: 40,
