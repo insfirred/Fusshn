@@ -23,7 +23,7 @@ class SearchAppBar extends StatelessWidget {
       // leading: null,
       centerTitle: true,
       title: Hero(
-        tag: HeroTags.searchEventTextfield,
+        tag: HeroTags.searchEventTextfieldHomeTab,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(32),
           child: BackdropFilter(
@@ -32,7 +32,9 @@ class SearchAppBar extends StatelessWidget {
               sigmaY: 10,
             ),
             child: GestureDetector(
-              onTap: () => context.navigateTo(const SearchEventRoute()),
+              onTap: () => context.navigateTo(SearchEventRoute(
+                heroTagForSearchbar: HeroTags.searchEventTextfieldHomeTab,
+              )),
               child: Material(
                 color: Colors.transparent,
                 child: Container(

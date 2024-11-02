@@ -23,11 +23,7 @@ class UserDetails extends ConsumerWidget {
 
     return Column(
       children: [
-        Text(
-          'Profile',
-          style: Theme.of(context).textTheme.displaySmall,
-        ),
-        const SizedBox(height: 35),
+        const SizedBox(height: 20),
         Hero(
           tag: HeroTags.userProfileImage,
           child: ClipRRect(

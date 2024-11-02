@@ -86,9 +86,13 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     SearchEventRoute.name: (routeData) {
+      final args = routeData.argsAs<SearchEventRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SearchEventView(),
+        child: SearchEventView(
+          heroTagForSearchbar: args.heroTagForSearchbar,
+          key: args.key,
+        ),
       );
     },
     SeeAllEventRoute.name: (routeData) {
@@ -319,16 +323,40 @@ class ProfileRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [SearchEventView]
-class SearchEventRoute extends PageRouteInfo<void> {
-  const SearchEventRoute({List<PageRouteInfo>? children})
-      : super(
+class SearchEventRoute extends PageRouteInfo<SearchEventRouteArgs> {
+  SearchEventRoute({
+    required String heroTagForSearchbar,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           SearchEventRoute.name,
+          args: SearchEventRouteArgs(
+            heroTagForSearchbar: heroTagForSearchbar,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'SearchEventRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<SearchEventRouteArgs> page =
+      PageInfo<SearchEventRouteArgs>(name);
+}
+
+class SearchEventRouteArgs {
+  const SearchEventRouteArgs({
+    required this.heroTagForSearchbar,
+    this.key,
+  });
+
+  final String heroTagForSearchbar;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SearchEventRouteArgs{heroTagForSearchbar: $heroTagForSearchbar, key: $key}';
+  }
 }
 
 /// generated route for

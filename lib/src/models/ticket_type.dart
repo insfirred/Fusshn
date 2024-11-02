@@ -6,17 +6,6 @@ part 'ticket_type.g.dart';
 
 @JsonSerializable()
 class TicketType {
-  // firestore keys
-  static String idKey = 'id';
-  static String nameKey = 'name';
-  static String priceKey = 'price';
-  static String personAllowedKey = 'person_allowed';
-  static String personGenderKey = 'person_gender';
-  static String descriptionKey = 'description';
-  static String isRefundableKey = 'phone';
-  static String totalTicketsKey = 'total_tickets';
-  static String availableTicketsKey = 'available_tickets';
-
   final String id;
   final String name;
   final double price;

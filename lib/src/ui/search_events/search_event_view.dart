@@ -1,17 +1,22 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fusshn/src/common/dimens.dart';
-import 'package:fusshn/src/ui/search_events/search_event_view_model.dart';
 
+import '../../common/dimens.dart';
 import 'components/artist_top_search_result.dart';
 import 'components/event_top_search_result.dart';
 import 'components/heading_with_divider.dart';
 import 'components/search_event_textfield.dart';
+import 'search_event_view_model.dart';
 
 @RoutePage()
 class SearchEventView extends ConsumerWidget {
-  const SearchEventView({super.key});
+  const SearchEventView({
+    required this.heroTagForSearchbar,
+    super.key,
+  });
+
+  final String heroTagForSearchbar;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,7 +34,7 @@ class SearchEventView extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 30),
-              const SearchEventTextfield(),
+              SearchEventTextfield(heroTagForSearchbar),
               const SizedBox(height: 20),
               const HeadingWithDivider('Events'),
               const SizedBox(height: 10),

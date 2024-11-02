@@ -3,12 +3,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../common/enums.dart';
 import '../../models/event_data.dart';
 import '../../routing/app_router.dart';
 import '../common_widgets/animated_gradient_background.dart';
 import '../common_widgets/sliver_title.dart';
-import 'components/event_category_box.dart';
 import 'components/greetings_appbar.dart';
 import 'components/home_banner.dart';
 import 'components/horizontal_event_slider.dart';
@@ -90,19 +88,27 @@ class HomeView extends ConsumerWidget {
             slivers: [
               const GreetingAppBar(),
               const SearchAppBar(),
-              const SliverTitle(label: 'Trending'),
+              // const SliverTitle(label: 'Trending'),
               const SliverToBoxAdapter(child: SizedBox(height: 12)),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 38,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: EventCategories.values.length,
-                    itemBuilder: (context, index) => EventCategoryBox(index),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 24)),
+              // const SliverToBoxAdapter(
+              //   child: SizedBox(
+              //     height: 38,
+              //     child: AllEventTagsSection(),
+              //   ),
+              // ),
+              // const SliverToBoxAdapter(child: SizedBox(height: 24)),
+              // SliverToBoxAdapter(
+              //   child: ElevatedButton(
+              //     onPressed: () async {
+              //       for (var element in eventsForFirestore) {
+              //         await FirebaseFirestore.instance
+              //             .collection('events')
+              //             .add(element.toJson());
+              //       }
+              //     },
+              //     child: Text('push events'),
+              //   ),
+              // ),
               SliverToBoxAdapter(
                 child: CarouselSlider(
                   options: CarouselOptions(

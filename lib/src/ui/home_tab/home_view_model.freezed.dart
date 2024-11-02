@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomeViewState {
-  List<EventData> get events => throw _privateConstructorUsedError;
+  List<EventData> get events =>
+      throw _privateConstructorUsedError; // @Default([]) String selectedTag,
   int get paymentSuccessPopupTrigger => throw _privateConstructorUsedError;
   int get locationServicePopupTrigger => throw _privateConstructorUsedError;
   int get locationPermissionPopuptrigger => throw _privateConstructorUsedError;
@@ -179,6 +180,7 @@ class _$HomeViewStateImpl
     return EqualUnmodifiableListView(_events);
   }
 
+// @Default([]) String selectedTag,
   @override
   @JsonKey()
   final int paymentSuccessPopupTrigger;
@@ -266,7 +268,7 @@ abstract class _HomeViewState implements HomeViewState {
 
   @override
   List<EventData> get events;
-  @override
+  @override // @Default([]) String selectedTag,
   int get paymentSuccessPopupTrigger;
   @override
   int get locationServicePopupTrigger;

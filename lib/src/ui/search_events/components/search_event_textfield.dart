@@ -2,14 +2,16 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fusshn/src/ui/search_events/search_event_view_model.dart';
 
-import '../../../common/hero_tags.dart';
+import '../search_event_view_model.dart';
 
 class SearchEventTextfield extends ConsumerStatefulWidget {
-  const SearchEventTextfield({
+  const SearchEventTextfield(
+    this.heroTag, {
     super.key,
   });
+
+  final String heroTag;
 
   @override
   ConsumerState<SearchEventTextfield> createState() =>
@@ -49,7 +51,7 @@ class _SearchEventTextfieldState extends ConsumerState<SearchEventTextfield> {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: HeroTags.searchEventTextfield,
+      tag: widget.heroTag,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(32),
         child: BackdropFilter(

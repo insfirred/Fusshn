@@ -1,4 +1,5 @@
 import 'package:fusshn/src/common/enums.dart';
+import 'package:fusshn/src/common/event_tags.dart';
 import 'package:fusshn/src/models/artist_data.dart';
 import 'package:fusshn/src/models/ticket_type.dart';
 
@@ -10,8 +11,6 @@ List<EventData> eventsForFirestore = [
     name: 'Prateek Kuhad Silhouettes Tour - Gurgaon',
     description:
         '''Akin to painting on a blank canvas, singer, songwriter, and producer Prateek Kuhad brings his music to life in both broad and delicate strokes. Utilizing an entire spectrum of color and texture, his palette spans pop hooks, indie experimentation, and eloquent folk storytelling delivered in both English and Hindi, manifesting vibrancy through versatility. His breakout single “Cold/mess” generated over 50 million global streams, while former President Barack Obama touted the song on his “Favorite Music of 2019” playlist. On its heels, “Kasoor” exploded with over 100 million global streams and counting. He continued to garner tastemaker praise for his 2022 album, The Way That Lovers Do,” which WONDERLAND hailed as “filled with wispy vocals, ambient production and all-around romance-tinged sound.” His songs have surged through culture, appearing everywhere from the EMMY® Award-winning series Ted Lasso to campaigns for Uber, McDonald's, and WhatsApp. Amidst packing venues on multiple continents, Prateek's vision comes into focus clearer than ever before on a series of singles and more to come.''',
-    category: 'Music Festival',
-    eventGenre: 'Pop',
     artistLineup: [
       const ArtistData(
         id: 'prateek',
@@ -34,7 +33,6 @@ List<EventData> eventsForFirestore = [
     ],
     startTime: DateTime(2024, 11, 3, 11),
     endTime: DateTime(2024, 11, 3, 17),
-    gateCloseTime: DateTime(2024, 2, 25, 16),
     tickets: [
       const TicketType(
         id: 'gp',
@@ -84,14 +82,13 @@ List<EventData> eventsForFirestore = [
       'The ticket holder may not bring outside food, drink, or illegal substances to the festival.',
       'The ticket holder may not resell or transfer their ticket without the express written consent of the event promoter.',
     ],
+    tags: [EventTags.liveMusic],
   ),
   EventData(
     id: 'wbaebveabvraa',
     name: 'Karan Aujla - It Was All A Dream',
     description:
         '''Experience the magic of Karan Aujla live on his It Was All A Dream World Tour! Get ready for a night of sensational music as he performs his biggest hits, including the soulful "Softly”, “Winning Speech”, “IDK HOW” and “Antidote”. ” Karan Aujla, renowned for his powerful voice and dynamic stage presence, will take you on a musical journey like no other. From chart-toppers to fan favorites, enjoy an unforgettable evening filled with electrifying performances and captivating melodies. Don’t miss this opportunity to witness one of Punjabi music’s brightest stars live in concert. Secure your tickets now and be part of this extraordinary event!''',
-    category: 'Music Festival',
-    eventGenre: 'Punjabi HipHop',
     artistLineup: [
       const ArtistData(
         id: 'karanaujla',
@@ -114,7 +111,6 @@ List<EventData> eventsForFirestore = [
     ],
     startTime: DateTime(2024, 11, 3, 11),
     endTime: DateTime(2024, 11, 3, 17),
-    gateCloseTime: DateTime(2024, 2, 25, 16),
     tickets: [
       const TicketType(
         id: 'gp',
@@ -164,6 +160,10 @@ List<EventData> eventsForFirestore = [
       'The ticket holder may not bring outside food, drink, or illegal substances to the festival.',
       'The ticket holder may not resell or transfer their ticket without the express written consent of the event promoter.',
     ],
+    tags: [
+      EventTags.liveMusic,
+      EventTags.hiphop,
+    ],
   ),
   EventData(
     id: 'wbaebveabvraa',
@@ -171,8 +171,6 @@ List<EventData> eventsForFirestore = [
     description:
         '''The sensational Punjabi superstar Guru Randhawa is hitting the road for an epic Indian Tour!
 Brace yourselves for electrifying performances, unforgettable moments, and a musical journey like never before. Gather your squad, and get ready to groove to the beats of your favorite hits!''',
-    category: 'Music Festival',
-    eventGenre: 'Punjabi Pop',
     artistLineup: [
       const ArtistData(
         id: 'gururandhawa',
@@ -195,7 +193,6 @@ Brace yourselves for electrifying performances, unforgettable moments, and a mus
     ],
     startTime: DateTime(2024, 11, 3, 11),
     endTime: DateTime(2024, 11, 3, 17),
-    gateCloseTime: DateTime(2024, 2, 25, 16),
     tickets: [
       const TicketType(
         id: 'gp',
@@ -245,6 +242,7 @@ Brace yourselves for electrifying performances, unforgettable moments, and a mus
       'The ticket holder may not bring outside food, drink, or illegal substances to the festival.',
       'The ticket holder may not resell or transfer their ticket without the express written consent of the event promoter.',
     ],
+    tags: [EventTags.liveMusic],
   ),
   EventData(
     id: 'wbaebveabvreekc',
@@ -255,8 +253,6 @@ Unmatched Energy: Martin Garrix is famous for his high-energy sets that keep the
 State-of-the-Art Production: Each show will feature state-of-the-art sound systems and mesmerizing pyrotechnics, ensuring every beat and drop hits just right.
 Interactive Fan Engagement: From VIP meet-and-greets to interactive crowd experiences, fans will have multiple opportunities to connect with Garrix and be part of the show in unique ways.
 Tickets are expected to sell out fast. Make sure to grab yours early and secure your spot at what promises to be one of the most memorable events of the year. Whether you're a longtime fan or new to the EDM scene, the Martin Garrix India Tour 2024 is an unmissable event that will leave you buzzing long after the final beat drops.''',
-    category: 'Music Festival',
-    eventGenre: 'EDM',
     artistLineup: [
       const ArtistData(
         id: 'paradox',
@@ -280,7 +276,6 @@ Tickets are expected to sell out fast. Make sure to grab yours early and secure 
     ],
     startTime: DateTime(2024, 2, 25, 16),
     endTime: DateTime(2024, 2, 25, 22),
-    gateCloseTime: DateTime(2024, 2, 25, 20),
     tickets: [
       const TicketType(
         id: 'fp',
@@ -329,6 +324,10 @@ Tickets are expected to sell out fast. Make sure to grab yours early and secure 
       'The ticket holder agrees to submit to a reasonable search for prohibited items upon entering the festival.',
       'The ticket holder may not bring outside food, drink, or illegal substances to the festival.',
       'The ticket holder may not resell or transfer their ticket without the express written consent of the event promoter.',
+    ],
+    tags: [
+      EventTags.edm,
+      EventTags.liveMusic,
     ],
   ),
 ];

@@ -6,13 +6,6 @@ part 'booking.g.dart';
 
 @JsonSerializable()
 class Booking {
-  static String idey = 'id';
-  static String paymentIdKey = 'payment_id';
-  static String eventIdKey = 'event_id';
-  static String ticketTypeKey = 'ticket_type';
-  static String ticketCountKey = 'ticket_count';
-  static String createdAtKey = 'created_at';
-
   final String id;
   final String paymentId;
   final String eventId;

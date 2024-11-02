@@ -7,16 +7,6 @@ enum Gender {
   preferNotToSay,
 }
 
-enum EventCategories {
-  Live_concerts,
-  DJ_nights,
-  Cultural,
-  Sports,
-  Family,
-  Activities,
-  Tourism,
-}
-
 enum BookingStatus {
   success,
   failure,

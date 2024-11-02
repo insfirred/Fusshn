@@ -112,7 +112,6 @@ class EventDetailView extends StatelessWidget {
                   TimingAndVenue(
                     startTime: eventData.startTime,
                     endTime: eventData.endTime,
-                    gateCloses: eventData.gateCloseTime,
                     location: eventData.eventLocation,
                     organizerName: eventData.organiserName,
                   ),

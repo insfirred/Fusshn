@@ -9,14 +9,12 @@ class TimingAndVenue extends StatelessWidget {
     super.key,
     required this.startTime,
     required this.endTime,
-    required this.gateCloses,
     required this.location,
     required this.organizerName,
   });
 
   final DateTime startTime;
   final DateTime endTime;
-  final DateTime gateCloses;
   final String location;
   final String organizerName;
 
@@ -75,7 +73,7 @@ class TimingAndVenue extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'Gate Closes :',
+                        'End Time :',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
@@ -84,7 +82,7 @@ class TimingAndVenue extends StatelessWidget {
                 Expanded(
                   flex: 5,
                   child: Text(
-                    DateFormat.jm().format(gateCloses),
+                    DateFormat.jm().format(endTime),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
