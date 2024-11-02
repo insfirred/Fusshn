@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:fusshn/src/ui/home_tab/home_view_model.dart';
 
 import '../../models/event_data.dart';
 import '../../services/firestore.dart';
+import '../home_tab/home_view_model.dart';
 
 part 'event_view_model.freezed.dart';
 

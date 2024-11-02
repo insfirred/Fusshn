@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fusshn/src/common/dimens.dart';
 import 'package:intl/intl.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
+import '../../../common/dimens.dart';
 import '../../../models/event_data.dart';
 import '../../../routing/app_router.dart';
 
@@ -40,18 +40,9 @@ class EventTabCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-              ),
-              child: Image.network(
-                event.imagesUrls.first,
-                width: ((MediaQuery.of(context).size.width) -
-                    (2 * homeTabHorizontalPadding)),
-                height: 235,
-                fit: BoxFit.cover,
-              ),
+            _Image(
+              imageUrl: event.imagesUrls.first,
+              startDate: event.startTime,
             ),
             Padding(
               padding: const EdgeInsets.all(10),
@@ -128,6 +119,34 @@ class EventTabCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _Image extends StatelessWidget {
+  const _Image({
+    required this.imageUrl,
+    required this.startDate,
+    super.key,
+  });
+
+  final String imageUrl;
+  final DateTime startDate;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(12),
+        topRight: Radius.circular(12),
+      ),
+      child: Image.network(
+        imageUrl,
+        width: ((MediaQuery.of(context).size.width) -
+            (2 * homeTabHorizontalPadding)),
+        height: 235,
+        fit: BoxFit.cover,
       ),
     );
   }
