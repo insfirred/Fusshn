@@ -1,94 +1,175 @@
+import 'dart:ui';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../common/dimens.dart';
+import '../../../models/event_data.dart';
 
 class HomeBanner extends StatelessWidget {
-  const HomeBanner({
+  const HomeBanner(
+    this.event, {
     super.key,
   });
 
+  final EventData event;
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        SizedBox(
-          width: double.maxFinite,
-          child: Image.asset(
-            'assets/images/test/event.jpg',
-            fit: BoxFit.fitWidth,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          _Image(event.imagesUrls.first),
+          const _Gradient(),
+          _Details(event),
+          Align(
+            alignment: Alignment.topRight,
+            child: _EventTagBox(event.tags.first),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Details extends StatelessWidget {
+  const _Details(this.event);
+
+  final EventData event;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(12),
+        topRight: Radius.circular(12),
+      ),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: 5,
+          sigmaY: 5,
         ),
-        Container(
+        child: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: homeTabHorizontalPadding,
+            vertical: 10,
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                'Techno Blizzard - DJ Nash, DJ Sukhwinder',
+                event.name,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 8),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(
-                            'assets/location.png',
-                            width: 10,
-                          ),
-                          const SizedBox(width: 5),
-                          Text(
-                            'Club Khubani, Aerocity',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 2),
-                      Row(
-                        children: [
-                          Image.asset(
-                            'assets/calender.png',
-                            width: 10,
-                          ),
-                          const SizedBox(width: 5),
-                          Text(
-                            '30th September, 8:30 PM',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                  SvgPicture.asset('assets/location.svg'),
+                  const SizedBox(width: 5),
+                  Expanded(
                     child: Text(
-                      'From \$299',
+                      event.eventLocation,
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
-                  )
+                  ),
                 ],
               ),
-              const SizedBox(height: 5)
+              const SizedBox(height: 2),
+              Row(
+                children: [
+                  SvgPicture.asset('assets/calendar.svg'),
+                  const SizedBox(width: 5),
+                  Text(
+                    '30th September, 8:30 PM',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
             ],
           ),
         ),
-      ],
+      ),
+    );
+  }
+}
+
+class _Image extends StatelessWidget {
+  const _Image(this.url);
+
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: 360,
+        child: CachedNetworkImage(
+          imageUrl: url,
+          fit: BoxFit.cover,
+          memCacheHeight: 360,
+          height: 360,
+        ),
+      ),
+    );
+  }
+}
+
+class _Gradient extends StatelessWidget {
+  const _Gradient();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 360,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        gradient: LinearGradient(
+          colors: [
+            const Color(0xFF000000).withOpacity(0),
+            const Color(0xFF111111).withOpacity(1),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: const [0.5, 1],
+        ),
+      ),
+    );
+  }
+}
+
+class _EventTagBox extends StatelessWidget {
+  const _EventTagBox(this.tag);
+
+  final String tag;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 18,
+        right: 22,
+      ),
+      padding: const EdgeInsets.symmetric(
+        vertical: 4,
+        horizontal: 8,
+      ),
+      decoration: BoxDecoration(
+        color: const Color(0x7FF8F894).withOpacity(0.4),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(tag),
     );
   }
 }

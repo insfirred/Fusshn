@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:svg_flutter/svg_flutter.dart';
@@ -140,8 +141,8 @@ class _Image extends StatelessWidget {
         topLeft: Radius.circular(12),
         topRight: Radius.circular(12),
       ),
-      child: Image.network(
-        imageUrl,
+      child: CachedNetworkImage(
+        imageUrl: imageUrl,
         width: ((MediaQuery.of(context).size.width) -
             (2 * homeTabHorizontalPadding)),
         height: 235,

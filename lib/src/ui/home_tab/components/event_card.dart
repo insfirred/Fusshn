@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fusshn/src/models/event_data.dart';
 import 'package:fusshn/src/routing/app_router.dart';
@@ -46,8 +47,8 @@ class _Image extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
-      child: Image.network(
-        url,
+      child: CachedNetworkImage(
+        imageUrl: url,
         height: 285,
         width: 232,
         fit: BoxFit.cover,

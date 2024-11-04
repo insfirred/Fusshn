@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,8 +22,8 @@ class EventImagesSlider extends StatelessWidget {
                 .map(
                   (url) => ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      url,
+                    child: CachedNetworkImage(
+                      imageUrl: url,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -38,28 +39,6 @@ class EventImagesSlider extends StatelessWidget {
               initialPage: 0,
             ),
           ),
-          // Container(
-          //   color: Colors.amber,
-          //   padding:
-          //       const EdgeInsets.symmetric(horizontal: homeTabHorizontalPadding),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       ElevatedButton(
-          //         onPressed: () => buttonCarouselController.previousPage(
-          //             duration: const Duration(milliseconds: 300),
-          //             curve: Curves.linear),
-          //         child: const Text('<-'),
-          //       ),
-          //       ElevatedButton(
-          //         onPressed: () => buttonCarouselController.nextPage(
-          //             duration: const Duration(milliseconds: 300),
-          //             curve: Curves.linear),
-          //         child: const Text('→'),
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );

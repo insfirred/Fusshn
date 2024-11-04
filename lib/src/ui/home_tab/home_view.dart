@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,8 +6,8 @@ import '../../models/event_data.dart';
 import '../../routing/app_router.dart';
 import '../common_widgets/animated_gradient_background.dart';
 import '../common_widgets/sliver_title.dart';
+import 'components/events_carousel_slider_section.dart';
 import 'components/greetings_appbar.dart';
-import 'components/home_banner.dart';
 import 'components/horizontal_event_slider.dart';
 import 'components/location_card.dart';
 import 'components/payment_success_alert.dart';
@@ -108,25 +107,10 @@ class HomeView extends ConsumerWidget {
               //     child: Text('push events'),
               //   ),
               // ),
-              SliverToBoxAdapter(
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                    // aspectRatio: 16 / 9,
-                    height: 360,
-                    viewportFraction: 1,
-                    autoPlay: true,
-                  ),
-                  items: [0, 1, 2, 3, 4, 5, 6].map(
-                    (i) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return const HomeBanner();
-                        },
-                      );
-                    },
-                  ).toList(),
-                ),
+              const SliverToBoxAdapter(
+                child: EventsCarouselSliderSection(),
               ),
+
               const SliverToBoxAdapter(child: SizedBox(height: 26)),
               SliverTitle(
                 label: 'Happening near you!',

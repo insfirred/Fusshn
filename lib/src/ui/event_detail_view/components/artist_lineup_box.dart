@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -43,8 +44,8 @@ class ArtistLineupBox extends StatelessWidget {
                     child: Row(
                       children: lineup
                           .map(
-                            (artist) => Image.network(
-                              artist.imageUrl,
+                            (artist) => CachedNetworkImage(
+                              imageUrl: artist.imageUrl,
                               width: 32,
                               height: 32,
                             ),

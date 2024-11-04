@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ArtistTopSearchResult extends StatelessWidget {
@@ -20,12 +21,11 @@ class ArtistTopSearchResult extends StatelessWidget {
         ),
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(6),
-          child: Image.network(
-            'https://firebasestorage.googleapis.com/v0/b/fusshn-aef8e.appspot.com/o/test_data%2Fseedhe_maut.jpg?alt=media&token=856ad4d9-1e31-4bf2-acc8-fc4d4aaf4326',
+          child: CachedNetworkImage(
+            imageUrl:
+                'https://firebasestorage.googleapis.com/v0/b/fusshn-aef8e.appspot.com/o/test_data%2Fseedhe_maut.jpg?alt=media&token=856ad4d9-1e31-4bf2-acc8-fc4d4aaf4326',
             width: 40,
             height: 40,
-            cacheWidth: 40,
-            cacheHeight: 40,
           ),
         ),
       ),
