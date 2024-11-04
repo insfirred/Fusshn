@@ -88,7 +88,6 @@ class HomeView extends ConsumerWidget {
             slivers: [
               const GreetingAppBar(),
               const SearchAppBar(),
-              // const SliverTitle(label: 'Trending'),
               const SliverToBoxAdapter(child: SizedBox(height: 12)),
               // const SliverToBoxAdapter(
               //   child: SizedBox(

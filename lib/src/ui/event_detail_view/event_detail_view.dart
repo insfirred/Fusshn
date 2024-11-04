@@ -38,23 +38,23 @@ class EventDetailView extends StatelessWidget {
                   const SliverToBoxAdapter(child: SizedBox(height: 12)),
                   SliverAppBar(
                     toolbarHeight: 30,
-                    leadingWidth: 35,
+                    leadingWidth: 45,
                     backgroundColor: Colors.transparent,
                     leading: GestureDetector(
                       onTap: () => context.maybePop(),
                       behavior: HitTestBehavior.opaque,
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            left: homeTabHorizontalPadding),
-                        child: Image.asset(
-                          'assets/back.png',
+                          left: homeTabHorizontalPadding,
                         ),
+                        child: Image.asset('assets/back.png'),
                       ),
                     ),
                     actions: [
                       Padding(
                         padding: const EdgeInsets.only(
-                            right: homeTabHorizontalPadding),
+                          right: homeTabHorizontalPadding,
+                        ),
                         child: Image.asset(
                           'assets/share.png',
                           width: 20,
@@ -62,10 +62,11 @@ class EventDetailView extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SliverToBoxAdapter(child: SizedBox(height: 10)),
 
                   // EVENT_IMAGES
                   EventImagesSlider(urls: eventData.imagesUrls),
-                  const SliverToBoxAdapter(child: SizedBox(height: 8)),
+                  const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
                   // EVENT_TITLE
                   SliverAppBar(
@@ -74,8 +75,7 @@ class EventDetailView extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     floating: true,
                     pinned: true,
-                    // collapsedHeight: 80,
-                    toolbarHeight: 65,
+                    toolbarHeight: 80,
                     title: BackdropFilter(
                       filter: ImageFilter.blur(
                         sigmaX: 10,
@@ -86,8 +86,10 @@ class EventDetailView extends StatelessWidget {
                           Text(
                             eventData.name,
                             style: Theme.of(context).textTheme.displaySmall,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 8),
                           Text(
                             '${DateFormat('d MMMM y, ').format(eventData.startTime)} • ${eventData.eventLocation}',
                             style: Theme.of(context)

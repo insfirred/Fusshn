@@ -98,7 +98,10 @@ class _Data extends StatelessWidget {
           Text(
             eventData.name,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleMedium,
+            maxLines: 2,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontSize: 18,
+                ),
           ),
           const SizedBox(height: 8),
           Column(

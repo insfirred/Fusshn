@@ -51,10 +51,9 @@ class EventTabCard extends StatelessWidget {
                 children: [
                   Text(
                     event.name,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(fontSize: 14),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                   ),
                   const SizedBox(height: 12),
                   Row(
