@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fusshn/src/repositories/app_repository.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../common/indian_cities.dart';
+import '../../../repositories/app_repository.dart';
 import '../select_location_view_model.dart';
 
 class PopularCitiesSection extends StatelessWidget {
@@ -83,11 +83,11 @@ class _PopularCityItem extends ConsumerWidget {
             'assets/indian_cities/mumbai_logo.svg',
             color: isSelected ? const Color(0xFF17BD3B) : Colors.white,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 14),
           Text(
             city,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 10,
               color: isSelected ? const Color(0xFF17BD3B) : Colors.white,
             ),
           ),

@@ -71,21 +71,6 @@ class AppRepository extends StateNotifier<AppState> {
           }
         },
       );
-
-      // listens to location service and sets in app repo
-      // _locationServiceSubscription = Geolocator.getServiceStatusStream().listen(
-      //   (ServiceStatus locStatus) {
-      //     if (locStatus == ServiceStatus.enabled) {
-      //       state = state.copyWith(isLocationServiceEnabled: true);
-      //     } else {
-      //       state = state.copyWith(
-      //         isLocationServiceEnabled: false,
-      //         locationServicePopupTrigger:
-      //             state.locationServicePopupTrigger + 1,
-      //       );
-      //     }
-      //   },
-      // );
     }();
   }
 

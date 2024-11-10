@@ -45,7 +45,7 @@ class _LocationSearchBoxState extends ConsumerState<LocationSearchBox> {
         controller: controller,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: 'Select city of your choice',
+          hintText: 'Search your city',
           hintStyle: TextStyle(
             fontSize: 12,
             color: Colors.black.withOpacity(0.6),
@@ -60,9 +60,9 @@ class _LocationSearchBoxState extends ConsumerState<LocationSearchBox> {
                 context.maybePop();
               }
             },
-            icon: const FaIcon(
+            icon: FaIcon(
               FontAwesomeIcons.locationCrosshairs,
-              color: Colors.black,
+              color: Colors.grey.shade700,
             ),
           ),
         ),

@@ -69,8 +69,8 @@ class _LocationFetchingLoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BackdropFilter(
       filter: ImageFilter.blur(
-        sigmaX: 3,
-        sigmaY: 3,
+        sigmaX: 5,
+        sigmaY: 5,
       ),
       child: Center(
         child: DefaultTextStyle(
@@ -79,7 +79,10 @@ class _LocationFetchingLoadingScreen extends StatelessWidget {
           ),
           child: AnimatedTextKit(
             animatedTexts: [
-              WavyAnimatedText('Fetching Location...'),
+              WavyAnimatedText(
+                'Fetching Location...',
+                textStyle: TextStyle(color: Theme.of(context).primaryColor),
+              ),
             ],
             repeatForever: true,
             isRepeatingAnimation: true,
