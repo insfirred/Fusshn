@@ -16,6 +16,7 @@ import '../ui/privacy_policy/privacy_policy_view.dart';
 import '../ui/profile_tab/profile_view.dart';
 import '../ui/search_events/search_event_view.dart';
 import '../ui/see_all_event/see_all_event_view.dart';
+import '../ui/select_first_location/select_first_location_view.dart';
 import '../ui/select_location/select_location_view.dart';
 import '../ui/splash/splash_view.dart';
 import '../ui/terms_and_conditions/terms_and_conditions_view.dart';
@@ -107,6 +108,10 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           path: '/search-event',
           page: SearchEventRoute.page,
+        ),
+        AutoRoute(
+          path: '/select-first-location',
+          page: SelectFirstLocationRoute.page,
         ),
       ];
 }

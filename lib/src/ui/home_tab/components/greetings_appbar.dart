@@ -11,11 +11,9 @@ class GreetingAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentCity = ref
-        .watch(
-          appRepositoryProvider.select((_) => _.currentPlacemarks),
-        )?[0]
-        .locality;
+    final userLocation = ref.watch(
+      appRepositoryProvider.select((_) => _.userLocationData),
+    );
 
     final userName = ref.watch(
       appRepositoryProvider.select((_) => _.userData?.name),
@@ -43,25 +41,33 @@ class GreetingAppBar extends ConsumerWidget {
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
-          if (currentCity != null)
-            Row(
-              children: [
-                Text(
-                  currentCity,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(width: 6),
-                Image.asset(
-                  'assets/dropdown.png',
-                  width: 12,
-                ),
-              ],
+          if (userLocation != null)
+            GestureDetector(
+              onTap: () {
+                context.navigateTo(
+                  SelectLocationRoute(),
+                );
+              },
+              behavior: HitTestBehavior.opaque,
+              child: Row(
+                children: [
+                  Text(
+                    userLocation.city,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(width: 6),
+                  Image.asset(
+                    'assets/dropdown.png',
+                    width: 12,
+                  ),
+                ],
+              ),
             )
           else
             GestureDetector(
               onTap: () {
                 context.navigateTo(
-                  const SelectLocationRoute(),
+                  SelectLocationRoute(),
                 );
               },
               behavior: HitTestBehavior.opaque,

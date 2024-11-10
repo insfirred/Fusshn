@@ -9,7 +9,12 @@ import 'components/popular_cities_section.dart';
 
 @RoutePage()
 class SelectLocationView extends StatelessWidget {
-  const SelectLocationView({super.key});
+  const SelectLocationView({
+    super.key,
+    this.isFirstLocationView = false,
+  });
+
+  final bool isFirstLocationView;
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +28,16 @@ class SelectLocationView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const FusshnAppBar(label: 'Select your city'),
+              FusshnAppBar(
+                label: 'Select your city',
+                showBackButton: !isFirstLocationView,
+              ),
               const SizedBox(height: 20),
-              const PopularCitiesSection(),
+              PopularCitiesSection(isFirstLocationView),
               const LocationSearchBox(),
               const SizedBox(height: 20),
               Divider(color: Colors.grey.shade700),
-              const AllCitiesSection(),
+              AllCitiesSection(isFirstLocationView),
             ],
           ),
         ),

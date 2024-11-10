@@ -107,6 +107,32 @@ class HomeView extends ConsumerWidget {
               //     child: Text('push events'),
               //   ),
               // ),
+
+              // const SliverToBoxAdapter(child: SizedBox(height: 12)),
+              // SliverToBoxAdapter(
+              //   child: ElevatedButton(
+              //     onPressed: () async {
+              //       var a = Hive.box<Map>(HiveKeys.myLocationDataBoxKey)
+              //           .get(HiveKeys.lastLocationFieldKey);
+
+              //       log(a.toString());
+              //     },
+              //     child: Text('get city'),
+              //   ),
+              // ),
+              // const SliverToBoxAdapter(child: SizedBox(height: 12)),
+              // SliverToBoxAdapter(
+              //   child: ElevatedButton(
+              //     onPressed: () async {
+              //       await Hive.box<Map>(HiveKeys.myLocationDataBoxKey)
+              //           .delete(HiveKeys.lastLocationFieldKey);
+              //       log('deleted...');
+              //     },
+              //     child: Text('remove city'),
+              //   ),
+              // ),
+              // const SliverToBoxAdapter(child: SizedBox(height: 12)),
+
               const SliverToBoxAdapter(
                 child: EventsCarouselSliderSection(),
               ),

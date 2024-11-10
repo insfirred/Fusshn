@@ -17,7 +17,7 @@ List<String> allIndianCities = const [
   "Allahabad",
   "Amritsar",
   "Aurangabad",
-  "Bangalore",
+  "Bengaluru",
   "Bareilly",
   "Bhopal",
   "Bhubaneswar",

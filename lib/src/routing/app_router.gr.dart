@@ -105,10 +105,21 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    SelectLocationRoute.name: (routeData) {
+    SelectFirstLocationRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SelectLocationView(),
+        child: const SelectFirstLocationView(),
+      );
+    },
+    SelectLocationRoute.name: (routeData) {
+      final args = routeData.argsAs<SelectLocationRouteArgs>(
+          orElse: () => const SelectLocationRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SelectLocationView(
+          key: args.key,
+          isFirstLocationView: args.isFirstLocationView,
+        ),
       );
     },
     SplashRoute.name: (routeData) {
@@ -398,17 +409,55 @@ class SeeAllEventRouteArgs {
 }
 
 /// generated route for
-/// [SelectLocationView]
-class SelectLocationRoute extends PageRouteInfo<void> {
-  const SelectLocationRoute({List<PageRouteInfo>? children})
+/// [SelectFirstLocationView]
+class SelectFirstLocationRoute extends PageRouteInfo<void> {
+  const SelectFirstLocationRoute({List<PageRouteInfo>? children})
       : super(
+          SelectFirstLocationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SelectFirstLocationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SelectLocationView]
+class SelectLocationRoute extends PageRouteInfo<SelectLocationRouteArgs> {
+  SelectLocationRoute({
+    Key? key,
+    bool isFirstLocationView = false,
+    List<PageRouteInfo>? children,
+  }) : super(
           SelectLocationRoute.name,
+          args: SelectLocationRouteArgs(
+            key: key,
+            isFirstLocationView: isFirstLocationView,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'SelectLocationRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<SelectLocationRouteArgs> page =
+      PageInfo<SelectLocationRouteArgs>(name);
+}
+
+class SelectLocationRouteArgs {
+  const SelectLocationRouteArgs({
+    this.key,
+    this.isFirstLocationView = false,
+  });
+
+  final Key? key;
+
+  final bool isFirstLocationView;
+
+  @override
+  String toString() {
+    return 'SelectLocationRouteArgs{key: $key, isFirstLocationView: $isFirstLocationView}';
+  }
 }
 
 /// generated route for

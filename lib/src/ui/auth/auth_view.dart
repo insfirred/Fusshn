@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,9 +50,12 @@ class _AuthViewState extends ConsumerState<AuthView> {
       (previous, next) {
         final router = context.router;
 
-        if (next.status == AppStatus.authenticated) {
+        if (next.status == AppStatus.authenticatedWithNoLocation) {
+          router.replace(const SelectFirstLocationRoute());
+          log('NAVIGATION: Splash replaced with SelectFirstLocation Page');
+        } else if (next.status == AppStatus.authenticated) {
           router.replace(const MainRoute());
-          debugPrint('NAVIGATION: Splash replaced with Main Page');
+          log('NAVIGATION: Splash replaced with Main Page');
         }
       },
     );

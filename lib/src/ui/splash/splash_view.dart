@@ -46,6 +46,9 @@ class _SplashViewState extends ConsumerState<SplashView> {
         router.replace(const AuthRoute());
         debugPrint('NAVIGATION: Splash replaced with Auth Page');
       }
+    } else if (authStatus == AppStatus.authenticatedWithNoLocation) {
+      router.replace(const SelectFirstLocationRoute());
+      debugPrint('NAVIGATION: Splash replaced with SelectFirstLocation Page');
     } else if (authStatus == AppStatus.authenticated) {
       router.replace(const MainRoute());
       debugPrint('NAVIGATION: Splash replaced with Main Page');

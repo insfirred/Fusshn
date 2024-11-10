@@ -20,7 +20,7 @@ Map<String, dynamic> _$BookingToJson(Booking instance) => <String, dynamic>{
       'id': instance.id,
       'paymentId': instance.paymentId,
       'eventId': instance.eventId,
-      'ticketType': instance.ticketType.toJson(),
+      'ticketType': instance.ticketType,
       'ticketCount': instance.ticketCount,
       'createdAt': instance.createdAt.toIso8601String(),
     };
