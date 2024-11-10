@@ -7,8 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fusshn/src/models/location_data.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../common/hive_keys.dart';
@@ -75,19 +73,19 @@ class AppRepository extends StateNotifier<AppState> {
       );
 
       // listens to location service and sets in app repo
-      _locationServiceSubscription = Geolocator.getServiceStatusStream().listen(
-        (ServiceStatus locStatus) {
-          if (locStatus == ServiceStatus.enabled) {
-            state = state.copyWith(isLocationServiceEnabled: true);
-          } else {
-            state = state.copyWith(
-              isLocationServiceEnabled: false,
-              locationServicePopupTrigger:
-                  state.locationServicePopupTrigger + 1,
-            );
-          }
-        },
-      );
+      // _locationServiceSubscription = Geolocator.getServiceStatusStream().listen(
+      //   (ServiceStatus locStatus) {
+      //     if (locStatus == ServiceStatus.enabled) {
+      //       state = state.copyWith(isLocationServiceEnabled: true);
+      //     } else {
+      //       state = state.copyWith(
+      //         isLocationServiceEnabled: false,
+      //         locationServicePopupTrigger:
+      //             state.locationServicePopupTrigger + 1,
+      //       );
+      //     }
+      //   },
+      // );
     }();
   }
 
@@ -135,81 +133,6 @@ class AppRepository extends StateNotifier<AppState> {
     }
   }
 
-  Future<void> getCurrentPosition() async {
-    bool serviceEnabled;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    // Checking if the device location is ON or OFF.
-    if (!serviceEnabled) {
-      state = state.copyWith(isLocationServiceEnabled: false);
-      return;
-    }
-
-    state = state.copyWith(isLocationServiceEnabled: serviceEnabled);
-
-    final hasLocationPermission = await _handleLocationPermission();
-
-    if (!hasLocationPermission) return;
-
-    state = state.copyWith(haveLocationPermission: hasLocationPermission);
-
-    await Geolocator.getCurrentPosition().then(
-      (Position position) async {
-        _setCurrentPosition(position);
-        await placemarkFromCoordinates(
-          position.latitude,
-          position.longitude,
-        ).then(
-          (placemarks) {
-            _setCurrentPlacemarks(placemarks);
-          },
-        ).catchError((e) {
-          debugPrint(e);
-        });
-      },
-    ).catchError(
-      (e) {
-        log(e.toString());
-      },
-    );
-  }
-
-  Future<bool> _handleLocationPermission() async {
-    LocationPermission permission;
-
-    // Checking whats the status of location permission...
-    // return true if location access is there for this time else false.
-    permission = await Geolocator.checkPermission();
-    switch (permission) {
-      case LocationPermission.always:
-        return true;
-
-      case LocationPermission.whileInUse:
-        return true;
-
-      case LocationPermission.denied:
-        return false;
-
-      case LocationPermission.deniedForever:
-        return false;
-
-      case LocationPermission.unableToDetermine:
-        return false;
-    }
-  }
-
-  _setCurrentPlacemarks(List<Placemark>? val) => state = state.copyWith(
-        currentPlacemarks: val,
-      );
-
-  _setCurrentPosition(Position? val) => state = state.copyWith(
-        currentPosition: val,
-      );
-
-  void _showLocationServicePopup() => state = state.copyWith(
-        locationServicePopupTrigger: state.locationServicePopupTrigger + 1,
-      );
-
   // void _showLocationPermissionPopup() => state = state.copyWith(
   //       locationPermissionPopuptrigger:
   //           state.locationPermissionPopuptrigger + 1,
@@ -234,12 +157,6 @@ class AppState with _$AppState {
   const factory AppState({
     @Default(null) User? authUser,
     UserData? userData,
-    @Default(false) bool isLocationServiceEnabled,
-    @Default(false) bool haveLocationPermission,
-    @Default(0) int locationServicePopupTrigger,
-    @Default(0) int locationPermissionPopuptrigger,
-    List<Placemark>? currentPlacemarks,
-    Position? currentPosition,
     @Default(AppStatus.initial) AppStatus status,
     LocationData? userLocationData,
   }) = _AppState;

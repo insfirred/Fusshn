@@ -18,12 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AppState {
   User? get authUser => throw _privateConstructorUsedError;
   UserData? get userData => throw _privateConstructorUsedError;
-  bool get isLocationServiceEnabled => throw _privateConstructorUsedError;
-  bool get haveLocationPermission => throw _privateConstructorUsedError;
-  int get locationServicePopupTrigger => throw _privateConstructorUsedError;
-  int get locationPermissionPopuptrigger => throw _privateConstructorUsedError;
-  List<Placemark>? get currentPlacemarks => throw _privateConstructorUsedError;
-  Position? get currentPosition => throw _privateConstructorUsedError;
   AppStatus get status => throw _privateConstructorUsedError;
   LocationData? get userLocationData => throw _privateConstructorUsedError;
 
@@ -40,12 +34,6 @@ abstract class $AppStateCopyWith<$Res> {
   $Res call(
       {User? authUser,
       UserData? userData,
-      bool isLocationServiceEnabled,
-      bool haveLocationPermission,
-      int locationServicePopupTrigger,
-      int locationPermissionPopuptrigger,
-      List<Placemark>? currentPlacemarks,
-      Position? currentPosition,
       AppStatus status,
       LocationData? userLocationData});
 }
@@ -65,12 +53,6 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
   $Res call({
     Object? authUser = freezed,
     Object? userData = freezed,
-    Object? isLocationServiceEnabled = null,
-    Object? haveLocationPermission = null,
-    Object? locationServicePopupTrigger = null,
-    Object? locationPermissionPopuptrigger = null,
-    Object? currentPlacemarks = freezed,
-    Object? currentPosition = freezed,
     Object? status = null,
     Object? userLocationData = freezed,
   }) {
@@ -83,30 +65,6 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.userData
           : userData // ignore: cast_nullable_to_non_nullable
               as UserData?,
-      isLocationServiceEnabled: null == isLocationServiceEnabled
-          ? _value.isLocationServiceEnabled
-          : isLocationServiceEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-      haveLocationPermission: null == haveLocationPermission
-          ? _value.haveLocationPermission
-          : haveLocationPermission // ignore: cast_nullable_to_non_nullable
-              as bool,
-      locationServicePopupTrigger: null == locationServicePopupTrigger
-          ? _value.locationServicePopupTrigger
-          : locationServicePopupTrigger // ignore: cast_nullable_to_non_nullable
-              as int,
-      locationPermissionPopuptrigger: null == locationPermissionPopuptrigger
-          ? _value.locationPermissionPopuptrigger
-          : locationPermissionPopuptrigger // ignore: cast_nullable_to_non_nullable
-              as int,
-      currentPlacemarks: freezed == currentPlacemarks
-          ? _value.currentPlacemarks
-          : currentPlacemarks // ignore: cast_nullable_to_non_nullable
-              as List<Placemark>?,
-      currentPosition: freezed == currentPosition
-          ? _value.currentPosition
-          : currentPosition // ignore: cast_nullable_to_non_nullable
-              as Position?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -130,12 +88,6 @@ abstract class _$$AppStateImplCopyWith<$Res>
   $Res call(
       {User? authUser,
       UserData? userData,
-      bool isLocationServiceEnabled,
-      bool haveLocationPermission,
-      int locationServicePopupTrigger,
-      int locationPermissionPopuptrigger,
-      List<Placemark>? currentPlacemarks,
-      Position? currentPosition,
       AppStatus status,
       LocationData? userLocationData});
 }
@@ -153,12 +105,6 @@ class __$$AppStateImplCopyWithImpl<$Res>
   $Res call({
     Object? authUser = freezed,
     Object? userData = freezed,
-    Object? isLocationServiceEnabled = null,
-    Object? haveLocationPermission = null,
-    Object? locationServicePopupTrigger = null,
-    Object? locationPermissionPopuptrigger = null,
-    Object? currentPlacemarks = freezed,
-    Object? currentPosition = freezed,
     Object? status = null,
     Object? userLocationData = freezed,
   }) {
@@ -171,30 +117,6 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.userData
           : userData // ignore: cast_nullable_to_non_nullable
               as UserData?,
-      isLocationServiceEnabled: null == isLocationServiceEnabled
-          ? _value.isLocationServiceEnabled
-          : isLocationServiceEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-      haveLocationPermission: null == haveLocationPermission
-          ? _value.haveLocationPermission
-          : haveLocationPermission // ignore: cast_nullable_to_non_nullable
-              as bool,
-      locationServicePopupTrigger: null == locationServicePopupTrigger
-          ? _value.locationServicePopupTrigger
-          : locationServicePopupTrigger // ignore: cast_nullable_to_non_nullable
-              as int,
-      locationPermissionPopuptrigger: null == locationPermissionPopuptrigger
-          ? _value.locationPermissionPopuptrigger
-          : locationPermissionPopuptrigger // ignore: cast_nullable_to_non_nullable
-              as int,
-      currentPlacemarks: freezed == currentPlacemarks
-          ? _value._currentPlacemarks
-          : currentPlacemarks // ignore: cast_nullable_to_non_nullable
-              as List<Placemark>?,
-      currentPosition: freezed == currentPosition
-          ? _value.currentPosition
-          : currentPosition // ignore: cast_nullable_to_non_nullable
-              as Position?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -213,15 +135,8 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
   const _$AppStateImpl(
       {this.authUser = null,
       this.userData,
-      this.isLocationServiceEnabled = false,
-      this.haveLocationPermission = false,
-      this.locationServicePopupTrigger = 0,
-      this.locationPermissionPopuptrigger = 0,
-      final List<Placemark>? currentPlacemarks,
-      this.currentPosition,
       this.status = AppStatus.initial,
-      this.userLocationData})
-      : _currentPlacemarks = currentPlacemarks;
+      this.userLocationData});
 
   @override
   @JsonKey()
@@ -230,38 +145,13 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
   final UserData? userData;
   @override
   @JsonKey()
-  final bool isLocationServiceEnabled;
-  @override
-  @JsonKey()
-  final bool haveLocationPermission;
-  @override
-  @JsonKey()
-  final int locationServicePopupTrigger;
-  @override
-  @JsonKey()
-  final int locationPermissionPopuptrigger;
-  final List<Placemark>? _currentPlacemarks;
-  @override
-  List<Placemark>? get currentPlacemarks {
-    final value = _currentPlacemarks;
-    if (value == null) return null;
-    if (_currentPlacemarks is EqualUnmodifiableListView)
-      return _currentPlacemarks;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  final Position? currentPosition;
-  @override
-  @JsonKey()
   final AppStatus status;
   @override
   final LocationData? userLocationData;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppState(authUser: $authUser, userData: $userData, isLocationServiceEnabled: $isLocationServiceEnabled, haveLocationPermission: $haveLocationPermission, locationServicePopupTrigger: $locationServicePopupTrigger, locationPermissionPopuptrigger: $locationPermissionPopuptrigger, currentPlacemarks: $currentPlacemarks, currentPosition: $currentPosition, status: $status, userLocationData: $userLocationData)';
+    return 'AppState(authUser: $authUser, userData: $userData, status: $status, userLocationData: $userLocationData)';
   }
 
   @override
@@ -271,16 +161,6 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
       ..add(DiagnosticsProperty('type', 'AppState'))
       ..add(DiagnosticsProperty('authUser', authUser))
       ..add(DiagnosticsProperty('userData', userData))
-      ..add(DiagnosticsProperty(
-          'isLocationServiceEnabled', isLocationServiceEnabled))
-      ..add(
-          DiagnosticsProperty('haveLocationPermission', haveLocationPermission))
-      ..add(DiagnosticsProperty(
-          'locationServicePopupTrigger', locationServicePopupTrigger))
-      ..add(DiagnosticsProperty(
-          'locationPermissionPopuptrigger', locationPermissionPopuptrigger))
-      ..add(DiagnosticsProperty('currentPlacemarks', currentPlacemarks))
-      ..add(DiagnosticsProperty('currentPosition', currentPosition))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('userLocationData', userLocationData));
   }
@@ -294,41 +174,14 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
                 other.authUser == authUser) &&
             (identical(other.userData, userData) ||
                 other.userData == userData) &&
-            (identical(
-                    other.isLocationServiceEnabled, isLocationServiceEnabled) ||
-                other.isLocationServiceEnabled == isLocationServiceEnabled) &&
-            (identical(other.haveLocationPermission, haveLocationPermission) ||
-                other.haveLocationPermission == haveLocationPermission) &&
-            (identical(other.locationServicePopupTrigger,
-                    locationServicePopupTrigger) ||
-                other.locationServicePopupTrigger ==
-                    locationServicePopupTrigger) &&
-            (identical(other.locationPermissionPopuptrigger,
-                    locationPermissionPopuptrigger) ||
-                other.locationPermissionPopuptrigger ==
-                    locationPermissionPopuptrigger) &&
-            const DeepCollectionEquality()
-                .equals(other._currentPlacemarks, _currentPlacemarks) &&
-            (identical(other.currentPosition, currentPosition) ||
-                other.currentPosition == currentPosition) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.userLocationData, userLocationData) ||
                 other.userLocationData == userLocationData));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      authUser,
-      userData,
-      isLocationServiceEnabled,
-      haveLocationPermission,
-      locationServicePopupTrigger,
-      locationPermissionPopuptrigger,
-      const DeepCollectionEquality().hash(_currentPlacemarks),
-      currentPosition,
-      status,
-      userLocationData);
+  int get hashCode =>
+      Object.hash(runtimeType, authUser, userData, status, userLocationData);
 
   @JsonKey(ignore: true)
   @override
@@ -341,12 +194,6 @@ abstract class _AppState implements AppState {
   const factory _AppState(
       {final User? authUser,
       final UserData? userData,
-      final bool isLocationServiceEnabled,
-      final bool haveLocationPermission,
-      final int locationServicePopupTrigger,
-      final int locationPermissionPopuptrigger,
-      final List<Placemark>? currentPlacemarks,
-      final Position? currentPosition,
       final AppStatus status,
       final LocationData? userLocationData}) = _$AppStateImpl;
 
@@ -354,18 +201,6 @@ abstract class _AppState implements AppState {
   User? get authUser;
   @override
   UserData? get userData;
-  @override
-  bool get isLocationServiceEnabled;
-  @override
-  bool get haveLocationPermission;
-  @override
-  int get locationServicePopupTrigger;
-  @override
-  int get locationPermissionPopuptrigger;
-  @override
-  List<Placemark>? get currentPlacemarks;
-  @override
-  Position? get currentPosition;
   @override
   AppStatus get status;
   @override

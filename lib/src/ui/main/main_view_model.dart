@@ -1,8 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../repositories/app_repository.dart';
-
 part 'main_view_model.freezed.dart';
 
 final mainViewModelProvider =
@@ -24,28 +22,28 @@ class MainViewModel extends StateNotifier<MainViewState> {
       await Future.delayed(const Duration(seconds: 1));
 
       // listens to location service and sets in app repo
-      if ((ref.read(appRepositoryProvider).isLocationServiceEnabled)) {
-        // if location service is enabled,
-        // then proceed further to ask location permission
-        if ((ref.read(appRepositoryProvider).haveLocationPermission)) {
-          // if have location permission,
-          // then no worries.
-          // DO NOTHING...
-        } else {
-          // if no location permission.
-          // then ask to give permissions
-          ref.read(appRepositoryProvider.notifier).getCurrentPosition();
-          state = state.copyWith(
-            locationServicePopupTrigger: state.locationServicePopupTrigger + 1,
-          );
-        }
-      } else {
-        // if location service is enabled,
-        // then ask to enable it.
-        state = state.copyWith(
-          locationServicePopupTrigger: state.locationServicePopupTrigger + 1,
-        );
-      }
+      // if ((ref.read(appRepositoryProvider).isLocationServiceEnabled)) {
+      //   // if location service is enabled,
+      //   // then proceed further to ask location permission
+      //   if ((ref.read(appRepositoryProvider).haveLocationPermission)) {
+      //     // if have location permission,
+      //     // then no worries.
+      //     // DO NOTHING...
+      //   } else {
+      //     // if no location permission.
+      //     // then ask to give permissions
+      //     ref.read(appRepositoryProvider.notifier).getCurrentPosition();
+      //     state = state.copyWith(
+      //       locationServicePopupTrigger: state.locationServicePopupTrigger + 1,
+      //     );
+      //   }
+      // } else {
+      //   // if location service is enabled,
+      //   // then ask to enable it.
+      //   state = state.copyWith(
+      //     locationServicePopupTrigger: state.locationServicePopupTrigger + 1,
+      //   );
+      // }
     }();
   }
 }

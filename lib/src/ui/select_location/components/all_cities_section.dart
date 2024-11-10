@@ -65,7 +65,12 @@ class _CityItem extends ConsumerWidget {
       onTap: () {
         ref
             .read(selectLocationViewModelProvider.notifier)
-            .setUserLocation(city);
+            .setUserLocationInDbAndState(
+              city: city,
+              pincode: '250110',
+              lat: 0,
+              lng: 0,
+            );
 
         if (!isFirstLocationView) {
           context.maybePop();

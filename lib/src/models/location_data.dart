@@ -6,8 +6,8 @@ part 'location_data.g.dart';
 class LocationData {
   final String city;
   final String pincode;
-  final String lattitide;
-  final String longitude;
+  final double lattitide;
+  final double longitude;
 
   const LocationData({
     required this.city,

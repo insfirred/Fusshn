@@ -9,8 +9,8 @@ part of 'location_data.dart';
 LocationData _$LocationDataFromJson(Map<String, dynamic> json) => LocationData(
       city: json['city'] as String,
       pincode: json['pincode'] as String,
-      lattitide: json['lattitide'] as String,
-      longitude: json['longitude'] as String,
+      lattitide: (json['lattitide'] as num).toDouble(),
+      longitude: (json['longitude'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$LocationDataToJson(LocationData instance) =>

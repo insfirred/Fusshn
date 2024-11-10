@@ -18,6 +18,11 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SelectLocationViewState {
   String get searchQuery => throw _privateConstructorUsedError;
   List<String> get allIndianCities => throw _privateConstructorUsedError;
+  bool get isLocationServiceEnabled => throw _privateConstructorUsedError;
+  bool get haveLocationPermission => throw _privateConstructorUsedError;
+  List<Placemark>? get currentPlacemarks => throw _privateConstructorUsedError;
+  SelectLocationViewStatus get status => throw _privateConstructorUsedError;
+  Position? get currentPosition => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SelectLocationViewStateCopyWith<SelectLocationViewState> get copyWith =>
@@ -30,7 +35,14 @@ abstract class $SelectLocationViewStateCopyWith<$Res> {
           $Res Function(SelectLocationViewState) then) =
       _$SelectLocationViewStateCopyWithImpl<$Res, SelectLocationViewState>;
   @useResult
-  $Res call({String searchQuery, List<String> allIndianCities});
+  $Res call(
+      {String searchQuery,
+      List<String> allIndianCities,
+      bool isLocationServiceEnabled,
+      bool haveLocationPermission,
+      List<Placemark>? currentPlacemarks,
+      SelectLocationViewStatus status,
+      Position? currentPosition});
 }
 
 /// @nodoc
@@ -49,6 +61,11 @@ class _$SelectLocationViewStateCopyWithImpl<$Res,
   $Res call({
     Object? searchQuery = null,
     Object? allIndianCities = null,
+    Object? isLocationServiceEnabled = null,
+    Object? haveLocationPermission = null,
+    Object? currentPlacemarks = freezed,
+    Object? status = null,
+    Object? currentPosition = freezed,
   }) {
     return _then(_value.copyWith(
       searchQuery: null == searchQuery
@@ -59,6 +76,26 @@ class _$SelectLocationViewStateCopyWithImpl<$Res,
           ? _value.allIndianCities
           : allIndianCities // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      isLocationServiceEnabled: null == isLocationServiceEnabled
+          ? _value.isLocationServiceEnabled
+          : isLocationServiceEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      haveLocationPermission: null == haveLocationPermission
+          ? _value.haveLocationPermission
+          : haveLocationPermission // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currentPlacemarks: freezed == currentPlacemarks
+          ? _value.currentPlacemarks
+          : currentPlacemarks // ignore: cast_nullable_to_non_nullable
+              as List<Placemark>?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as SelectLocationViewStatus,
+      currentPosition: freezed == currentPosition
+          ? _value.currentPosition
+          : currentPosition // ignore: cast_nullable_to_non_nullable
+              as Position?,
     ) as $Val);
   }
 }
@@ -72,7 +109,14 @@ abstract class _$$SelectLocationViewStateImplCopyWith<$Res>
       __$$SelectLocationViewStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String searchQuery, List<String> allIndianCities});
+  $Res call(
+      {String searchQuery,
+      List<String> allIndianCities,
+      bool isLocationServiceEnabled,
+      bool haveLocationPermission,
+      List<Placemark>? currentPlacemarks,
+      SelectLocationViewStatus status,
+      Position? currentPosition});
 }
 
 /// @nodoc
@@ -90,6 +134,11 @@ class __$$SelectLocationViewStateImplCopyWithImpl<$Res>
   $Res call({
     Object? searchQuery = null,
     Object? allIndianCities = null,
+    Object? isLocationServiceEnabled = null,
+    Object? haveLocationPermission = null,
+    Object? currentPlacemarks = freezed,
+    Object? status = null,
+    Object? currentPosition = freezed,
   }) {
     return _then(_$SelectLocationViewStateImpl(
       searchQuery: null == searchQuery
@@ -100,6 +149,26 @@ class __$$SelectLocationViewStateImplCopyWithImpl<$Res>
           ? _value._allIndianCities
           : allIndianCities // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      isLocationServiceEnabled: null == isLocationServiceEnabled
+          ? _value.isLocationServiceEnabled
+          : isLocationServiceEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      haveLocationPermission: null == haveLocationPermission
+          ? _value.haveLocationPermission
+          : haveLocationPermission // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currentPlacemarks: freezed == currentPlacemarks
+          ? _value._currentPlacemarks
+          : currentPlacemarks // ignore: cast_nullable_to_non_nullable
+              as List<Placemark>?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as SelectLocationViewStatus,
+      currentPosition: freezed == currentPosition
+          ? _value.currentPosition
+          : currentPosition // ignore: cast_nullable_to_non_nullable
+              as Position?,
     ));
   }
 }
@@ -108,8 +177,15 @@ class __$$SelectLocationViewStateImplCopyWithImpl<$Res>
 
 class _$SelectLocationViewStateImpl implements _SelectLocationViewState {
   const _$SelectLocationViewStateImpl(
-      {this.searchQuery = "", final List<String> allIndianCities = const []})
-      : _allIndianCities = allIndianCities;
+      {this.searchQuery = "",
+      final List<String> allIndianCities = const [],
+      this.isLocationServiceEnabled = false,
+      this.haveLocationPermission = false,
+      final List<Placemark>? currentPlacemarks,
+      this.status = SelectLocationViewStatus.NO_FETCHING,
+      this.currentPosition})
+      : _allIndianCities = allIndianCities,
+        _currentPlacemarks = currentPlacemarks;
 
   @override
   @JsonKey()
@@ -124,8 +200,31 @@ class _$SelectLocationViewStateImpl implements _SelectLocationViewState {
   }
 
   @override
+  @JsonKey()
+  final bool isLocationServiceEnabled;
+  @override
+  @JsonKey()
+  final bool haveLocationPermission;
+  final List<Placemark>? _currentPlacemarks;
+  @override
+  List<Placemark>? get currentPlacemarks {
+    final value = _currentPlacemarks;
+    if (value == null) return null;
+    if (_currentPlacemarks is EqualUnmodifiableListView)
+      return _currentPlacemarks;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  @JsonKey()
+  final SelectLocationViewStatus status;
+  @override
+  final Position? currentPosition;
+
+  @override
   String toString() {
-    return 'SelectLocationViewState(searchQuery: $searchQuery, allIndianCities: $allIndianCities)';
+    return 'SelectLocationViewState(searchQuery: $searchQuery, allIndianCities: $allIndianCities, isLocationServiceEnabled: $isLocationServiceEnabled, haveLocationPermission: $haveLocationPermission, currentPlacemarks: $currentPlacemarks, status: $status, currentPosition: $currentPosition)';
   }
 
   @override
@@ -136,12 +235,29 @@ class _$SelectLocationViewStateImpl implements _SelectLocationViewState {
             (identical(other.searchQuery, searchQuery) ||
                 other.searchQuery == searchQuery) &&
             const DeepCollectionEquality()
-                .equals(other._allIndianCities, _allIndianCities));
+                .equals(other._allIndianCities, _allIndianCities) &&
+            (identical(
+                    other.isLocationServiceEnabled, isLocationServiceEnabled) ||
+                other.isLocationServiceEnabled == isLocationServiceEnabled) &&
+            (identical(other.haveLocationPermission, haveLocationPermission) ||
+                other.haveLocationPermission == haveLocationPermission) &&
+            const DeepCollectionEquality()
+                .equals(other._currentPlacemarks, _currentPlacemarks) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.currentPosition, currentPosition) ||
+                other.currentPosition == currentPosition));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, searchQuery,
-      const DeepCollectionEquality().hash(_allIndianCities));
+  int get hashCode => Object.hash(
+      runtimeType,
+      searchQuery,
+      const DeepCollectionEquality().hash(_allIndianCities),
+      isLocationServiceEnabled,
+      haveLocationPermission,
+      const DeepCollectionEquality().hash(_currentPlacemarks),
+      status,
+      currentPosition);
 
   @JsonKey(ignore: true)
   @override
@@ -154,12 +270,27 @@ class _$SelectLocationViewStateImpl implements _SelectLocationViewState {
 abstract class _SelectLocationViewState implements SelectLocationViewState {
   const factory _SelectLocationViewState(
       {final String searchQuery,
-      final List<String> allIndianCities}) = _$SelectLocationViewStateImpl;
+      final List<String> allIndianCities,
+      final bool isLocationServiceEnabled,
+      final bool haveLocationPermission,
+      final List<Placemark>? currentPlacemarks,
+      final SelectLocationViewStatus status,
+      final Position? currentPosition}) = _$SelectLocationViewStateImpl;
 
   @override
   String get searchQuery;
   @override
   List<String> get allIndianCities;
+  @override
+  bool get isLocationServiceEnabled;
+  @override
+  bool get haveLocationPermission;
+  @override
+  List<Placemark>? get currentPlacemarks;
+  @override
+  SelectLocationViewStatus get status;
+  @override
+  Position? get currentPosition;
   @override
   @JsonKey(ignore: true)
   _$$SelectLocationViewStateImplCopyWith<_$SelectLocationViewStateImpl>
