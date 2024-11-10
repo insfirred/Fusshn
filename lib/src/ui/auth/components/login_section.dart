@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fusshn/src/ui/common_widgets/fusshn_loading_btn.dart';
 
 import '../../common_widgets/fusshn_btn.dart';
+import '../../common_widgets/fusshn_loading_btn.dart';
 import '../auth_view_model.dart';
 import 'text_field_auth.dart';
 
@@ -57,6 +59,12 @@ class LoginSectionState extends ConsumerState<LoginSection> {
       authViewModelProvider.select((_) => _.status),
     );
 
+    final showResetPasswordLinkSentAlert = ref.watch(
+      authViewModelProvider.select((_) => _.showResetPasswordLinkSentAlert),
+    );
+
+    log('aaaaaaaaa $showResetPasswordLinkSentAlert');
+
     return Container(
       // TODO: Remove this margin in future
       margin: const EdgeInsets.only(top: 160),
@@ -71,6 +79,25 @@ class LoginSectionState extends ConsumerState<LoginSection> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if (showResetPasswordLinkSentAlert) ...[
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white24,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  'A reset link has been sent to your email. Click on it to reset your password',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(fontSize: 12),
+                ),
+              ),
+              const SizedBox(height: 8),
+            ],
+
             Text(
               'Sign in',
               style: Theme.of(context).textTheme.titleMedium,
@@ -117,13 +144,20 @@ class LoginSectionState extends ConsumerState<LoginSection> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  'Forgot Email or Password?',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: const Color(0xFF01FFFF),
-                      ),
+                GestureDetector(
+                  onTap: () {
+                    ref
+                        .read(authViewModelProvider.notifier)
+                        .setAuthViewScreen(AuthViewType.resetPassword);
+                  },
+                  child: Text(
+                    'Forgot Email or Password?',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xFF01FFFF),
+                        ),
+                  ),
                 ),
               ],
             ),

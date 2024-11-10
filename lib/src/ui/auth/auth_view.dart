@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fusshn/src/common/dimens.dart';
+import 'package:fusshn/src/ui/auth/components/reset_password_section.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../repositories/app_repository.dart';
@@ -85,7 +86,9 @@ class _AuthViewState extends ConsumerState<AuthView> {
                 horizontal: authViewHorizontalPadding),
             child: activeScreen == AuthViewType.register
                 ? const RegisterSection()
-                : const LoginSection(),
+                : activeScreen == AuthViewType.login
+                    ? const LoginSection()
+                    : const ResetPasswordSection(),
           ),
         ],
       ),

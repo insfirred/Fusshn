@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fusshn/src/common/dimens.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../common/dimens.dart';
 import '../../models/event_data.dart';
 import '../../routing/app_router.dart';
 import '../common_widgets/animated_gradient_background.dart';

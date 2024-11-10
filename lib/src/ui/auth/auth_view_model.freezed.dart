@@ -33,6 +33,7 @@ mixin _$AuthViewState {
   AuthViewStatus get status => throw _privateConstructorUsedError;
   AuthViewType get activeScreen => throw _privateConstructorUsedError;
   bool get isLogin => throw _privateConstructorUsedError;
+  bool get showResetPasswordLinkSentAlert => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -64,6 +65,7 @@ abstract class $AuthViewStateCopyWith<$Res> {
       AuthViewStatus status,
       AuthViewType activeScreen,
       bool isLogin,
+      bool showResetPasswordLinkSentAlert,
       String? errorMessage});
 }
 
@@ -97,6 +99,7 @@ class _$AuthViewStateCopyWithImpl<$Res, $Val extends AuthViewState>
     Object? status = null,
     Object? activeScreen = null,
     Object? isLogin = null,
+    Object? showResetPasswordLinkSentAlert = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -168,6 +171,10 @@ class _$AuthViewStateCopyWithImpl<$Res, $Val extends AuthViewState>
           ? _value.isLogin
           : isLogin // ignore: cast_nullable_to_non_nullable
               as bool,
+      showResetPasswordLinkSentAlert: null == showResetPasswordLinkSentAlert
+          ? _value.showResetPasswordLinkSentAlert
+          : showResetPasswordLinkSentAlert // ignore: cast_nullable_to_non_nullable
+              as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -202,6 +209,7 @@ abstract class _$$AuthViewStateImplCopyWith<$Res>
       AuthViewStatus status,
       AuthViewType activeScreen,
       bool isLogin,
+      bool showResetPasswordLinkSentAlert,
       String? errorMessage});
 }
 
@@ -233,6 +241,7 @@ class __$$AuthViewStateImplCopyWithImpl<$Res>
     Object? status = null,
     Object? activeScreen = null,
     Object? isLogin = null,
+    Object? showResetPasswordLinkSentAlert = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$AuthViewStateImpl(
@@ -304,6 +313,10 @@ class __$$AuthViewStateImplCopyWithImpl<$Res>
           ? _value.isLogin
           : isLogin // ignore: cast_nullable_to_non_nullable
               as bool,
+      showResetPasswordLinkSentAlert: null == showResetPasswordLinkSentAlert
+          ? _value.showResetPasswordLinkSentAlert
+          : showResetPasswordLinkSentAlert // ignore: cast_nullable_to_non_nullable
+              as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -335,6 +348,7 @@ class _$AuthViewStateImpl
       this.status = AuthViewStatus.initial,
       this.activeScreen = AuthViewType.login,
       this.isLogin = true,
+      this.showResetPasswordLinkSentAlert = false,
       this.errorMessage});
 
   @override
@@ -383,11 +397,14 @@ class _$AuthViewStateImpl
   @JsonKey()
   final bool isLogin;
   @override
+  @JsonKey()
+  final bool showResetPasswordLinkSentAlert;
+  @override
   final String? errorMessage;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthViewState(name: $name, email: $email, password: $password, confirmPassword: $confirmPassword, mobile: $mobile, nameError: $nameError, emailError: $emailError, passwordError: $passwordError, confirmPasswordError: $confirmPasswordError, mobileError: $mobileError, gender: $gender, showPassword: $showPassword, showConfirmPassword: $showConfirmPassword, isTermsAccepted: $isTermsAccepted, status: $status, activeScreen: $activeScreen, isLogin: $isLogin, errorMessage: $errorMessage)';
+    return 'AuthViewState(name: $name, email: $email, password: $password, confirmPassword: $confirmPassword, mobile: $mobile, nameError: $nameError, emailError: $emailError, passwordError: $passwordError, confirmPasswordError: $confirmPasswordError, mobileError: $mobileError, gender: $gender, showPassword: $showPassword, showConfirmPassword: $showConfirmPassword, isTermsAccepted: $isTermsAccepted, status: $status, activeScreen: $activeScreen, isLogin: $isLogin, showResetPasswordLinkSentAlert: $showResetPasswordLinkSentAlert, errorMessage: $errorMessage)';
   }
 
   @override
@@ -412,6 +429,8 @@ class _$AuthViewStateImpl
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('activeScreen', activeScreen))
       ..add(DiagnosticsProperty('isLogin', isLogin))
+      ..add(DiagnosticsProperty(
+          'showResetPasswordLinkSentAlert', showResetPasswordLinkSentAlert))
       ..add(DiagnosticsProperty('errorMessage', errorMessage));
   }
 
@@ -448,31 +467,37 @@ class _$AuthViewStateImpl
             (identical(other.activeScreen, activeScreen) ||
                 other.activeScreen == activeScreen) &&
             (identical(other.isLogin, isLogin) || other.isLogin == isLogin) &&
+            (identical(other.showResetPasswordLinkSentAlert,
+                    showResetPasswordLinkSentAlert) ||
+                other.showResetPasswordLinkSentAlert ==
+                    showResetPasswordLinkSentAlert) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      name,
-      email,
-      password,
-      confirmPassword,
-      mobile,
-      nameError,
-      emailError,
-      passwordError,
-      confirmPasswordError,
-      mobileError,
-      gender,
-      showPassword,
-      showConfirmPassword,
-      isTermsAccepted,
-      status,
-      activeScreen,
-      isLogin,
-      errorMessage);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        name,
+        email,
+        password,
+        confirmPassword,
+        mobile,
+        nameError,
+        emailError,
+        passwordError,
+        confirmPasswordError,
+        mobileError,
+        gender,
+        showPassword,
+        showConfirmPassword,
+        isTermsAccepted,
+        status,
+        activeScreen,
+        isLogin,
+        showResetPasswordLinkSentAlert,
+        errorMessage
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -500,6 +525,7 @@ abstract class _AuthViewState implements AuthViewState {
       final AuthViewStatus status,
       final AuthViewType activeScreen,
       final bool isLogin,
+      final bool showResetPasswordLinkSentAlert,
       final String? errorMessage}) = _$AuthViewStateImpl;
 
   @override
@@ -536,6 +562,8 @@ abstract class _AuthViewState implements AuthViewState {
   AuthViewType get activeScreen;
   @override
   bool get isLogin;
+  @override
+  bool get showResetPasswordLinkSentAlert;
   @override
   String? get errorMessage;
   @override

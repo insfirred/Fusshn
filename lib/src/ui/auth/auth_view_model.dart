@@ -64,16 +64,23 @@ class AuthViewModel extends StateNotifier<AuthViewState> {
       );
 
   setAuthViewScreen(AuthViewType screen) => state = state.copyWith(
-      activeScreen: screen,
-      status: AuthViewStatus.initial,
-      showPassword: false,
-      showConfirmPassword: false,
-      nameError: null,
-      emailError: null,
-      passwordError: null,
-      confirmPasswordError: null,
-      mobileError: null,
-      isTermsAccepted: false);
+        email: '',
+        password: '',
+        confirmPassword: '',
+        name: '',
+        mobile: '',
+        activeScreen: screen,
+        status: AuthViewStatus.initial,
+        showPassword: false,
+        showConfirmPassword: false,
+        nameError: null,
+        emailError: null,
+        passwordError: null,
+        confirmPasswordError: null,
+        mobileError: null,
+        isTermsAccepted: false,
+        showResetPasswordLinkSentAlert: false,
+      );
 
   setPhone(String mobile) => state = state.copyWith(
         mobile: mobile,
@@ -166,6 +173,35 @@ class AuthViewModel extends StateNotifier<AuthViewState> {
   logout() {
     firebaseAuth.signOut();
   }
+
+  Future<bool> resetPassword() async {
+    log('Reset Password Initiated');
+
+    try {
+      setResetPasswordLinkSentAlert(false);
+      // user input validation
+      log('Email Validation Initiated');
+      if (!(_validatingFields(checkEmail: true))) return false;
+      log('Email Validation Successfull');
+
+      state = state.copyWith(status: AuthViewStatus.loading);
+
+      log('Sending Link to ${state.email}');
+      await firebaseAuth.sendPasswordResetEmail(email: state.email);
+      log('Link sent successfully');
+      state = state.copyWith(
+        status: AuthViewStatus.success,
+        showResetPasswordLinkSentAlert: true,
+      );
+      return true;
+    } catch (e) {
+      _setError(e.toString());
+      return false;
+    }
+  }
+
+  setResetPasswordLinkSentAlert(bool val) =>
+      state = state.copyWith(showResetPasswordLinkSentAlert: val);
 
   bool _validatingFields({
     bool? checkName,
@@ -269,6 +305,7 @@ class AuthViewState with _$AuthViewState {
     @Default(AuthViewStatus.initial) AuthViewStatus status,
     @Default(AuthViewType.login) AuthViewType activeScreen,
     @Default(true) bool isLogin,
+    @Default(false) bool showResetPasswordLinkSentAlert,
     String? errorMessage,
   }) = _AuthViewState;
 }
@@ -283,4 +320,5 @@ enum AuthViewStatus {
 enum AuthViewType {
   login,
   register,
+  resetPassword,
 }
