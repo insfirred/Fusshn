@@ -28,18 +28,9 @@ class _VersionInfoState extends State<VersionInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          'Build by Kalash and Garvit with ❣️',
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-        const Spacer(),
-        Text(
-          'v$version',
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-      ],
+    return Text(
+      'v$version',
+      style: Theme.of(context).textTheme.bodySmall,
     );
   }
 }

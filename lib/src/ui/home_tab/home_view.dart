@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fusshn/src/common/dimens.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../models/event_data.dart';
 import '../../routing/app_router.dart';
@@ -9,7 +11,6 @@ import '../common_widgets/sliver_title.dart';
 import 'components/events_carousel_slider_section.dart';
 import 'components/greetings_appbar.dart';
 import 'components/horizontal_event_slider.dart';
-import 'components/location_card.dart';
 import 'components/payment_success_alert.dart';
 import 'components/search_appbar.dart';
 import 'home_view_model.dart';
@@ -32,46 +33,6 @@ class HomeView extends ConsumerWidget {
             builder: (BuildContext context) => paymentSuccessAlert(context),
           );
         }
-
-        // if (previous?.locationServicePopupTrigger !=
-        //     next.locationServicePopupTrigger) {
-        //   showDialog(
-        //     context: context,
-        //     builder: (BuildContext context) => AlertDialog(
-        //       title: const Text(
-        //           'Please turn on the location service to see nearby events'),
-        //       actions: [
-        //         ElevatedButton(
-        //           onPressed: () {
-        //             Geolocator.openLocationSettings();
-        //             Navigator.pop(context);
-        //           },
-        //           child: const Text('Enable Location'),
-        //         ),
-        //       ],
-        //     ),
-        //   );
-        // }
-
-        // if (previous?.locationPermissionPopuptrigger !=
-        //     next.locationPermissionPopuptrigger) {
-        //   showDialog(
-        //     context: context,
-        //     builder: (BuildContext context) => AlertDialog(
-        //       title: const Text(
-        //           'Location permission is turn off for this app, please give permission to see nearby events'),
-        //       actions: [
-        //         ElevatedButton(
-        //           onPressed: () {
-        //             Geolocator.openAppSettings();
-        //             Navigator.pop(context);
-        //           },
-        //           child: const Text('Give Permission'),
-        //         ),
-        //       ],
-        //     ),
-        //   );
-        // }
       },
     );
 
@@ -201,23 +162,35 @@ class HomeView extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 12)),
-              SliverTitle(
-                label: 'Premium Locations',
-                onTap: () {},
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 8)),
+              const SliverToBoxAdapter(child: SizedBox(height: 40)),
               SliverToBoxAdapter(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  height: 300,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 6,
-                    itemBuilder: (context, index) => LocationCard(index),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: homeTabHorizontalPadding,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Let\'s Party\nTogether <3',
+                        style: GoogleFonts.pacifico(
+                          fontSize: 50,
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                      const SizedBox(height: 25),
+                      Text(
+                        'Crafted with ❣️ by Kalash and Garvit',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey.shade300,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
+              const SliverToBoxAdapter(child: SizedBox(height: 100)),
             ],
           ),
         ),
