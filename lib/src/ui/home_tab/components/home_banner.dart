@@ -1,11 +1,13 @@
 import 'dart:ui';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../common/dimens.dart';
 import '../../../models/event_data.dart';
+import '../../../routing/app_router.dart';
 
 class HomeBanner extends StatelessWidget {
   const HomeBanner(
@@ -17,21 +19,25 @@ class HomeBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          _Image(event.imagesUrls.first),
-          const _Gradient(),
-          _Details(event),
-          Align(
-            alignment: Alignment.topRight,
-            child: _EventTagBox(event.tags.first),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => context.navigateTo(EventDetailRoute(eventData: event)),
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            _Image(event.imagesUrls.first),
+            const _Gradient(),
+            _Details(event),
+            Align(
+              alignment: Alignment.topRight,
+              child: _EventTagBox(event.tags.first),
+            ),
+          ],
+        ),
       ),
     );
   }

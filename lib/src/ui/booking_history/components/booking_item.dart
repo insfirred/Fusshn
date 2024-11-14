@@ -24,10 +24,12 @@ class BookingItem extends ConsumerWidget {
 
     return GestureDetector(
       onTap: () {
-        context.navigateTo(TicketRoute(
-          eventData: event,
-          booking: booking,
-        ));
+        context.navigateTo(
+          TicketRoute(
+            eventData: event,
+            booking: booking,
+          ),
+        );
       },
       behavior: HitTestBehavior.opaque,
       child: Container(

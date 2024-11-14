@@ -30,6 +30,7 @@ class _EventsCarouselSliderSectionState
     final List<EventData> eventDataList = ref.watch(
       homeViewModelProvider.select((_) => _.events),
     );
+
     return Column(
       children: [
         CarouselSlider(

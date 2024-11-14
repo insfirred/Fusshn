@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../../common/dimens.dart';
+import '../../../models/event_data.dart';
 import '../../../models/ticket_type.dart';
 import '../../../routing/app_router.dart';
 import '../../../utils/snackbar_utils.dart';
@@ -13,9 +16,11 @@ class ChooseTicket extends ConsumerWidget {
   const ChooseTicket({
     super.key,
     required this.tickets,
+    required this.event,
   });
 
   final List<TicketType> tickets;
+  final EventData event;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,20 +46,8 @@ class ChooseTicket extends ConsumerWidget {
       width: double.maxFinite,
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-                width: 40,
-                height: 2,
-              )
-            ],
-          ),
-          const SizedBox(height: 10),
+          const _DrawerIndicator(),
+          const SizedBox(height: 20),
           Expanded(
             child: Column(
               children: [
@@ -64,24 +57,33 @@ class ChooseTicket extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        /// Event Info
+                        _EventInfo(event),
+                        const SizedBox(height: 24),
+
+                        /// Heading
                         Text(
                           'Choose your tickets',
                           style: Theme.of(context)
                               .textTheme
-                              .displayLarge
-                              ?.copyWith(fontSize: 22),
+                              .bodyMedium
+                              ?.copyWith(fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(height: 2),
                         Text(
-                            'View all ticket options available. Click once to select and add how many you want to buy.',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(
-                                    fontSize: 12,
-                                    color: const Color(0xFF808080))),
+                          'You can select up to 10 tickets',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                                  fontSize: 12,
+                                  color:
+                                      const Color(0xFFFFFFFF).withOpacity(0.5)),
+                        ),
                         const Divider(color: Color(0xFF3F3F3F)),
                         const SizedBox(height: 16),
+
+                        /// All tickets
                         Column(
                           children: tickets
                               .map(
@@ -93,6 +95,8 @@ class ChooseTicket extends ConsumerWidget {
                     ),
                   ),
                 ),
+
+                /// Confirm Button
                 FusshnBtn(
                   label: 'Confirm',
                   onTap: () {
@@ -124,6 +128,84 @@ class ChooseTicket extends ConsumerWidget {
   }
 }
 
+class _EventInfo extends StatelessWidget {
+  const _EventInfo(this.event);
+
+  final EventData event;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: CachedNetworkImage(
+              imageUrl: event.posterUrl,
+              height: 100,
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 4,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    event.name,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                  Text(
+                    DateFormat('d MMMM y, ').add_jm().format(event.startTime),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.white.withOpacity(0.5),
+                        ),
+                  ),
+                  Text(
+                    event.eventLocation,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.white.withOpacity(0.5),
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _DrawerIndicator extends StatelessWidget {
+  const _DrawerIndicator();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(2),
+          ),
+          width: 40,
+          height: 2,
+        ),
+      ],
+    );
+  }
+}
+
 class _Ticket extends ConsumerWidget {
   const _Ticket({
     required this.ticket,
@@ -137,67 +219,78 @@ class _Ticket extends ConsumerWidget {
       bookTicketSheetViewModelProvider.select((_) => _.selectedTicketType),
     );
 
-    return GestureDetector(
-      onTap: () {
-        ref
-            .read(bookTicketSheetViewModelProvider.notifier)
-            .setTicketType(selectedTicketType != ticket ? ticket : null);
-      },
-      child: Container(
-        height: 200,
-        padding: const EdgeInsets.all(20),
-        margin: const EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: const Color(0xFFFAFAFA).withOpacity(0.5),
-          ),
-          color: selectedTicketType == ticket
-              ? const Color.fromARGB(255, 32, 136, 53)
-              : null,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    final selectedTicketCount = ref.watch(
+      bookTicketSheetViewModelProvider.select((_) => _.selectedTicketCount),
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              ticket.name,
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              ticket.description,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: const Color(0xFFFFFFFF).withOpacity(0.5),
-                  fontSize: 12),
-            ),
-            const Spacer(),
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '\u20B9 ${ticket.price.ceil()}',
-                      style: Theme.of(context).textTheme.displaySmall,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      ticket.isRefundable ? 'Refundable' : 'Non Refundable',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: const Color(0xFFFFFFFF).withOpacity(0.5),
-                          fontSize: 12),
-                    ),
-                  ],
+                Text(
+                  ticket.name,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
-                const Spacer(),
-                if (selectedTicketType == ticket) ...[
-                  const _Counter(),
-                ],
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '\u20B9 ${ticket.price.ceil()} | ',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(fontSize: 12),
+                      ),
+                      TextSpan(
+                        text: 'Available',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(color: Theme.of(context).primaryColor),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
+            if (selectedTicketType == ticket) ...[
+              const _Counter(),
+            ] else
+              GestureDetector(
+                onTap: () {
+                  ref
+                      .read(bookTicketSheetViewModelProvider.notifier)
+                      .setTicketType(
+                          selectedTicketType != ticket ? ticket : null);
+                },
+                child: Container(
+                  width: 100,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Center(
+                    child: selectedTicketType != ticket
+                        ? Text('Add +')
+                        : Text(selectedTicketCount.toString()),
+                  ),
+                ),
+              ),
           ],
         ),
-      ),
+        Text(
+          ticket.description,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: const Color(0xFFFFFFFF).withOpacity(0.5), fontSize: 12),
+        ),
+        const SizedBox(height: 24),
+      ],
     );
   }
 }
@@ -241,6 +334,9 @@ class _Counter extends ConsumerWidget {
         const SizedBox(width: 8),
         TextButton(
           onPressed: () {
+            // condition so that user cannot select more than 10 tickets.
+            if (selectedTicketCount >= 10) return;
+
             ref
                 .read(bookTicketSheetViewModelProvider.notifier)
                 .setTicketCount(selectedTicketCount + 1);
