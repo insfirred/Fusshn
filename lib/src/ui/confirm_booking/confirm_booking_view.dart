@@ -312,20 +312,22 @@ class _BillSummary extends ConsumerWidget {
             ],
           ),
           const Divider(color: Color(0xFF999999)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Discount',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              Text(
-                '\u20B9 $bookingFee',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
+
+          /// DISCOUNT Value
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Text(
+          //       'Discount',
+          //       style: Theme.of(context).textTheme.bodySmall,
+          //     ),
+          //     Text(
+          //       '\u20B9 $bookingFee',
+          //       style: Theme.of(context).textTheme.bodySmall,
+          //     ),
+          //   ],
+          // ),
+          // const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

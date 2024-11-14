@@ -180,7 +180,7 @@ class HomeView extends ConsumerWidget {
                       ),
                       const SizedBox(height: 25),
                       Text(
-                        'Crafted with ❣️ by Kalash and Garvit',
+                        'Crafted by Kalash and Garvit with ❣️',
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey.shade300,

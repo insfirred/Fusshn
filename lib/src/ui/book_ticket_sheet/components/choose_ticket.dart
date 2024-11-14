@@ -136,7 +136,7 @@ class _EventInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: 110,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -144,7 +144,7 @@ class _EventInfo extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             child: CachedNetworkImage(
               imageUrl: event.posterUrl,
-              height: 100,
+              height: 110,
             ),
           ),
           const SizedBox(width: 10),
@@ -162,6 +162,8 @@ class _EventInfo extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                   ),
                   Text(
                     DateFormat('d MMMM y, ').add_jm().format(event.startTime),
@@ -174,6 +176,8 @@ class _EventInfo extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: Colors.white.withOpacity(0.5),
                         ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                   ),
                 ],
               ),
@@ -277,7 +281,7 @@ class _Ticket extends ConsumerWidget {
                   ),
                   child: Center(
                     child: selectedTicketType != ticket
-                        ? Text('Add +')
+                        ? const Text('Add +')
                         : Text(selectedTicketCount.toString()),
                   ),
                 ),

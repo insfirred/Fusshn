@@ -103,6 +103,13 @@ class AppRepository extends StateNotifier<AppState> {
     firebaseAuth.signOut();
   }
 
+  deleteUserAccount() async {
+    User? currentUser = firebaseAuth.currentUser;
+    await currentUser?.delete();
+
+    _deleterUserDetailsFromFirestore();
+  }
+
   _fetchCurrentUserData() async {
     print('fetching user data from cloud....');
     var snapshot = await firestore
@@ -127,6 +134,10 @@ class AppRepository extends StateNotifier<AppState> {
   Map? _hasLastLocation() {
     var myLocationDataBox = hive.box<Map>(HiveKeys.myLocationDataBoxKey);
     return myLocationDataBox.get(HiveKeys.lastLocationFieldKey);
+  }
+
+  _deleterUserDetailsFromFirestore() async {
+    await firestore.collection('users').doc(state.userData?.uid).delete();
   }
 
   @override

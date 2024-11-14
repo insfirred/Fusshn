@@ -152,9 +152,12 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
     _setGstFee();
     _setBookingFee();
 
+    log('${state.basePrice} + ${state.bookingFee} + ${state.gstFee}');
+
     state = state.copyWith(
       grandTotalPrice: _roundOffUptoTwoDecimal(
-          state.basePrice + state.bookingFee + state.gstFee),
+        state.basePrice + state.bookingFee + state.gstFee,
+      ),
     );
   }
 
@@ -172,14 +175,6 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
   double _roundOffUptoTwoDecimal(double val) {
     String inString = val.toStringAsFixed(2);
     return double.parse(inString);
-  }
-
-  /// DELETE this function later {NO-USE}
-  printJwtToken() async {
-    final currentAuthUser = ref.read(appRepositoryProvider).authUser;
-    String idToken = await currentAuthUser?.getIdToken() ?? '';
-
-    print(idToken);
   }
 
   /// For testing purpose. DELETE this function later {NO-USE}
