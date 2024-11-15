@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../common/dimens.dart';
 import '../../common/hero_tags.dart';
+import '../../repositories/app_repository.dart';
 import '../../utils/bottom_sheet_util.dart';
 import '../../utils/snackbar_utils.dart';
 import '../common_widgets/fusshn_appbar.dart';
@@ -78,9 +82,16 @@ class EditImageSection extends ConsumerWidget {
       onTap: () {
         showFusshnBottomSheet(
           context: context,
-          builder: (context) => const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18.0),
-            child: Column(
+          builder: (context) => Container(
+            decoration: const BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 30),
+            child: const Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text('Select your profile picture'),
@@ -98,7 +109,6 @@ class EditImageSection extends ConsumerWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
               ],
             ),
           ),
@@ -221,7 +231,14 @@ class _AllFieldsState extends ConsumerState<_AllFields> {
       editProfileViewModelProvider.select((_) => _.mobileError),
     );
 
+    final isEmailVerified = ref
+            .read(appRepositoryProvider.notifier)
+            .getCurrentUser()
+            ?.emailVerified ??
+        false;
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _TextField(
           hintText: 'Full name',
@@ -262,7 +279,115 @@ class _AllFieldsState extends ConsumerState<_AllFields> {
           readOnly: true,
           textColor: const Color(0xFF808080),
         ),
+        if (!isEmailVerified) ...[
+          TextButton(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => const EmailVerificationSheet(),
+              );
+            },
+            child: const Text('Click to verify your email'),
+          ),
+          TextButton(
+            onPressed: () async {
+              User? currentUser =
+                  ref.read(appRepositoryProvider.notifier).getCurrentUser();
+
+              await currentUser?.reload();
+              if (currentUser?.emailVerified == true) {
+                ref
+                    .read(appRepositoryProvider.notifier)
+                    .setEmailVerifiedInFirestore();
+              }
+              log('User reloaded ${currentUser?.emailVerified}');
+            },
+            child: const Text('Check email verified or not'),
+          ),
+        ],
       ],
+    );
+  }
+}
+
+class EmailVerificationSheet extends ConsumerWidget {
+  const EmailVerificationSheet({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final email = ref.watch(
+      appRepositoryProvider.select((_) => _.userData!.email),
+    );
+
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: homeTabHorizontalPadding,
+        vertical: 20,
+      ),
+      decoration: const BoxDecoration(
+        color: Colors.black,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'We will send a verification to $email. Tap on that link to verify it.',
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Center(child: Text('Cancel')),
+                    ),
+                  ),
+                ),
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  color: Theme.of(context).primaryColor,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () async {
+                        await ref
+                            .read(editProfileViewModelProvider.notifier)
+                            .sendEmailVerificationLink();
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: 50,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Center(child: Text('Send Link')),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

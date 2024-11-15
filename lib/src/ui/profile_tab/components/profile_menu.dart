@@ -10,7 +10,7 @@ import 'logout_alert.dart';
 import 'profile_item.dart';
 
 class ProfileMenu extends ConsumerStatefulWidget {
-  const ProfileMenu();
+  const ProfileMenu({super.key});
 
   @override
   ConsumerState<ProfileMenu> createState() => _ProfileMenuState();

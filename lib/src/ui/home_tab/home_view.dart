@@ -85,11 +85,15 @@ class HomeView extends ConsumerWidget {
               // SliverToBoxAdapter(
               //   child: ElevatedButton(
               //     onPressed: () async {
-              //       await Hive.box<Map>(HiveKeys.myLocationDataBoxKey)
-              //           .delete(HiveKeys.lastLocationFieldKey);
-              //       log('deleted...');
+              //       User? user = FirebaseAuth.instance.currentUser;
+              //       // await user?.sendEmailVerification();
+              //       await user?.reload();
+              //       log('email verified? : ${user?.emailVerified}....');
+              //       // FirebaseAuth.instance.applyActionCode(
+              //       //     'g5KbDgbedLhr3QIYQ5rChHVnI-TxbIWM764bjTJMIsoAAAGTLtthdw');
+              //       // log('link sent.......');
               //     },
-              //     child: Text('remove city'),
+              //     child: const Text('Send link'),
               //   ),
               // ),
               // const SliverToBoxAdapter(child: SizedBox(height: 12)),

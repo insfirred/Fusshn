@@ -12,6 +12,7 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData(
       email: json['email'] as String,
       phone: json['phone'] as String?,
       imageUrl: json['imageUrl'] as String?,
+      isEmailVerified: json['isEmailVerified'] as bool? ?? false,
       bookingIdsList: (json['bookingIdsList'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -23,5 +24,6 @@ Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'email': instance.email,
       'phone': instance.phone,
       'imageUrl': instance.imageUrl,
+      'isEmailVerified': instance.isEmailVerified,
       'bookingIdsList': instance.bookingIdsList,
     };

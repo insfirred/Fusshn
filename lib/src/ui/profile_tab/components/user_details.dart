@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../common/hero_tags.dart';
 import '../../../repositories/app_repository.dart';
@@ -20,6 +21,10 @@ class UserDetails extends ConsumerWidget {
     final imageUrl = ref.watch(
       appRepositoryProvider.select((_) => _.userData!.imageUrl),
     );
+    final isEmailVerified = ref
+            .watch(appRepositoryProvider.select((_) => _.userData))
+            ?.isEmailVerified ??
+        false;
 
     return Column(
       children: [
@@ -50,9 +55,27 @@ class UserDetails extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 4),
-            Text(
-              email,
-              style: Theme.of(context).textTheme.bodySmall,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  email,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(width: 10),
+                isEmailVerified
+                    ? FaIcon(
+                        FontAwesomeIcons.circleCheck,
+                        color: Theme.of(context).primaryColor,
+                      )
+                    : Text(
+                        '(not verified yet)',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(color: Colors.red),
+                      )
+              ],
             ),
             const SizedBox(height: 10),
             const Row(

@@ -8,6 +8,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:string_validator/string_validator.dart';
 
 import '../../common/enums.dart';
+import '../../common/firestore_keys.dart';
 import '../../models/user_data.dart';
 import '../../services/firebase_auth.dart';
 import '../../services/firestore.dart';
@@ -133,7 +134,7 @@ class AuthViewModel extends StateNotifier<AuthViewState> {
           ).toJson();
 
           await firestore
-              .collection(UserData.userCollectionKey)
+              .collection(FirestoreKeys.userGlobalCollection)
               .doc(creds.user!.uid)
               .set(userData);
         },

@@ -6,10 +6,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:fusshn/src/models/location_data.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../common/firestore_keys.dart';
 import '../common/hive_keys.dart';
+import '../models/location_data.dart';
 import '../models/user_data.dart';
 import '../services/firebase_auth.dart';
 import '../services/firestore.dart';
@@ -77,9 +78,25 @@ class AppRepository extends StateNotifier<AppState> {
   setProfilePicUrlInFireStore(String url) async {
     try {
       final currentUserId = state.authUser!.uid;
-      final userCollection = firestore.collection('users');
+      final userCollection =
+          firestore.collection(FirestoreKeys.userGlobalCollection);
       await userCollection.doc(currentUserId).set(
         {'imageUrl': url},
+        SetOptions(merge: true),
+      );
+
+      refreshUserData();
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  setEmailVerifiedInFirestore() async {
+    try {
+      final currentUserId = state.authUser!.uid;
+      final userCollection = firestore.collection('users');
+      await userCollection.doc(currentUserId).set(
+        {'isEmailVerified': true},
         SetOptions(merge: true),
       );
 
@@ -99,6 +116,8 @@ class AppRepository extends StateNotifier<AppState> {
         status: status,
       );
 
+  User? getCurrentUser() => firebaseAuth.currentUser;
+
   void logout() {
     firebaseAuth.signOut();
   }
@@ -113,7 +132,7 @@ class AppRepository extends StateNotifier<AppState> {
   _fetchCurrentUserData() async {
     print('fetching user data from cloud....');
     var snapshot = await firestore
-        .collection(UserData.userCollectionKey)
+        .collection(FirestoreKeys.userGlobalCollection)
         .doc(state.authUser!.uid)
         .get();
 

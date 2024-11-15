@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -89,6 +90,23 @@ class EditProfileViewModel extends StateNotifier<EditProfileViewState> {
         status: EditProfileViewStatus.initial,
         mobileError: null,
       );
+
+  Future<bool> sendEmailVerificationLink() async {
+    try {
+      User? currentUser =
+          ref.read(appRepositoryProvider.notifier).getCurrentUser();
+
+      if (currentUser != null) {
+        await currentUser.sendEmailVerification();
+        log('Email verification link send to ${currentUser.email}');
+      }
+      return true;
+    } catch (e) {
+      log('Error while sending email verification link $e');
+      _setError(e.toString());
+      return false;
+    }
+  }
 
   _settingUserDataInState() {
     UserData user = ref.read(appRepositoryProvider).userData!;
