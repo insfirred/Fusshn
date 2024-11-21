@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -115,22 +117,11 @@ class TimingAndVenue extends StatelessWidget {
                     children: [
                       Text(
                         location,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              decoration: TextDecoration.underline,
-                              decorationColor: const Color(0xFFFFFFFF),
-                            ),
-                      ),
-                      Text(
-                        '100 FT, DP Rd, near Rajaram Bridge, Karve Nagar, Pune, Maharashtra 411052',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: const Color(0xFF808080)),
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                       const _EventLocationBox(
-                        lat: 1,
-                        lng: 1,
-                        // 28.396366244820598, 77.10404872451666
+                        lat: 28.396366244820598,
+                        lng: 77.10404872451666,
                       ),
                     ],
                   ),
@@ -160,10 +151,7 @@ class TimingAndVenue extends StatelessWidget {
                   flex: 5,
                   child: Text(
                     organizerName,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          decoration: TextDecoration.underline,
-                          decorationColor: const Color(0xFFFFFFFF),
-                        ),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
               ],
@@ -191,17 +179,18 @@ class _EventLocationBox extends StatelessWidget {
       onTap: _launchUrl,
       behavior: HitTestBehavior.opaque,
       child: Text(
-        'Tap to view location',
+        'Get directions',
         style: Theme.of(context).textTheme.bodySmall?.copyWith(
               decoration: TextDecoration.underline,
-              decorationColor: const Color(0xFFFFFFFF),
+              decorationColor: const Color(0xFF808080),
+              color: const Color(0xFF808080),
             ),
       ),
     );
   }
 
   Future<void> _launchUrl() async {
-    print('opening maps');
+    log('opening maps');
     if (!await launchUrl(
         Uri.parse('https://www.google.com/maps/place/$lat,$lng'))) {
       throw Exception('Something went wrong on launching map url...');

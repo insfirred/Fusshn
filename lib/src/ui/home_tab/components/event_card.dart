@@ -81,10 +81,27 @@ class _Gradient extends StatelessWidget {
   }
 }
 
-class _Data extends StatelessWidget {
+class _Data extends StatefulWidget {
   const _Data(this.eventData);
 
   final EventData eventData;
+
+  @override
+  State<_Data> createState() => _DataState();
+}
+
+class _DataState extends State<_Data> {
+  double initialTicketPrice = double.maxFinite;
+
+  @override
+  void initState() {
+    super.initState();
+    for (var t in widget.eventData.tickets) {
+      if (t.price < initialTicketPrice) {
+        initialTicketPrice = t.price;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +114,7 @@ class _Data extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            eventData.name,
+            widget.eventData.name,
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -118,7 +135,7 @@ class _Data extends StatelessWidget {
                   SizedBox(
                     width: 190,
                     child: Text(
-                      eventData.eventLocation,
+                      widget.eventData.eventLocation,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
                           .textTheme
@@ -139,7 +156,7 @@ class _Data extends StatelessWidget {
                   Text(
                     DateFormat('d MMMM y, ')
                         .add_jm()
-                        .format(eventData.startTime),
+                        .format(widget.eventData.startTime),
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context)
                         .textTheme
@@ -160,7 +177,7 @@ class _Data extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                'From \$999',
+                'From \u{20B9}$initialTicketPrice',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ),

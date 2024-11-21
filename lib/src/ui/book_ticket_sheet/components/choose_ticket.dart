@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../common/dimens.dart';
 import '../../../models/event_data.dart';
@@ -262,6 +265,8 @@ class _Ticket extends ConsumerWidget {
                 ),
               ],
             ),
+
+            // Add Button and Counter
             if (selectedTicketType == ticket) ...[
               const _Counter(),
             ] else
@@ -308,47 +313,62 @@ class _Counter extends ConsumerWidget {
       bookTicketSheetViewModelProvider.select((_) => _.selectedTicketCount),
     );
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        TextButton(
-          onPressed: () {
-            if (selectedTicketCount > 1) {
+    return Container(
+      width: 100,
+      height: 40,
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          GestureDetector(
+            onTap: () {
+              if (selectedTicketCount > 1) {
+                ref
+                    .read(bookTicketSheetViewModelProvider.notifier)
+                    .setTicketCount(selectedTicketCount - 1);
+              } else if (selectedTicketCount == 1) {
+                ref
+                    .read(bookTicketSheetViewModelProvider.notifier)
+                    .setTicketType(null);
+              }
+
               ref
                   .read(bookTicketSheetViewModelProvider.notifier)
-                  .setTicketCount(selectedTicketCount - 1);
-            } else if (selectedTicketCount == 1) {
+                  .setTicketCount(
+                      selectedTicketCount > 1 ? selectedTicketCount - 1 : 1);
+            },
+            child: SvgPicture.asset(
+              'assets/remove.svg',
+              width: 20,
+              height: 20,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            selectedTicketCount.toString(),
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(width: 8),
+          GestureDetector(
+            onTap: () {
+              // condition so that user cannot select more than 10 tickets.
+              if (selectedTicketCount >= 10) return;
+
               ref
                   .read(bookTicketSheetViewModelProvider.notifier)
-                  .setTicketType(null);
-            }
-
-            ref.read(bookTicketSheetViewModelProvider.notifier).setTicketCount(
-                selectedTicketCount > 1 ? selectedTicketCount - 1 : 1);
-          },
-          style: TextButton.styleFrom(backgroundColor: Colors.grey),
-          child: const Icon(Icons.remove),
-        ),
-        const SizedBox(width: 8),
-        Text(
-          selectedTicketCount.toString(),
-          style:
-              Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 18),
-        ),
-        const SizedBox(width: 8),
-        TextButton(
-          onPressed: () {
-            // condition so that user cannot select more than 10 tickets.
-            if (selectedTicketCount >= 10) return;
-
-            ref
-                .read(bookTicketSheetViewModelProvider.notifier)
-                .setTicketCount(selectedTicketCount + 1);
-          },
-          style: TextButton.styleFrom(backgroundColor: Colors.grey),
-          child: const Icon(Icons.add),
-        ),
-      ],
+                  .setTicketCount(selectedTicketCount + 1);
+            },
+            child: SvgPicture.asset(
+              'assets/add.svg',
+              width: 20,
+              height: 20,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

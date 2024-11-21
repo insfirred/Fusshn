@@ -23,6 +23,8 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    DateTime? currentBackPressTime;
+
     ref.listen(
       homeViewModelProvider,
       (previous, next) {
@@ -46,7 +48,10 @@ class HomeView extends ConsumerWidget {
           child: CustomScrollView(
             physics: const BouncingScrollPhysics(),
             slivers: [
+              // GREETINGS SECTION
               const GreetingAppBar(),
+
+              // SEARCH BOX
               const SearchAppBar(),
               const SliverToBoxAdapter(child: SizedBox(height: 12)),
               // const SliverToBoxAdapter(
@@ -98,10 +103,12 @@ class HomeView extends ConsumerWidget {
               // ),
               // const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
+              // CAROUSEL SLIDER
               const SliverToBoxAdapter(
                 child: EventsCarouselSliderSection(),
               ),
 
+              // HAPPENING NEAR YOU Section
               const SliverToBoxAdapter(child: SizedBox(height: 26)),
               SliverTitle(
                 label: 'Happening near you!',
@@ -116,6 +123,8 @@ class HomeView extends ConsumerWidget {
                 child: HorizontalEventSlider(),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 20)),
+
+              // MUSIC EVENTS Section
               SliverTitle(
                 label: 'Music Events',
                 onTap: () {
@@ -125,10 +134,10 @@ class HomeView extends ConsumerWidget {
                 },
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 8)),
-              const SliverToBoxAdapter(
-                child: HorizontalEventSlider(),
-              ),
+              const SliverToBoxAdapter(child: HorizontalEventSlider()),
               const SliverToBoxAdapter(child: SizedBox(height: 20)),
+
+              // FEATURED ARTISTS Section
               const SliverTitle(label: 'Featured Artists'),
               const SliverToBoxAdapter(child: SizedBox(height: 11)),
               SliverToBoxAdapter(
@@ -167,6 +176,8 @@ class HomeView extends ConsumerWidget {
                 ),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 40)),
+
+              // LETS PARTY TOGETHER Section
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -194,7 +205,7 @@ class HomeView extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 100)),
+              const SliverToBoxAdapter(child: SizedBox(height: 50)),
             ],
           ),
         ),

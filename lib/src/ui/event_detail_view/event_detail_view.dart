@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../common/dimens.dart';
 import '../../models/event_data.dart';
@@ -75,7 +74,7 @@ class EventDetailView extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     floating: true,
                     pinned: true,
-                    toolbarHeight: 80,
+                    toolbarHeight: 70,
                     title: BackdropFilter(
                       filter: ImageFilter.blur(
                         sigmaX: 10,
@@ -88,14 +87,6 @@ class EventDetailView extends StatelessWidget {
                             style: Theme.of(context).textTheme.displaySmall,
                             maxLines: 2,
                             textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            '${DateFormat('d MMMM y, ').format(eventData.startTime)} • ${eventData.eventLocation}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(fontSize: 12),
                           ),
                         ],
                       ),

@@ -16,8 +16,9 @@ class GreetingAppBar extends ConsumerWidget {
     );
 
     final userName = ref.watch(
-      appRepositoryProvider.select((_) => _.userData?.name),
-    );
+          appRepositoryProvider.select((_) => _.userData?.name),
+        ) ??
+        "";
 
     return SliverAppBar(
       collapsedHeight: 85,
