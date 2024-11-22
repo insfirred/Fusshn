@@ -80,15 +80,11 @@ class EventDetailView extends StatelessWidget {
                         sigmaX: 10,
                         sigmaY: 10,
                       ),
-                      child: Column(
-                        children: [
-                          Text(
-                            eventData.name,
-                            style: Theme.of(context).textTheme.displaySmall,
-                            maxLines: 2,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                      child: Text(
+                        eventData.name,
+                        style: Theme.of(context).textTheme.displaySmall,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),

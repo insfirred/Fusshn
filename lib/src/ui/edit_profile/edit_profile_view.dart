@@ -40,21 +40,33 @@ class EditProfileView extends ConsumerWidget {
         child: Padding(
           padding:
               const EdgeInsets.symmetric(horizontal: homeTabHorizontalPadding),
-          child: Column(
+          child: Stack(
             children: [
-              const FusshnAppBar(label: 'Edit Profile'),
-              const SizedBox(height: 50),
-              const EditImageSection(),
-              const SizedBox(height: 30),
-              const AllFields(),
-              const SizedBox(height: 80),
-              FusshnBtn(
-                label: 'Save Details',
-                onTap: () {
-                  ref
-                      .read(editProfileViewModelProvider.notifier)
-                      .saveDetailsPressed();
-                },
+              const SingleChildScrollView(
+                child: Column(
+                  children: [
+                    FusshnAppBar(label: 'Edit Profile'),
+                    SizedBox(height: 50),
+                    EditImageSection(),
+                    SizedBox(height: 30),
+                    AllFields(),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: FusshnBtn(
+                    height: 50,
+                    label: 'Save Details',
+                    onTap: () {
+                      ref
+                          .read(editProfileViewModelProvider.notifier)
+                          .saveDetailsPressed();
+                    },
+                  ),
+                ),
               ),
             ],
           ),

@@ -105,7 +105,7 @@ class EventTabCard extends StatelessWidget {
                           color: Theme.of(context).primaryColor,
                         ),
                         child: Text(
-                          'From \$${event.tickets.first.price.toInt()}',
+                          'From \u{20B9}${event.tickets.first.price.toInt()}',
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium

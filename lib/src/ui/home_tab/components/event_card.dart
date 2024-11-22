@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:fusshn/src/models/event_data.dart';
-import 'package:fusshn/src/routing/app_router.dart';
 import 'package:intl/intl.dart';
+
+import '../../../models/event_data.dart';
+import '../../../routing/app_router.dart';
 
 class EventCard extends StatelessWidget {
   const EventCard({
@@ -118,7 +119,7 @@ class _DataState extends State<_Data> {
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontSize: 18,
+                  fontSize: 16,
                 ),
           ),
           const SizedBox(height: 8),
@@ -137,10 +138,10 @@ class _DataState extends State<_Data> {
                     child: Text(
                       widget.eventData.eventLocation,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(fontSize: 12),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
                     ),
                   ),
                 ],
@@ -158,30 +159,48 @@ class _DataState extends State<_Data> {
                         .add_jm()
                         .format(widget.eventData.startTime),
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(fontSize: 12),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
                   ),
                 ],
               ),
             ],
           ),
           const SizedBox(height: 8),
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            width: double.maxFinite,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Center(
-              child: Text(
-                'From \u{20B9}$initialTicketPrice',
-                style: Theme.of(context).textTheme.bodySmall,
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'From \u{20B9}${initialTicketPrice.toInt()}',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
               ),
-            ),
-          )
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 7),
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Book Now',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

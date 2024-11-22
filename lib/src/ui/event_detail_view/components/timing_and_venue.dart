@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -72,6 +73,7 @@ class TimingAndVenue extends StatelessWidget {
                       Image.asset(
                         'assets/cross_circle.png',
                         width: 14,
+                        color: const Color(0xFFBB1616),
                       ),
                       const SizedBox(width: 8),
                       Text(
@@ -99,7 +101,7 @@ class TimingAndVenue extends StatelessWidget {
                   child: Row(
                     children: [
                       Image.asset(
-                        'assets/clock.png',
+                        'assets/location.png',
                         width: 14,
                       ),
                       const SizedBox(width: 8),
@@ -115,14 +117,21 @@ class TimingAndVenue extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        location,
-                        style: Theme.of(context).textTheme.bodySmall,
+                      GestureDetector(
+                        onTap: _launchUrl,
+                        child: Text(
+                          location,
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: const Color(0xFFF1F1F1),
+                                  ),
+                        ),
                       ),
-                      const _EventLocationBox(
-                        lat: 28.396366244820598,
-                        lng: 77.10404872451666,
-                      ),
+                      // const _EventLocationBox(
+                      //   lat: 28.396366244820598,
+                      //   lng: 77.10404872451666,
+                      // ),
                     ],
                   ),
                 ),
@@ -151,7 +160,11 @@ class TimingAndVenue extends StatelessWidget {
                   flex: 5,
                   child: Text(
                     organizerName,
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: const Color(0xFF9BFFB1),
+                          decoration: TextDecoration.underline,
+                          decorationColor: const Color(0xFF9BFFB1),
+                        ),
                   ),
                 ),
               ],
@@ -162,37 +175,11 @@ class TimingAndVenue extends StatelessWidget {
       ),
     );
   }
-}
-
-class _EventLocationBox extends StatelessWidget {
-  const _EventLocationBox({
-    required this.lat,
-    required this.lng,
-  });
-
-  final double lat;
-  final double lng;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _launchUrl,
-      behavior: HitTestBehavior.opaque,
-      child: Text(
-        'Get directions',
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              decoration: TextDecoration.underline,
-              decorationColor: const Color(0xFF808080),
-              color: const Color(0xFF808080),
-            ),
-      ),
-    );
-  }
 
   Future<void> _launchUrl() async {
     log('opening maps');
-    if (!await launchUrl(
-        Uri.parse('https://www.google.com/maps/place/$lat,$lng'))) {
+    if (!await launchUrl(Uri.parse(
+        'https://www.google.com/maps/@28.396366244820598,77.10404872451666,15z'))) {
       throw Exception('Something went wrong on launching map url...');
     }
   }

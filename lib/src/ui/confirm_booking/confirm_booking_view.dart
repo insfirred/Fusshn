@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fusshn/src/ui/home_tab/home_view_model.dart';
 
@@ -41,42 +42,48 @@ class ConfirmBookingView extends ConsumerWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(
+            const SingleChildScrollView(
+              padding: EdgeInsets.symmetric(
                 horizontal: homeTabHorizontalPadding,
               ),
-              physics: const BouncingScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const FusshnAppBar(label: 'Confirm Booking'),
-                  const SizedBox(height: 10),
-                  const _ImportantNoteBox(),
-                  const SizedBox(height: 15),
-                  const _BillSummary(),
-                  const SizedBox(height: 18),
-                  const Divider(color: Color(0xFF999999)),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Got Code?',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      Image.asset(
-                        'assets/lock.png',
-                        width: 15,
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  const Divider(color: Color(0xFF999999)),
-                  const _TermsConditionsBox(),
-                  const SizedBox(height: 15),
-                  const _CompletePaymentBtn(),
+                  FusshnAppBar(label: 'Confirm Booking'),
+                  SizedBox(height: 10),
+                  _ImportantNoteBox(),
+                  SizedBox(height: 15),
+                  _BillSummary(),
+                  // const SizedBox(height: 18),
+                  // const Divider(color: Color(0xFF999999)),
+                  // const SizedBox(height: 10),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text(
+                  //       'Got Code?',
+                  //       style: Theme.of(context).textTheme.bodyMedium,
+                  //     ),
+                  //     Image.asset(
+                  //       'assets/lock.png',
+                  //       width: 15,
+                  //     )
+                  //   ],
+                  // ),
+                  SizedBox(height: 10),
+                  Divider(color: Color(0xFF999999)),
+                  _TermsConditionsBox(),
+                  SizedBox(height: 70),
                 ],
+              ),
+            ),
+            const Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 20),
+                child: _CompletePaymentBtn(),
               ),
             ),
             if (paymentStatus == PaymentStatus.loading) ...[
@@ -223,6 +230,7 @@ class _CompletePaymentBtn extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return FusshnBtn(
+      height: 45,
       label: 'Proceed to Payment',
       onTap: () {
         ref.read(confirmBookingViewModelProvider.notifier).openCheckout();

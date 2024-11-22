@@ -53,14 +53,14 @@ class DateAndTimingBox extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall
-                      ?.copyWith(fontSize: 10, color: const Color(0xFF9BFFB1)),
+                      ?.copyWith(fontSize: 10, color: const Color(0xFFFF8181)),
                 ),
                 Text(
                   DateFormat('d MMM y').format(endTime),
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall
-                      ?.copyWith(color: const Color(0xFF9BFFB1)),
+                      ?.copyWith(color: const Color(0xFFFF8181)),
                 )
               ],
             ),

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fusshn/src/ui/common_widgets/fusshn_btn.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../common/dimens.dart';
@@ -57,8 +58,8 @@ class _Details extends StatelessWidget {
       ),
       child: BackdropFilter(
         filter: ImageFilter.blur(
-          sigmaX: 5,
-          sigmaY: 5,
+          sigmaX: 3,
+          sigmaY: 3,
         ),
         child: Container(
           padding: const EdgeInsets.symmetric(
@@ -100,6 +101,8 @@ class _Details extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 8),
+              const FusshnBtn(label: 'Book Now'),
             ],
           ),
         ),
@@ -175,7 +178,10 @@ class _EventTagBox extends StatelessWidget {
         color: const Color(0x7FF8F894).withOpacity(0.4),
         borderRadius: BorderRadius.circular(4),
       ),
-      child: Text(tag),
+      child: Text(
+        tag,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 10),
+      ),
     );
   }
 }

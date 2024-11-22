@@ -23,8 +23,6 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    DateTime? currentBackPressTime;
-
     ref.listen(
       homeViewModelProvider,
       (previous, next) {
@@ -113,9 +111,7 @@ class HomeView extends ConsumerWidget {
               SliverTitle(
                 label: 'Happening near you!',
                 onTap: () {
-                  context.navigateTo(
-                    SeeAllEventRoute(events: eventDataList),
-                  );
+                  context.navigateTo(SeeAllEventRoute(events: eventDataList));
                 },
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 8)),
@@ -195,7 +191,7 @@ class HomeView extends ConsumerWidget {
                       ),
                       const SizedBox(height: 25),
                       Text(
-                        'Crafted by Kalash and Garvit with ❣️',
+                        'Crafted with ❣️ Only for U',
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey.shade300,
@@ -205,7 +201,7 @@ class HomeView extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 50)),
+              const SliverToBoxAdapter(child: SizedBox(height: 70)),
             ],
           ),
         ),

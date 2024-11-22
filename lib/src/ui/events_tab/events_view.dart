@@ -50,6 +50,7 @@ class EventsView extends StatelessWidget {
                         ),
                         SizedBox(height: 24),
                         EventTabList(),
+                        SizedBox(height: 20),
                       ],
                     ),
                   ),
