@@ -1,6 +1,6 @@
 ![](./Assets/header.png)
 
-# News Shorts 📄 
+# Fusshn
 
 An event booking app where user can buy tickets of various events.
 
