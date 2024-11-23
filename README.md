@@ -7,9 +7,10 @@ An event booking app where user can buy tickets of various events.
 
 ## Features 🚀
 
-- Get all the ebent information near you.
-- Buy the event tickets.
-- SHare the event with your friends.
+- Get all the event information near you.
+- Build using riverpod in MVVM.
+- Razor Integration for smooth transaction.
+- Clean dark themed UI. 
 
 
 ## Screenshots 
