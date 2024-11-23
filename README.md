@@ -1,16 +1,19 @@
-# fusshn
+![](./Assets/header.png)
 
-A new Flutter project.
+# Fusshn 📄 
 
-## Getting Started
+An event booking app where user can buy tickets of various events. 
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Features 🚀
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Get all the events details near you.
+- Book the tickets of the event.
+- Share the evnets with your friends.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Onboarding Screens 
+![screenshot1](assets/readMe/one.jpg)
+
+## HomeScreen, WebView, Bookmarks
+![screenshot1](assets/readMe/two.jpg)
