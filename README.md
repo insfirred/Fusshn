@@ -13,6 +13,15 @@ An event booking app where user can buy tickets of various events.
 
 
 ## Screenshots 
+
+<p float="left">
+  <img src="/assets/github_ss/Screenshot_1732362252.png" width="100" />
+  <img src="/assets/github_ss/Screenshot_1732362261.png" width="100" />
+  <img src="/assets/github_ss/Screenshot_1732362252.png" width="100" />
+  <img src="/assets/github_ss/Screenshot_1732362252.png" width="100" />
+  <img src="/assets/github_ss/Screenshot_1732362252.png" width="100" />
+
+</p>
 ![screenshot1](assets/github_ss/Screenshot_1732362252.png)
 ![screenshot1](assets/github_ss/Screenshot_1732362261.png)
 ![screenshot1](assets/github_ss/Screenshot_1732362252.png)
