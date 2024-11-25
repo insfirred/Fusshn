@@ -12,6 +12,7 @@ class Booking {
   final TicketType ticketType;
   final int ticketCount;
   final DateTime createdAt;
+  final String userId;
 
   const Booking({
     required this.id,
@@ -20,6 +21,7 @@ class Booking {
     required this.ticketType,
     required this.ticketCount,
     required this.createdAt,
+    required this.userId,
   });
 
   factory Booking.fromJson(Map<String, dynamic> json) =>

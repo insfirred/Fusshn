@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fusshn/src/repositories/app_repository.dart';
 import 'package:fusshn/src/ui/common_widgets/fusshn_btn.dart';
 import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../common/dimens.dart';
 import '../../models/booking.dart';
@@ -74,21 +74,22 @@ class TicketView extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 40),
-                      Column(
-                        children: [
-                          Container(
-                            width: 100,
-                            height: 100,
-                            color: Colors.pink,
-                          ),
-                          const SizedBox(height: 12),
-                          const Text(
-                            'ID: 12345678',
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
-                          )
-                        ],
+
+                      // QR Code
+                      QrImageView(
+                        data: booking.id,
+                        version: QrVersions.auto,
+                        backgroundColor: Colors.white,
+                        size: 150,
+                        eyeStyle: const QrEyeStyle(
+                          color: Colors.black,
+                          eyeShape: QrEyeShape.square,
+                        ),
+                        dataModuleStyle: const QrDataModuleStyle(
+                          color: Colors.black,
+                        ),
+                        gapless: false,
+                        semanticsLabel: 'BookingID',
                       ),
                     ],
                   ),

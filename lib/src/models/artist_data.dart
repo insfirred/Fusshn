@@ -4,11 +4,6 @@ part 'artist_data.g.dart';
 
 @JsonSerializable()
 class ArtistData {
-  // firestore keys
-  static String idKey = 'id';
-  static String nameKey = 'name';
-  static String imageUrlKey = 'image_url';
-
   final String id;
   final String name;
   final String imageUrl;

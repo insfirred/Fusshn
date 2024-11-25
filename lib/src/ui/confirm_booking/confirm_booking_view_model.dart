@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fusshn/src/utils/booking_id_conversions.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../common/payment.dart';
@@ -290,7 +291,20 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
 
   // TODO: Make it a Transaction method
   _createBookingData(String paymentId) async {
-    String bookingId = '';
+    String userId = ref.read(appRepositoryProvider).userData!.uid;
+    String now = DateTime.now().toString();
+
+    Map<String, dynamic> bookingDataForId = {
+      "paymentId": paymentId,
+      "eventId": state.eventId,
+      "ticketType": state.selectedTicketType!.toJson(),
+      "ticketCount": state.selectedTicketCount.toString(),
+      "createdAt": now,
+      "userId": userId,
+    };
+
+    String bookingId = BookingIdConversions.encodeJsonToId(bookingDataForId);
+
     Booking newBooking = Booking(
       id: bookingId,
       paymentId: paymentId,
@@ -298,29 +312,17 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
       ticketType: state.selectedTicketType!,
       ticketCount: state.selectedTicketCount,
       createdAt: DateTime.now(),
+      userId: userId,
     );
+
+    Map<String, dynamic> newBookingJson = newBooking.toJson();
 
     // booking added to booking collection...
-
-    await firestore.collection('bookings').add(newBooking.toJson()).then(
-      (docRef) {
-        bookingId = docRef.id;
-        docRef.update({'id': bookingId});
-      },
-    );
+    await firestore.collection('bookings').add(newBookingJson);
 
     // updating user doc with new created booking.
     List<String> oldBookingIdsList =
         ref.read(appRepositoryProvider).userData!.bookingIdsList ?? [];
-
-    newBooking = Booking(
-      id: bookingId,
-      paymentId: paymentId,
-      eventId: state.eventId,
-      ticketType: state.selectedTicketType!,
-      ticketCount: state.selectedTicketCount,
-      createdAt: DateTime.now(),
-    );
 
     List<String> updatedBooking = [];
     for (var e in oldBookingIdsList) {

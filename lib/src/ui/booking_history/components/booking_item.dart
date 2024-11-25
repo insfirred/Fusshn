@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../models/booking.dart';
@@ -22,6 +25,8 @@ class BookingItem extends ConsumerWidget {
       bookingHistoryViewModelProvider.select((_) => _.eventData),
     )?[booking.id];
 
+    log(booking.id);
+
     return GestureDetector(
       onTap: () {
         context.navigateTo(
@@ -33,7 +38,7 @@ class BookingItem extends ConsumerWidget {
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
-          height: 150,
+          height: 160,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: Colors.white,
@@ -45,24 +50,20 @@ class BookingItem extends ConsumerWidget {
           child: Row(
             children: [
               Expanded(
-                flex: 5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 80,
-                      height: 80,
-                      color: Colors.red,
-                    ),
-                    const SizedBox(height: 12),
-                    const Text(
-                      'ID: 12345678',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12,
-                      ),
-                    )
-                  ],
+                flex: 8,
+                child: QrImageView(
+                  data: booking.id,
+                  version: QrVersions.auto,
+                  backgroundColor: Colors.white,
+                  eyeStyle: const QrEyeStyle(
+                    color: Colors.black,
+                    eyeShape: QrEyeShape.square,
+                  ),
+                  dataModuleStyle: const QrDataModuleStyle(
+                    color: Colors.black,
+                  ),
+                  gapless: false,
+                  semanticsLabel: 'BookingID',
                 ),
               ),
               const SizedBox(width: 17),
@@ -81,8 +82,10 @@ class BookingItem extends ConsumerWidget {
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 10),
                     Text(
                       '${DateFormat('d MMM y,').add_jm().format(event!.startTime)} - ${DateFormat.jm().format(event.endTime)}',
                       style: TextStyle(
