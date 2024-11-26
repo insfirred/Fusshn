@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class EventImagesSlider extends StatelessWidget {
   EventImagesSlider({
@@ -9,7 +8,8 @@ class EventImagesSlider extends StatelessWidget {
     required this.urls,
   });
 
-  final CarouselController buttonCarouselController = CarouselController();
+  final CarouselSliderController buttonCarouselController =
+      CarouselSliderController();
   final List<String> urls;
 
   @override

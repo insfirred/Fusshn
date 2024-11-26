@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,12 +10,17 @@ class NewBottomBar extends ConsumerWidget {
     super.key,
   });
 
-  static final height = Platform.isIOS ? 80.0 : 60.0;
+  static final height = Platform.isIOS
+      ? 80.0
+      : kIsWeb
+          ? 60
+          : 60.0;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      height: NewBottomBar.height,
+      // height: NewBottomBar.height,
+      height: 100,
       padding: const EdgeInsets.only(
         left: 10,
         right: 10,

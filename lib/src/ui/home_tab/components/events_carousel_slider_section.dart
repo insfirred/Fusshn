@@ -16,13 +16,13 @@ class EventsCarouselSliderSection extends ConsumerStatefulWidget {
 
 class _EventsCarouselSliderSectionState
     extends ConsumerState<EventsCarouselSliderSection> {
-  late CarouselController controller;
+  late CarouselSliderController controller;
   int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    controller = CarouselController();
+    controller = CarouselSliderController();
   }
 
   @override
