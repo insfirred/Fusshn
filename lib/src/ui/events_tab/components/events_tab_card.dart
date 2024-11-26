@@ -128,7 +128,6 @@ class _Image extends StatelessWidget {
   const _Image({
     required this.imageUrl,
     required this.startDate,
-    super.key,
   });
 
   final String imageUrl;

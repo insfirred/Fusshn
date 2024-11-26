@@ -128,7 +128,7 @@ class _Data extends StatelessWidget {
                     width: 10,
                   ),
                   const SizedBox(width: 5),
-                  Container(
+                  SizedBox(
                     width: 190,
                     child: Text(
                       'Club Khubani, Near petrol Pump, Aerocity',
