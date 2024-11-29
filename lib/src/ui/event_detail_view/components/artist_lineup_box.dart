@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../common/dimens.dart';
 import '../../../models/artist_data.dart';
@@ -27,42 +28,8 @@ class ArtistLineupBox extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 12,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFFAFAFA)),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: lineup
-                          .map(
-                            (artist) => CachedNetworkImage(
-                              imageUrl: artist.imageUrl,
-                              width: 32,
-                              height: 32,
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      _generateArtistNames(),
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                ],
-              ),
+            Row(
+              children: lineup.map((e) => _ArtistItem(e)).toList(),
             ),
             const SizedBox(height: 8),
             const Divider(
@@ -82,5 +49,35 @@ class ArtistLineupBox extends StatelessWidget {
     }
     int len = res.length;
     return res.substring(0, len - 2);
+  }
+}
+
+class _ArtistItem extends StatelessWidget {
+  const _ArtistItem(this.artist);
+
+  final ArtistData artist;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: CachedNetworkImage(
+              imageUrl: artist.imageUrl,
+              width: 80,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            artist.name,
+            style:
+                Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 12),
+          ),
+        ],
+      ),
+    );
   }
 }

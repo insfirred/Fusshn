@@ -82,7 +82,7 @@ class EventDetailView extends StatelessWidget {
                       ),
                       child: Text(
                         eventData.name,
-                        style: Theme.of(context).textTheme.displaySmall,
+                        style: Theme.of(context).textTheme.titleMedium,
                         maxLines: 2,
                         textAlign: TextAlign.center,
                       ),
@@ -114,9 +114,7 @@ class EventDetailView extends StatelessWidget {
                   ),
 
                   // INTRODUCTION
-                  EventIntroduction(
-                    intro: eventData.description,
-                  ),
+                  EventIntroduction(eventData.description),
                   const SliverToBoxAdapter(child: SizedBox(height: 8)),
 
                   // ARTIST LINEUP
@@ -124,9 +122,7 @@ class EventDetailView extends StatelessWidget {
                   const SliverToBoxAdapter(child: SizedBox(height: 24)),
 
                   // TERMS AND CONDITIONS
-                  TermsAndConditions(
-                    termsAndConditions: eventData.termsAndConditions,
-                  ),
+                  TermsAndConditions(eventData.termsAndConditions),
                   const SliverToBoxAdapter(child: SizedBox(height: 90)),
                 ],
               ),

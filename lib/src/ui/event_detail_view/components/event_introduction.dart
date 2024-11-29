@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../common/dimens.dart';
 
 class EventIntroduction extends StatefulWidget {
-  const EventIntroduction({
+  const EventIntroduction(
+    this.intro, {
     super.key,
-    required this.intro,
   });
 
   final String intro;
@@ -15,7 +15,15 @@ class EventIntroduction extends StatefulWidget {
 }
 
 class _EventIntroductionState extends State<EventIntroduction> {
-  bool isVisible = true;
+  bool showFullIntro = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.intro.length <= 280) {
+      showFullIntro = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,44 +33,57 @@ class _EventIntroductionState extends State<EventIntroduction> {
           horizontal: homeTabHorizontalPadding,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  isVisible = !isVisible;
-                });
-              },
-              behavior: HitTestBehavior.opaque,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Introduction',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: isVisible
-                        ? Image.asset(
-                            'assets/dropdown_inverted.png',
-                            width: 12,
-                          )
-                        : Image.asset(
-                            'assets/dropdown.png',
-                            width: 12,
-                          ),
-                  )
-                ],
-              ),
+            Text(
+              'Introduction',
+              style: Theme.of(context).textTheme.titleMedium,
             ),
-            const SizedBox(height: 8),
-            if (isVisible) ...[
+            const SizedBox(height: 4),
+            if (widget.intro.length <= 280) ...[
               Text(
                 widget.intro,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall
-                    ?.copyWith(color: const Color(0xFFB0B0B0)),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: const Color(0xFFB0B0B0),
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
+            ] else ...[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (showFullIntro) ...[
+                    Text(
+                      widget.intro,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: const Color(0xFFB0B0B0),
+                            fontWeight: FontWeight.w400,
+                          ),
+                    ),
+                  ] else ...[
+                    Text(
+                      '${widget.intro.substring(0, 280)}...',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: const Color(0xFFB0B0B0),
+                            fontWeight: FontWeight.w400,
+                          ),
+                    ),
+                  ],
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        showFullIntro = !showFullIntro;
+                      });
+                    },
+                    child: Text(
+                      showFullIntro ? 'See Less' : 'See More',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                    ),
+                  ),
+                ],
               ),
             ],
             const Divider(

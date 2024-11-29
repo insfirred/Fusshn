@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../common/dimens.dart';
 
 class TermsAndConditions extends StatefulWidget {
-  const TermsAndConditions({
+  const TermsAndConditions(
+    this.termsAndConditions, {
     super.key,
-    required this.termsAndConditions,
   });
 
   final List<String> termsAndConditions;
@@ -15,7 +15,15 @@ class TermsAndConditions extends StatefulWidget {
 }
 
 class _TermsAndConditionsState extends State<TermsAndConditions> {
-  bool isVisible = true;
+  bool showAllTerms = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.termsAndConditions.length <= 3) {
+      showAllTerms = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,50 +32,81 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
         padding: const EdgeInsets.symmetric(
           horizontal: homeTabHorizontalPadding,
         ),
-        child: Column(
-          children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  isVisible = !isVisible;
-                });
-              },
-              behavior: HitTestBehavior.opaque,
-              child: Row(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.white,
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Terms & Conditions',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontSize: 16, color: Colors.black),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: isVisible
-                        ? Image.asset(
-                            'assets/dropdown_inverted.png',
-                            width: 12,
-                          )
-                        : Image.asset(
-                            'assets/dropdown.png',
-                            width: 12,
-                          ),
-                  )
                 ],
               ),
-            ),
-            const SizedBox(height: 8),
-            if (isVisible) ...[
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: widget.termsAndConditions.length,
-                itemBuilder: (context, index) => _TermItem(
-                  index: index,
-                  label: widget.termsAndConditions[index],
+              const SizedBox(height: 8),
+              if (widget.termsAndConditions.length <= 3) ...[
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: widget.termsAndConditions.length,
+                  itemBuilder: (context, index) => _TermItem(
+                    index: index,
+                    label: widget.termsAndConditions[index],
+                  ),
+                ),
+              ] else ...[
+                if (showAllTerms) ...[
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: widget.termsAndConditions.length,
+                    itemBuilder: (context, index) => _TermItem(
+                      index: index,
+                      label: widget.termsAndConditions[index],
+                    ),
+                  ),
+                ] else ...[
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: 3,
+                    itemBuilder: (context, index) => _TermItem(
+                      index: index,
+                      label: widget.termsAndConditions[index],
+                    ),
+                  ),
+                ],
+              ],
+              Padding(
+                padding: const EdgeInsets.only(left: 24),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      showAllTerms = !showAllTerms;
+                    });
+                  },
+                  behavior: HitTestBehavior.opaque,
+                  child: Text(
+                    showAllTerms ? 'See Less' : 'See More',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontSize: 12,
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                  ),
                 ),
               ),
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -96,17 +135,17 @@ class _TermItem extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodySmall
-                  ?.copyWith(color: const Color(0xFFB0B0B0)),
+                  ?.copyWith(color: Colors.black, fontSize: 12),
             ),
           ),
           Expanded(
-            flex: 14,
+            flex: 20,
             child: Text(
               label,
               style: Theme.of(context)
                   .textTheme
                   .bodySmall
-                  ?.copyWith(color: const Color(0xFFB0B0B0)),
+                  ?.copyWith(color: Colors.black, fontSize: 12),
             ),
           ),
         ],
