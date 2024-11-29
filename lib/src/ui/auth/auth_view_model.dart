@@ -27,7 +27,7 @@ final authViewModelProvider =
 class AuthViewModel extends StateNotifier<AuthViewState> {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firestore;
-  final AutoDisposeStateNotifierProviderRef ref;
+  final Ref ref;
 
   AuthViewModel({
     required this.firebaseAuth,

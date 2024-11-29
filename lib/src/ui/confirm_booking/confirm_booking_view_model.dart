@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:fusshn/src/utils/booking_id_conversions.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../common/payment.dart';
@@ -28,7 +27,7 @@ final confirmBookingViewModelProvider = StateNotifierProvider.autoDispose<
 );
 
 class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
-  final AutoDisposeStateNotifierProviderRef ref;
+  final Ref ref;
   final Razorpay razorpay;
   final FirebaseFirestore firestore;
 
@@ -292,20 +291,10 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
   // TODO: Make it a Transaction method
   _createBookingData(String paymentId) async {
     String userId = ref.read(appRepositoryProvider).userData!.uid;
-    String now = DateTime.now().toString();
 
-    Map<String, dynamic> bookingDataForId = {
-      "paymentId": paymentId,
-      "eventId": state.eventId,
-      "ticketType": state.selectedTicketType!.toJson(),
-      "ticketCount": state.selectedTicketCount.toString(),
-      "createdAt": now,
-      "userId": userId,
-    };
+    String bookingId = "";
 
-    String bookingId = BookingIdConversions.encodeJsonToId(bookingDataForId);
-
-    Booking newBooking = Booking(
+    Booking booking = Booking(
       id: bookingId,
       paymentId: paymentId,
       eventId: state.eventId,
@@ -315,10 +304,15 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
       userId: userId,
     );
 
-    Map<String, dynamic> newBookingJson = newBooking.toJson();
+    Map<String, dynamic> newBookingJson = booking.toJson();
 
     // booking added to booking collection...
-    await firestore.collection('bookings').add(newBookingJson);
+    await firestore.collection('bookings').add(newBookingJson).then((doc) {
+      bookingId = doc.id;
+      doc.update({
+        "id": doc.id,
+      });
+    });
 
     // updating user doc with new created booking.
     List<String> oldBookingIdsList =

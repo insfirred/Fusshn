@@ -18,7 +18,7 @@ final searchEventViewModelProvider = StateNotifierProvider.autoDispose<
 
 class SearchEventViewModel extends StateNotifier<SearchEventViewState> {
   final FirebaseFirestore firestore;
-  final AutoDisposeStateNotifierProviderRef ref;
+  final Ref ref;
 
   SearchEventViewModel({
     required this.firestore,

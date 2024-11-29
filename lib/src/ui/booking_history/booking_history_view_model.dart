@@ -22,7 +22,7 @@ final bookingHistoryViewModelProvider = StateNotifierProvider.autoDispose<
 
 class BookingHistoryViewModel extends StateNotifier<BookingHistoryViewState> {
   final FirebaseFirestore firestore;
-  final AutoDisposeStateNotifierProviderRef ref;
+  final Ref ref;
 
   BookingHistoryViewModel({
     required this.firestore,
