@@ -60,7 +60,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '120179228869',
     projectId: 'fusshn-aef8e',
     storageBucket: 'fusshn-aef8e.appspot.com',
-    iosBundleId: 'com.example.fusshn',
+    iosBundleId: 'com.fusshn.fusshncustomer',
   );
 
   static const FirebaseOptions web = FirebaseOptions(

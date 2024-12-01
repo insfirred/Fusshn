@@ -1,4 +1,4 @@
-package com.example.fusshn
+package com.fusshn.fusshncustomer
 
 import io.flutter.embedding.android.FlutterActivity
 

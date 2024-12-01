@@ -24,15 +24,15 @@ class GreetingAppBar extends ConsumerWidget {
       collapsedHeight: 85,
       toolbarHeight: 85,
       backgroundColor: Colors.transparent,
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 16, top: 20),
-          child: Image.asset(
-            'assets/notification_read.png',
-            width: 24,
-          ),
-        )
-      ],
+      // actions: [
+      //   Padding(
+      //     padding: const EdgeInsets.only(right: 16, top: 20),
+      //     child: Image.asset(
+      //       'assets/notification_read.png',
+      //       width: 24,
+      //     ),
+      //   )
+      // ],
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
