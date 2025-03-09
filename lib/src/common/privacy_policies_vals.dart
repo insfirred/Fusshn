@@ -1,6 +1,7 @@
-List<PrivacyPolicyModel> privacyPolicies = [
+List<PrivacyPolicyModel> privacyPoliciesVals = [
   // 1st
   PrivacyPolicyModel(
+    id: 1,
     title: 'Introduction',
     subModels: [],
     points: [
@@ -19,6 +20,7 @@ List<PrivacyPolicyModel> privacyPolicies = [
 
   // 2nd
   PrivacyPolicyModel(
+    id: 2,
     title: 'Information We Collect',
     subModels: [
       SubPrivacyPolicyModel(
@@ -82,6 +84,7 @@ List<PrivacyPolicyModel> privacyPolicies = [
 
   // 3rd
   PrivacyPolicyModel(
+    id: 3,
     title: 'How We Use Your Information',
     subModels: [
       SubPrivacyPolicyModel(
@@ -140,6 +143,7 @@ List<PrivacyPolicyModel> privacyPolicies = [
 
   // 4th
   PrivacyPolicyModel(
+    id: 4,
     title: 'How We Share Your Information',
     subModels: [
       SubPrivacyPolicyModel(
@@ -188,6 +192,7 @@ List<PrivacyPolicyModel> privacyPolicies = [
 
   // 5th
   PrivacyPolicyModel(
+    id: 5,
     title: 'Security Measures',
     subModels: [],
     points: [
@@ -201,6 +206,7 @@ List<PrivacyPolicyModel> privacyPolicies = [
 
   // 6th
   PrivacyPolicyModel(
+    id: 6,
     title: 'Your Rights and Choices',
     subModels: [
       SubPrivacyPolicyModel(
@@ -239,6 +245,7 @@ List<PrivacyPolicyModel> privacyPolicies = [
 
   // 7th
   PrivacyPolicyModel(
+    id: 7,
     title: 'Cookies and Tracking Technologies',
     subModels: [],
     points: [
@@ -252,6 +259,7 @@ List<PrivacyPolicyModel> privacyPolicies = [
 
   // 8th
   PrivacyPolicyModel(
+    id: 8,
     title: 'Third-Party Links and Services',
     subModels: [],
     points: [
@@ -265,6 +273,7 @@ List<PrivacyPolicyModel> privacyPolicies = [
 
   // 9th
   PrivacyPolicyModel(
+    id: 9,
     title: 'Children\'s Privacy',
     subModels: [],
     points: [
@@ -278,6 +287,7 @@ List<PrivacyPolicyModel> privacyPolicies = [
 
   // 10th
   PrivacyPolicyModel(
+    id: 10,
     title: 'Changes to This Privacy Policy',
     subModels: [],
     points: [
@@ -291,6 +301,7 @@ List<PrivacyPolicyModel> privacyPolicies = [
 
   // 11th
   PrivacyPolicyModel(
+    id: 11,
     title: 'Contact Us',
     subModels: [],
     points: [
@@ -312,15 +323,36 @@ List<PrivacyPolicyModel> privacyPolicies = [
 ];
 
 class PrivacyPolicyModel {
+  final int id;
   final String title;
   final List<SubPrivacyPolicyModel> subModels;
   final List<PrivacyPolicyPointModel> points;
 
   PrivacyPolicyModel({
+    required this.id,
     required this.title,
     required this.subModels,
     required this.points,
   });
+
+  factory PrivacyPolicyModel.fromJson(Map<String, dynamic> json) =>
+      PrivacyPolicyModel(
+        id: json['id'],
+        title: json['title'],
+        subModels: (json['sub_models'] as List)
+            .map((i) => SubPrivacyPolicyModel.fromJson(i))
+            .toList(),
+        points: (json['points'] as List)
+            .map((i) => PrivacyPolicyPointModel.fromJson(i))
+            .toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'sub_models': subModels.map((i) => i.toJson()).toList(),
+        'points': points.map((i) => i.toJson()).toList(),
+      };
 }
 
 class SubPrivacyPolicyModel {
@@ -331,6 +363,19 @@ class SubPrivacyPolicyModel {
     required this.subtitle,
     required this.pointModels,
   });
+
+  factory SubPrivacyPolicyModel.fromJson(Map<String, dynamic> json) =>
+      SubPrivacyPolicyModel(
+        subtitle: json['subtitle'],
+        pointModels: (json['point_models'] as List)
+            .map((i) => PrivacyPolicyPointModel.fromJson(i))
+            .toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'subtitle': subtitle,
+        'point_models': pointModels.map((i) => i.toJson()).toList(),
+      };
 }
 
 class PrivacyPolicyPointModel {
@@ -341,4 +386,15 @@ class PrivacyPolicyPointModel {
     required this.header,
     required this.point,
   });
+
+  factory PrivacyPolicyPointModel.fromJson(Map<String, dynamic> json) =>
+      PrivacyPolicyPointModel(
+        header: json['header'],
+        point: json['point'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        'header': header,
+        'point': point,
+      };
 }

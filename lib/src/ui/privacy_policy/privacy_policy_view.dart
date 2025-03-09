@@ -23,9 +23,9 @@ class PrivacyPolicyView extends StatelessWidget {
               Expanded(
                 child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
-                  itemCount: privacyPolicies.length,
+                  itemCount: privacyPoliciesVals.length,
                   itemBuilder: (context, index) => _PnpItem(
-                    privacyPolicies[index],
+                    privacyPoliciesVals[index],
                   ),
                   separatorBuilder: (context, index) => Divider(
                     color: Colors.white.withOpacity(0.5),

@@ -29,7 +29,7 @@ final editProfileViewModelProvider = StateNotifierProvider.autoDispose<
 class EditProfileViewModel extends StateNotifier<EditProfileViewState> {
   final FirebaseFirestore firestore;
   final FirebaseStorage storage;
-  final AutoDisposeStateNotifierProviderRef ref;
+  final Ref ref;
 
   EditProfileViewModel({
     required this.firestore,
