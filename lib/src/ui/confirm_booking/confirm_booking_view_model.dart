@@ -291,6 +291,9 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
   // TODO: Make it a Transaction method
   _createBookingData(String paymentId) async {
     String userId = ref.read(appRepositoryProvider).userData!.uid;
+    String userName = ref.read(appRepositoryProvider).userData!.name!;
+    String userEmail = ref.read(appRepositoryProvider).userData!.email;
+    String userPhone = ref.read(appRepositoryProvider).userData!.phone!;
 
     String bookingId = "";
 
@@ -305,6 +308,13 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
     );
 
     Map<String, dynamic> newBookingJson = booking.toJson();
+    newBookingJson.addAll(
+      {
+        "userName": userName,
+        "userEmail": userEmail,
+        "userPhone": userPhone,
+      },
+    );
 
     // booking added to booking collection...
     await firestore.collection('bookings').add(newBookingJson).then((doc) {

@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fusshn/src/services/notification_service.dart';
@@ -19,6 +20,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // for all users, subscribe to general topic.
+  await FirebaseMessaging.instance.subscribeToTopic('general');
 
   final sharedPreferences = await SharedPreferences.getInstance();
   final container = ProviderContainer(overrides: [
