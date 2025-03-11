@@ -87,10 +87,6 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
     razorpay.open(options);
   }
 
-  void deleteItAfter() async {
-    state = state.copyWith(status: PaymentStatus.success);
-  }
-
   void _handlePaymentSuccessResponse(PaymentSuccessResponse response) async {
     /*
     When Payment Success, we will perform the following.
@@ -149,8 +145,8 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
     );
 
     _setBasePrice();
-    _setGstFee();
     _setBookingFee();
+    _setGstFee();
 
     log('${state.basePrice} + ${state.bookingFee} + ${state.gstFee}');
 
@@ -162,15 +158,19 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
   }
 
   _setBasePrice() => state = state.copyWith(
-      basePrice: _roundOffUptoTwoDecimal(
-          state.selectedTicketType!.price * state.selectedTicketCount));
-
-  _setGstFee() => state = state.copyWith(
-      gstFee: _roundOffUptoTwoDecimal(state.basePrice / 100 * gstFeePercent));
+          basePrice: _roundOffUptoTwoDecimal(
+        state.selectedTicketType!.price * state.selectedTicketCount,
+      ));
 
   _setBookingFee() => state = state.copyWith(
-      bookingFee: _roundOffUptoTwoDecimal(
-          state.basePrice / 100 * defaultBookingFeePercent));
+          bookingFee: _roundOffUptoTwoDecimal(
+        state.basePrice / 100 * defaultBookingFeePercent,
+      ));
+
+  _setGstFee() => state = state.copyWith(
+          gstFee: _roundOffUptoTwoDecimal(
+        state.bookingFee / 100 * gstFeePercent,
+      ));
 
   double _roundOffUptoTwoDecimal(double val) {
     String inString = val.toStringAsFixed(2);
