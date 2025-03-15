@@ -45,6 +45,7 @@ dependencies:
   location: ^6.0.2
   qr_flutter: ^4.1.0
   firebase_messaging: ^14.9.4
+  flutter_native_splash: ^2.4.0
 
 dev_dependencies:
   flutter_test:
