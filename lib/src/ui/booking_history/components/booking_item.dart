@@ -38,74 +38,92 @@ class BookingItem extends ConsumerWidget {
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
-          height: 160,
+          height: booking.isValid ? 160 : 182,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: Colors.white,
           ),
           padding: const EdgeInsets.symmetric(
             horizontal: 10,
-            vertical: 16,
+            // vertical: 16,
           ),
-          child: Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                flex: 8,
-                child: QrImageView(
-                  data: booking.id,
-                  version: QrVersions.auto,
-                  backgroundColor: Colors.white,
-                  eyeStyle: const QrEyeStyle(
-                    color: Colors.black,
-                    eyeShape: QrEyeShape.square,
-                  ),
-                  dataModuleStyle: const QrDataModuleStyle(
-                    color: Colors.black,
-                  ),
-                  gapless: false,
-                  semanticsLabel: 'BookingID',
-                ),
-              ),
-              const SizedBox(width: 17),
-              SvgPicture.asset('assets/vertical_divider.svg'),
-              const SizedBox(width: 17),
-              Expanded(
-                flex: 12,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      event?.name ?? "Unknown",
-                      style: const TextStyle(
-                        fontSize: 16,
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 8,
+                    child: QrImageView(
+                      data: booking.id,
+                      version: QrVersions.auto,
+                      backgroundColor: Colors.white,
+                      eyeStyle: const QrEyeStyle(
                         color: Colors.black,
-                        fontWeight: FontWeight.w600,
+                        eyeShape: QrEyeShape.square,
                       ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      '${DateFormat('d MMM y,').add_jm().format(event!.startTime)} - ${DateFormat.jm().format(event.endTime)}',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black.withOpacity(0.5),
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      '${booking.ticketType.name} x ${booking.ticketCount}',
-                      style: const TextStyle(
-                        fontSize: 12,
+                      dataModuleStyle: const QrDataModuleStyle(
                         color: Colors.black,
-                        fontWeight: FontWeight.w600,
                       ),
+                      gapless: false,
+                      semanticsLabel: 'BookingID',
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 17),
+                  SvgPicture.asset('assets/vertical_divider.svg'),
+                  const SizedBox(width: 17),
+                  Expanded(
+                    flex: 12,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          event?.name ?? "Unknown",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          '${DateFormat('d MMM y,').add_jm().format(event!.startTime)} - ${DateFormat.jm().format(event.endTime)}',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black.withOpacity(0.5),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          '${booking.ticketType.name} x ${booking.ticketCount}',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
+              if (!booking.isValid) ...[
+                const Spacer(),
+                const Text(
+                  'FINISHED: Hope you enjoyed the show',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 5)
+              ],
             ],
           )),
     );

@@ -13,6 +13,7 @@ class Booking {
   final int ticketCount;
   final DateTime createdAt;
   final String userId;
+  final bool isValid;
 
   const Booking({
     required this.id,
@@ -22,6 +23,7 @@ class Booking {
     required this.ticketCount,
     required this.createdAt,
     required this.userId,
+    this.isValid = true,
   });
 
   factory Booking.fromJson(Map<String, dynamic> json) =>

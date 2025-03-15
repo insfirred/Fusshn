@@ -15,6 +15,7 @@ Booking _$BookingFromJson(Map<String, dynamic> json) => Booking(
       ticketCount: json['ticketCount'] as int,
       createdAt: DateTime.parse(json['createdAt'] as String),
       userId: json['userId'] as String,
+      isValid: json['isValid'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$BookingToJson(Booking instance) => <String, dynamic>{
@@ -25,4 +26,5 @@ Map<String, dynamic> _$BookingToJson(Booking instance) => <String, dynamic>{
       'ticketCount': instance.ticketCount,
       'createdAt': instance.createdAt.toIso8601String(),
       'userId': instance.userId,
+      'isValid': instance.isValid,
     };
