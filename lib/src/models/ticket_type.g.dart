@@ -10,12 +10,12 @@ TicketType _$TicketTypeFromJson(Map<String, dynamic> json) => TicketType(
       id: json['id'] as String,
       name: json['name'] as String,
       price: (json['price'] as num).toDouble(),
-      personAllowed: json['personAllowed'] as int,
+      personAllowedPerTicket: (json['personAllowedPerTicket'] as num).toInt(),
       personGender: $enumDecode(_$GenderEnumMap, json['personGender']),
       description: json['description'] as String,
       isRefundable: json['isRefundable'] as bool,
-      totalTickets: json['totalTickets'] as int,
-      availableTickets: json['availableTickets'] as int,
+      totalTickets: (json['totalTickets'] as num).toInt(),
+      availableTickets: (json['availableTickets'] as num).toInt(),
     );
 
 Map<String, dynamic> _$TicketTypeToJson(TicketType instance) =>
@@ -23,7 +23,7 @@ Map<String, dynamic> _$TicketTypeToJson(TicketType instance) =>
       'id': instance.id,
       'name': instance.name,
       'price': instance.price,
-      'personAllowed': instance.personAllowed,
+      'personAllowedPerTicket': instance.personAllowedPerTicket,
       'personGender': _$GenderEnumMap[instance.personGender]!,
       'description': instance.description,
       'isRefundable': instance.isRefundable,

@@ -9,7 +9,7 @@ class TicketType {
   final String id;
   final String name;
   final double price;
-  final int personAllowed;
+  final int personAllowedPerTicket;
   final Gender personGender;
   final String description;
   final bool isRefundable;
@@ -20,7 +20,7 @@ class TicketType {
     required this.id,
     required this.name,
     required this.price,
-    required this.personAllowed,
+    required this.personAllowedPerTicket,
     required this.personGender,
     required this.description,
     required this.isRefundable,

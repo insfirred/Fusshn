@@ -223,7 +223,7 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
               id: ticket.id,
               name: ticket.name,
               price: ticket.price,
-              personAllowed: ticket.personAllowed,
+              personAllowedPerTicket: ticket.personAllowedPerTicket,
               personGender: ticket.personGender,
               description: ticket.description,
               isRefundable: ticket.isRefundable,
@@ -305,19 +305,17 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
       ticketCount: state.selectedTicketCount,
       createdAt: DateTime.now(),
       userId: userId,
-    );
-
-    Map<String, dynamic> newBookingJson = booking.toJson();
-    newBookingJson.addAll(
-      {
-        "userName": userName,
-        "userEmail": userEmail,
-        "userPhone": userPhone,
-      },
+      userName: userName,
+      userEmail: userEmail,
+      userPhone: userPhone,
+      isCheckIn: false,
+      numberOfUserCheckedIn: 0,
+      totalUserAllowed: state.selectedTicketCount *
+          state.selectedTicketType!.personAllowedPerTicket,
     );
 
     // booking added to booking collection...
-    await firestore.collection('bookings').add(newBookingJson).then((doc) {
+    await firestore.collection('bookings').add(booking.toJson()).then((doc) {
       bookingId = doc.id;
       doc.update({
         "id": doc.id,
