@@ -38,7 +38,7 @@ class BookingItem extends ConsumerWidget {
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
-          height: booking.isValid ? 160 : 182,
+          height: booking.isCheckIn ? 160 : 182,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: Colors.white,
@@ -112,7 +112,7 @@ class BookingItem extends ConsumerWidget {
                   ),
                 ],
               ),
-              if (!booking.isValid) ...[
+              if (!booking.isCheckIn) ...[
                 const Spacer(),
                 const Text(
                   'FINISHED: Hope you enjoyed the show',

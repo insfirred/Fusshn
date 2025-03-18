@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../repositories/app_repository.dart';
 import '../../routing/app_router.dart';
@@ -24,12 +25,17 @@ class _SplashViewState extends ConsumerState<SplashView> {
     });
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
+      // body: Center(
+      //   // child: Text('Splash View'),
+      //   child: Image.asset(
+      //     'assets/app_icon.png',
+      //     width: 200,
+      //   ),
+      // ),
       body: Center(
-        // child: Text('Splash View'),
-        child: Image.asset(
-          'assets/app_icon.png',
-          width: 200,
+        child: Lottie.asset(
+          'assets/lottie/splash_animation.json',
         ),
       ),
     );
