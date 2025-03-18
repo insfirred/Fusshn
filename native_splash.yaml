@@ -4,10 +4,8 @@ flutter_native_splash:
   web: false
   
   background_image: "assets/splash/background_image.png"
-  branding: "assets/splash/branding_image.png"
   image: "assets/splash/logo.png"
 
   android_12:
     color: "#000000"
-    branding: "assets/splash/branding_image.png"
     image: "assets/splash/logo.png"
