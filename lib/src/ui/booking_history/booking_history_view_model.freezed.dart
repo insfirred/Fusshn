@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$BookingHistoryViewState {
-  List<Booking> get myBookings =>
+  List<Booking> get upcomingBookings => throw _privateConstructorUsedError;
+  List<Booking> get pastBookings =>
       throw _privateConstructorUsedError; // <BookindID, EventData>
   Map<String, EventData>? get eventData => throw _privateConstructorUsedError;
   BookingHistoryViewType get viewType => throw _privateConstructorUsedError;
@@ -35,7 +36,8 @@ abstract class $BookingHistoryViewStateCopyWith<$Res> {
       _$BookingHistoryViewStateCopyWithImpl<$Res, BookingHistoryViewState>;
   @useResult
   $Res call(
-      {List<Booking> myBookings,
+      {List<Booking> upcomingBookings,
+      List<Booking> pastBookings,
       Map<String, EventData>? eventData,
       BookingHistoryViewType viewType,
       BookingHistoryViewStatus status,
@@ -56,16 +58,21 @@ class _$BookingHistoryViewStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? myBookings = null,
+    Object? upcomingBookings = null,
+    Object? pastBookings = null,
     Object? eventData = freezed,
     Object? viewType = null,
     Object? status = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
-      myBookings: null == myBookings
-          ? _value.myBookings
-          : myBookings // ignore: cast_nullable_to_non_nullable
+      upcomingBookings: null == upcomingBookings
+          ? _value.upcomingBookings
+          : upcomingBookings // ignore: cast_nullable_to_non_nullable
+              as List<Booking>,
+      pastBookings: null == pastBookings
+          ? _value.pastBookings
+          : pastBookings // ignore: cast_nullable_to_non_nullable
               as List<Booking>,
       eventData: freezed == eventData
           ? _value.eventData
@@ -97,7 +104,8 @@ abstract class _$$BookingHistoryViewStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<Booking> myBookings,
+      {List<Booking> upcomingBookings,
+      List<Booking> pastBookings,
       Map<String, EventData>? eventData,
       BookingHistoryViewType viewType,
       BookingHistoryViewStatus status,
@@ -117,16 +125,21 @@ class __$$BookingHistoryViewStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? myBookings = null,
+    Object? upcomingBookings = null,
+    Object? pastBookings = null,
     Object? eventData = freezed,
     Object? viewType = null,
     Object? status = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$BookingHistoryViewStateImpl(
-      myBookings: null == myBookings
-          ? _value._myBookings
-          : myBookings // ignore: cast_nullable_to_non_nullable
+      upcomingBookings: null == upcomingBookings
+          ? _value._upcomingBookings
+          : upcomingBookings // ignore: cast_nullable_to_non_nullable
+              as List<Booking>,
+      pastBookings: null == pastBookings
+          ? _value._pastBookings
+          : pastBookings // ignore: cast_nullable_to_non_nullable
               as List<Booking>,
       eventData: freezed == eventData
           ? _value._eventData
@@ -154,21 +167,33 @@ class _$BookingHistoryViewStateImpl
     with DiagnosticableTreeMixin
     implements _BookingHistoryViewState {
   const _$BookingHistoryViewStateImpl(
-      {final List<Booking> myBookings = const [],
+      {final List<Booking> upcomingBookings = const [],
+      final List<Booking> pastBookings = const [],
       final Map<String, EventData>? eventData,
       this.viewType = BookingHistoryViewType.UPCOMING,
       this.status = BookingHistoryViewStatus.initial,
       this.errorMessage})
-      : _myBookings = myBookings,
+      : _upcomingBookings = upcomingBookings,
+        _pastBookings = pastBookings,
         _eventData = eventData;
 
-  final List<Booking> _myBookings;
+  final List<Booking> _upcomingBookings;
   @override
   @JsonKey()
-  List<Booking> get myBookings {
-    if (_myBookings is EqualUnmodifiableListView) return _myBookings;
+  List<Booking> get upcomingBookings {
+    if (_upcomingBookings is EqualUnmodifiableListView)
+      return _upcomingBookings;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_myBookings);
+    return EqualUnmodifiableListView(_upcomingBookings);
+  }
+
+  final List<Booking> _pastBookings;
+  @override
+  @JsonKey()
+  List<Booking> get pastBookings {
+    if (_pastBookings is EqualUnmodifiableListView) return _pastBookings;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_pastBookings);
   }
 
 // <BookindID, EventData>
@@ -194,7 +219,7 @@ class _$BookingHistoryViewStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BookingHistoryViewState(myBookings: $myBookings, eventData: $eventData, viewType: $viewType, status: $status, errorMessage: $errorMessage)';
+    return 'BookingHistoryViewState(upcomingBookings: $upcomingBookings, pastBookings: $pastBookings, eventData: $eventData, viewType: $viewType, status: $status, errorMessage: $errorMessage)';
   }
 
   @override
@@ -202,7 +227,8 @@ class _$BookingHistoryViewStateImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BookingHistoryViewState'))
-      ..add(DiagnosticsProperty('myBookings', myBookings))
+      ..add(DiagnosticsProperty('upcomingBookings', upcomingBookings))
+      ..add(DiagnosticsProperty('pastBookings', pastBookings))
       ..add(DiagnosticsProperty('eventData', eventData))
       ..add(DiagnosticsProperty('viewType', viewType))
       ..add(DiagnosticsProperty('status', status))
@@ -215,7 +241,9 @@ class _$BookingHistoryViewStateImpl
         (other.runtimeType == runtimeType &&
             other is _$BookingHistoryViewStateImpl &&
             const DeepCollectionEquality()
-                .equals(other._myBookings, _myBookings) &&
+                .equals(other._upcomingBookings, _upcomingBookings) &&
+            const DeepCollectionEquality()
+                .equals(other._pastBookings, _pastBookings) &&
             const DeepCollectionEquality()
                 .equals(other._eventData, _eventData) &&
             (identical(other.viewType, viewType) ||
@@ -228,7 +256,8 @@ class _$BookingHistoryViewStateImpl
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_myBookings),
+      const DeepCollectionEquality().hash(_upcomingBookings),
+      const DeepCollectionEquality().hash(_pastBookings),
       const DeepCollectionEquality().hash(_eventData),
       viewType,
       status,
@@ -244,14 +273,17 @@ class _$BookingHistoryViewStateImpl
 
 abstract class _BookingHistoryViewState implements BookingHistoryViewState {
   const factory _BookingHistoryViewState(
-      {final List<Booking> myBookings,
+      {final List<Booking> upcomingBookings,
+      final List<Booking> pastBookings,
       final Map<String, EventData>? eventData,
       final BookingHistoryViewType viewType,
       final BookingHistoryViewStatus status,
       final String? errorMessage}) = _$BookingHistoryViewStateImpl;
 
   @override
-  List<Booking> get myBookings;
+  List<Booking> get upcomingBookings;
+  @override
+  List<Booking> get pastBookings;
   @override // <BookindID, EventData>
   Map<String, EventData>? get eventData;
   @override

@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,14 +47,16 @@ class BookingHistoryViewModel extends StateNotifier<BookingHistoryViewState> {
       List<QueryDocumentSnapshot<Map<String, dynamic>>> bookingsSnapshotList =
           allBookingsSnapshot.docs;
 
-      List<Booking> myBookings = [];
+      List<Booking> myAllBookings = [];
+      List<Booking> upcomingBookings = [];
+      List<Booking> pastBookings = [];
 
       // filtering all my booking
       for (var snapshot in bookingsSnapshotList) {
         if (snapshot.exists) {
           Booking booking = Booking.fromJson(snapshot.data());
           if (myBookingsIds.contains(booking.id)) {
-            myBookings.add(booking);
+            myAllBookings.add(booking);
           }
         }
       }
@@ -69,30 +73,29 @@ class BookingHistoryViewModel extends StateNotifier<BookingHistoryViewState> {
       for (var eventSnapshot in eventSnapshotList) {
         if (eventSnapshot.exists) {
           EventData event = EventData.fromJson(eventSnapshot.data());
-          for (var myBooking in myBookings) {
+          for (var myBooking in myAllBookings) {
             if (myBooking.eventId == event.id) {
               myBookedEvents[myBooking.id] = event;
+              var now = DateTime.now();
+
+              // it event already happened (event is in past) => true
+              // else => false
+              bool isEventHappend = now.isAfter(event.endTime);
+
+              if (!myBooking.isCheckIn && !isEventHappend) {
+                upcomingBookings.add(myBooking);
+              } else {
+                pastBookings.add(myBooking);
+              }
             }
           }
         }
       }
 
-      // eventSnapshotList.forEach(
-      //   (eventSnapshot) async {
-      //     if (eventSnapshot.exists) {
-      //       EventData event = EventData.fromJson(eventSnapshot.data());
-      //       for (var myBooking in state.myBookings) {
-      //         if (myBooking.eventId == event.id) {
-      //           myBookedEvents[myBooking.id] = event;
-      //         }
-      //       }
-      //     }
-      //   },
-      // );
-
       state = state.copyWith(
         status: BookingHistoryViewStatus.success,
-        myBookings: myBookings,
+        upcomingBookings: upcomingBookings,
+        pastBookings: pastBookings,
         eventData: myBookedEvents,
       );
     } catch (e) {
@@ -107,7 +110,8 @@ class BookingHistoryViewModel extends StateNotifier<BookingHistoryViewState> {
 @freezed
 class BookingHistoryViewState with _$BookingHistoryViewState {
   const factory BookingHistoryViewState({
-    @Default([]) List<Booking> myBookings,
+    @Default([]) List<Booking> upcomingBookings,
+    @Default([]) List<Booking> pastBookings,
 
     // <BookindID, EventData>
     Map<String, EventData>? eventData,

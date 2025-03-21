@@ -224,7 +224,7 @@ class HomeView extends ConsumerWidget {
                       const SizedBox(height: 25),
                       Text(
                         'Crafted with ❣️ Only for U',
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: 15,
                           color: Colors.grey.shade300,
                         ),

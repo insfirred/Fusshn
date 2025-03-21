@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/dimens.dart';
 import '../common_widgets/fusshn_appbar.dart';
@@ -14,8 +15,12 @@ class BookingHistoryView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final myBooking = ref.watch(
-      bookingHistoryViewModelProvider.select((_) => _.myBookings),
+    final upcomingBookings = ref.watch(
+      bookingHistoryViewModelProvider.select((_) => _.upcomingBookings),
+    );
+
+    final pastBookings = ref.watch(
+      bookingHistoryViewModelProvider.select((_) => _.pastBookings),
     );
 
     final status = ref.watch(
@@ -77,16 +82,56 @@ class BookingHistoryView extends ConsumerWidget {
                               ),
                             ),
                             const SizedBox(height: 21),
-                            ListView.separated(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: myBooking.length,
-                              itemBuilder: (context, index) => BookingItem(
-                                myBooking[index],
-                              ),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 17),
-                            ),
+                            viewType == BookingHistoryViewType.UPCOMING
+                                ? upcomingBookings.isNotEmpty
+                                    ? ListView.separated(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: upcomingBookings.length,
+                                        itemBuilder: (context, index) =>
+                                            BookingItem(
+                                                upcomingBookings[index]),
+                                        separatorBuilder: (context, index) =>
+                                            const SizedBox(height: 17),
+                                      )
+                                    : Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 250,
+                                          ),
+                                          child: Text(
+                                            'Looks like you dont have any Upcoming Events :(',
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                : pastBookings.isNotEmpty
+                                    ? ListView.separated(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: pastBookings.length,
+                                        itemBuilder: (context, index) =>
+                                            BookingItem(pastBookings[index]),
+                                        separatorBuilder: (context, index) =>
+                                            const SizedBox(height: 17),
+                                      )
+                                    : Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 250,
+                                          ),
+                                          child: Text(
+                                            'Looks like you dont have any Past Events :(',
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                           ],
                         ),
             ],

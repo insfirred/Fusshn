@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:svg_flutter/svg_flutter.dart';
@@ -38,20 +39,18 @@ class BookingItem extends ConsumerWidget {
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
-          height: booking.isCheckIn ? 160 : 182,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: Colors.white,
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            // vertical: 16,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              Row(
+        height: booking.isCheckIn ? 182 : 160,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
                 children: [
                   Expanded(
                     flex: 8,
@@ -81,7 +80,7 @@ class BookingItem extends ConsumerWidget {
                       children: [
                         Text(
                           event?.name ?? "Unknown",
-                          style: const TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 16,
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
@@ -92,7 +91,7 @@ class BookingItem extends ConsumerWidget {
                         const SizedBox(height: 10),
                         Text(
                           '${DateFormat('d MMM y,').add_jm().format(event!.startTime)} - ${DateFormat.jm().format(event.endTime)}',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 14,
                             color: Colors.black.withOpacity(0.5),
                             fontWeight: FontWeight.w600,
@@ -101,7 +100,7 @@ class BookingItem extends ConsumerWidget {
                         const SizedBox(height: 12),
                         Text(
                           '${booking.ticketType.name} x ${booking.ticketCount}',
-                          style: const TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 12,
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
@@ -112,20 +111,43 @@ class BookingItem extends ConsumerWidget {
                   ),
                 ],
               ),
-              if (!booking.isCheckIn) ...[
-                const Spacer(),
-                const Text(
-                  'FINISHED: Hope you enjoyed the show',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
+            ),
+            if (booking.isCheckIn) ...[
+              Flexible(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(12),
+                      bottomRight: Radius.circular(12),
+                    ),
+                    color: Color.fromARGB(255, 198, 198, 198),
+                  ),
+                  child: Column(
+                    children: [
+                      const Spacer(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'FINISHED: Hope you enjoyed the show',
+                            style: GoogleFonts.poppins(
+                              fontStyle: FontStyle.italic,
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5)
+                    ],
                   ),
                 ),
-                const SizedBox(height: 5)
-              ],
+              ),
             ],
-          )),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -193,7 +194,7 @@ class TicketView extends StatelessWidget {
                                       ),
                                       child: Text(
                                         'Get Directions',
-                                        style: TextStyle(
+                                        style: GoogleFonts.poppins(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: const Color(0xFF78F894)

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BookingsTopBarItem extends StatelessWidget {
   const BookingsTopBarItem({
@@ -30,7 +31,7 @@ class BookingsTopBarItem extends StatelessWidget {
           child: Center(
             child: Text(
               label,
-              style: const TextStyle(
+              style: GoogleFonts.poppins(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
               ),

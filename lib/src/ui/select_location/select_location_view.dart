@@ -4,6 +4,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/dimens.dart';
 import '../common_widgets/fusshn_appbar.dart';
@@ -73,14 +74,16 @@ class _LocationFetchingLoadingScreen extends StatelessWidget {
       ),
       child: Center(
         child: DefaultTextStyle(
-          style: const TextStyle(
+          style: GoogleFonts.poppins(
             fontSize: 18,
           ),
           child: AnimatedTextKit(
             animatedTexts: [
               WavyAnimatedText(
                 'Fetching Location...',
-                textStyle: TextStyle(color: Theme.of(context).primaryColor),
+                textStyle: GoogleFonts.poppins(
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
             ],
             repeatForever: true,
