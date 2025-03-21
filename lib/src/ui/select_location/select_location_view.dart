@@ -32,7 +32,6 @@ class SelectLocationView extends ConsumerWidget {
         child: Stack(
           children: [
             SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.symmetric(
                 horizontal: homeTabHorizontalPadding,
               ),
@@ -43,9 +42,9 @@ class SelectLocationView extends ConsumerWidget {
                     label: 'Select your city',
                     showBackButton: !isFirstLocationView,
                   ),
+                  LocationSearchBox(isFirstLocationView),
                   const SizedBox(height: 20),
                   PopularCitiesSection(isFirstLocationView),
-                  LocationSearchBox(isFirstLocationView),
                   const SizedBox(height: 20),
                   Divider(color: Colors.grey.shade700),
                   AllCitiesSection(isFirstLocationView),

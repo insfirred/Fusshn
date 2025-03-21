@@ -1,15 +1,55 @@
-List<String> popularIndianCities = const [
-  "Mumbai",
-  "New Delhi",
-  "Noida",
-  "Gurugram",
-  "Bengaluru",
-  "Chandigarh",
-  "Hydrabad",
-  "Chennai",
-  "Pune",
-  "Kolkata",
+List<PopularCitiesData> popularIndianCities = [
+  const PopularCitiesData(
+    name: "Mumbai",
+    icon: 'mumbai_logo',
+  ),
+  const PopularCitiesData(
+    name: "Hyderabad",
+    icon: 'hyderabad_logo',
+  ),
+  const PopularCitiesData(
+    name: "Ahmedabad",
+    icon: 'ahmedabad_logo',
+  ),
+  const PopularCitiesData(
+    name: "Delhi NCR",
+    icon: 'delhi_ncr_logo',
+  ),
+  const PopularCitiesData(
+    name: "Chennai",
+    icon: 'chennai_logo',
+  ),
+  const PopularCitiesData(
+    name: "Agra",
+    icon: 'agra_logo',
+  ),
+  const PopularCitiesData(
+    name: "Bengaluru",
+    icon: 'mumbai_logo',
+  ),
+  const PopularCitiesData(
+    name: "Chandigarh",
+    icon: 'mumbai_logo',
+  ),
+  const PopularCitiesData(
+    name: "Pune",
+    icon: 'mumbai_logo',
+  ),
+  const PopularCitiesData(
+    name: "Kolkata",
+    icon: 'mumbai_logo',
+  ),
 ];
+
+class PopularCitiesData {
+  final String name;
+  final String icon;
+
+  const PopularCitiesData({
+    required this.name,
+    required this.icon,
+  });
+}
 
 List<String> allIndianCities = const [
   "Agra",

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fusshn/src/repositories/app_repository.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../select_location_view_model.dart';
 
@@ -79,9 +80,10 @@ class _CityItem extends ConsumerWidget {
       behavior: HitTestBehavior.opaque,
       child: Text(
         city,
-        style: TextStyle(
+        style: GoogleFonts.poppins(
           fontSize: 14,
           color: isSelected ? const Color(0xFF17BD3B) : Colors.white,
+          fontWeight: FontWeight.normal,
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../common/indian_cities.dart';
@@ -36,7 +37,8 @@ class PopularCitiesSection extends StatelessWidget {
             crossAxisCount: 4,
           ),
           itemBuilder: (context, index) => _PopularCityItem(
-            city: popularIndianCities[index],
+            city: popularIndianCities[index].name,
+            icon: popularIndianCities[index].icon,
             isFirstLocationView: isFirstLocationView,
           ),
         ),
@@ -48,10 +50,12 @@ class PopularCitiesSection extends StatelessWidget {
 class _PopularCityItem extends ConsumerWidget {
   const _PopularCityItem({
     required this.city,
+    required this.icon,
     required this.isFirstLocationView,
   });
 
   final String city;
+  final String icon;
   final bool isFirstLocationView;
 
   @override
@@ -72,22 +76,23 @@ class _PopularCityItem extends ConsumerWidget {
               lng: 0,
             );
 
-        if (!isFirstLocationView) {
-          context.maybePop();
-        }
+        context.maybePop();
       },
       behavior: HitTestBehavior.opaque,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           SvgPicture.asset(
-            'assets/indian_cities/mumbai_logo.svg',
+            'assets/indian_cities/$icon.svg',
+            width: 40,
             color: isSelected ? const Color(0xFF17BD3B) : Colors.white,
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           Text(
             city,
-            style: TextStyle(
-              fontSize: 10,
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              fontWeight: FontWeight.normal,
               color: isSelected ? const Color(0xFF17BD3B) : Colors.white,
             ),
           ),

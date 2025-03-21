@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../select_location_view_model.dart';
 
@@ -46,8 +47,9 @@ class _LocationSearchBoxState extends ConsumerState<LocationSearchBox> {
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: 'Search your city',
-          hintStyle: TextStyle(
-            fontSize: 12,
+          hintStyle: GoogleFonts.poppins(
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
             color: Colors.black.withOpacity(0.6),
           ),
           suffixIcon: IconButton(
