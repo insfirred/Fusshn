@@ -18,16 +18,32 @@ class ProfileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      title: Text(title),
-      titleTextStyle: titleTheme ?? Theme.of(context).textTheme.bodyMedium,
-      trailing: Image.asset(
-        iconPath,
-        height: height,
+    return Material(
+      color: Colors.transparent,
+      child: ListTile(
+        splashColor: ThemeData().splashColor,
+        onTap: onTap,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: const Color(0xFFF1F1F1),
+                  fontSize: 17,
+                ),
+          ),
+        ),
+        titleTextStyle: titleTheme ?? Theme.of(context).textTheme.bodyMedium,
+        trailing: Padding(
+          padding: const EdgeInsets.only(right: 16),
+          child: Image.asset(
+            iconPath,
+            height: height,
+          ),
+        ),
+        contentPadding: const EdgeInsets.all(0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
-      contentPadding: const EdgeInsets.all(0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     );
   }
 }

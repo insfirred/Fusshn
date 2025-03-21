@@ -23,7 +23,7 @@ EventData _$EventDataFromJson(Map<String, dynamic> json) => EventData(
       tickets: (json['tickets'] as List<dynamic>)
           .map((e) => TicketType.fromJson(e as Map<String, dynamic>))
           .toList(),
-      ageRestrictions: json['ageRestrictions'] as int,
+      ageRestrictions: (json['ageRestrictions'] as num).toInt(),
       organiserName: json['organiserName'] as String,
       termsAndConditions: (json['termsAndConditions'] as List<dynamic>)
           .map((e) => e as String)

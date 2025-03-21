@@ -21,10 +21,10 @@ class UserDetails extends ConsumerWidget {
     final imageUrl = ref.watch(
       appRepositoryProvider.select((_) => _.userData!.imageUrl),
     );
-    final isEmailVerified = ref
-            .watch(appRepositoryProvider.select((_) => _.userData))
-            ?.isEmailVerified ??
-        false;
+    // final isEmailVerified = ref
+    //         .watch(appRepositoryProvider.select((_) => _.userData))
+    //         ?.isEmailVerified ??
+    //     false;
 
     return Column(
       children: [
@@ -62,19 +62,19 @@ class UserDetails extends ConsumerWidget {
                   email,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-                const SizedBox(width: 10),
-                isEmailVerified
-                    ? FaIcon(
-                        FontAwesomeIcons.circleCheck,
-                        color: Theme.of(context).primaryColor,
-                      )
-                    : Text(
-                        '(not verified yet)',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: Colors.red),
-                      )
+                // const SizedBox(width: 10),
+                // isEmailVerified
+                //     ? FaIcon(
+                //         FontAwesomeIcons.circleCheck,
+                //         color: Theme.of(context).primaryColor,
+                //       )
+                //     : Text(
+                //         '(not verified yet)',
+                //         style: Theme.of(context)
+                //             .textTheme
+                //             .bodySmall
+                //             ?.copyWith(color: Colors.red),
+                //       )
               ],
             ),
             const SizedBox(height: 10),

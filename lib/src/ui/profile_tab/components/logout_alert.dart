@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../repositories/app_repository.dart';
 
@@ -15,11 +16,16 @@ logoutAlert(BuildContext context, WidgetRef ref) => BackdropFilter(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Column(
           children: [
-            Image.asset('assets/gifs/delete_account.png'),
-            const Padding(
-              padding: EdgeInsets.only(left: 24, bottom: 24, right: 24),
+            Image.asset(
+              'assets/gifs/delete_account.png',
+              width: 180,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 24, bottom: 24, right: 24),
               child: Text(
                 'Are You really want to logout from this device?',
+                style: GoogleFonts.poppins(fontSize: 13),
+                textAlign: TextAlign.center,
               ),
             ),
           ],

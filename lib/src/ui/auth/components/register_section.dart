@@ -106,7 +106,7 @@ class RegisterSectionState extends ConsumerState<RegisterSection> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -261,9 +261,9 @@ class _TermsConditions extends ConsumerWidget {
     );
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Checkbox(
+          activeColor: Theme.of(context).primaryColor,
           value: isTermsAccepted,
           onChanged: (val) {
             ref
@@ -281,7 +281,9 @@ class _TermsConditions extends ConsumerWidget {
         Expanded(
           child: Text(
             'I accept the above terms & conditions & promise to comply with future chnages',
-            style: Theme.of(context).textTheme.bodySmall,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  fontSize: 12,
+                ),
           ),
         ),
       ],

@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 
 import '../../common/dimens.dart';
+import '../../common/waste_data.dart';
+import '../../models/booking.dart';
 import '../../models/event_data.dart';
 import '../../routing/app_router.dart';
 import '../common_widgets/animated_gradient_background.dart';
@@ -102,6 +104,35 @@ class HomeView extends ConsumerWidget {
               // ),
               // const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
+              // SliverToBoxAdapter(
+              //   child: TextButton(
+              //     onPressed: () async {
+              //       Booking booking = Booking(
+              //         id: '1',
+              //         paymentId: '1',
+              //         eventId: '1',
+              //         ticketType: eventsForFirestore.first.tickets.first,
+              //         ticketCount: 1,
+              //         createdAt: DateTime.now(),
+              //         userId: '1',
+              //         userName: '1',
+              //         userEmail: '1',
+              //         userPhone: '1',
+              //         isCheckIn: false,
+              //         numberOfUserCheckedIn: 0,
+              //         totalUserAllowed: 1,
+              //       );
+
+              //       // booking added to booking collection...
+              //       var a = booking.toJson();
+              //       await FirebaseFirestore.instance
+              //           .collection('bookings')
+              //           .add(a);
+              //     },
+              //     child: const Text("Add Booking"),
+              //   ),
+              // ),
+
               // CAROUSEL SLIDER
               const SliverToBoxAdapter(
                 child: EventsCarouselSliderSection(),
@@ -132,46 +163,46 @@ class HomeView extends ConsumerWidget {
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 8)),
               const SliverToBoxAdapter(child: HorizontalEventSlider()),
-              const SliverToBoxAdapter(child: SizedBox(height: 20)),
 
-              // FEATURED ARTISTS Section
-              const SliverTitle(label: 'Featured Artists'),
-              const SliverToBoxAdapter(child: SizedBox(height: 11)),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 120,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 6,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: Column(
-                        children: [
-                          ClipOval(
-                            child: SizedBox.fromSize(
-                              size: const Size.fromRadius(36),
-                              child: Image.asset(
-                                'assets/images/test/artist.jpeg',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 80,
-                            child: Text(
-                              'Seedhe Maut',
-                              maxLines: 2,
-                              style: Theme.of(context).textTheme.bodySmall,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // const SliverToBoxAdapter(child: SizedBox(height: 20)),
+              // // FEATURED ARTISTS Section
+              // const SliverTitle(label: 'Featured Artists'),
+              // const SliverToBoxAdapter(child: SizedBox(height: 11)),
+              // SliverToBoxAdapter(
+              //   child: SizedBox(
+              //     height: 120,
+              //     child: ListView.builder(
+              //       scrollDirection: Axis.horizontal,
+              //       itemCount: 6,
+              //       itemBuilder: (context, index) => Padding(
+              //         padding: const EdgeInsets.symmetric(horizontal: 4),
+              //         child: Column(
+              //           children: [
+              //             ClipOval(
+              //               child: SizedBox.fromSize(
+              //                 size: const Size.fromRadius(36),
+              //                 child: Image.asset(
+              //                   'assets/images/test/artist.jpeg',
+              //                   fit: BoxFit.cover,
+              //                 ),
+              //               ),
+              //             ),
+              //             SizedBox(
+              //               width: 80,
+              //               child: Text(
+              //                 'Seedhe Maut',
+              //                 maxLines: 2,
+              //                 style: Theme.of(context).textTheme.bodySmall,
+              //                 overflow: TextOverflow.ellipsis,
+              //                 textAlign: TextAlign.center,
+              //               ),
+              //             )
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               const SliverToBoxAdapter(child: SizedBox(height: 40)),
 
               // LETS PARTY TOGETHER Section

@@ -49,17 +49,19 @@ class EventDetailView extends StatelessWidget {
                         child: Image.asset('assets/back.png'),
                       ),
                     ),
-                    actions: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: homeTabHorizontalPadding,
-                        ),
-                        child: Image.asset(
-                          'assets/share.png',
-                          width: 20,
-                        ),
-                      ),
-                    ],
+
+                    // share button
+                    // actions: [
+                    //   Padding(
+                    //     padding: const EdgeInsets.only(
+                    //       right: homeTabHorizontalPadding,
+                    //     ),
+                    //     child: Image.asset(
+                    //       'assets/share.png',
+                    //       width: 20,
+                    //     ),
+                    //   ),
+                    // ],
                   ),
                   const SliverToBoxAdapter(child: SizedBox(height: 10)),
 

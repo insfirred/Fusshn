@@ -33,6 +33,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ConfirmBookingView(),
       );
     },
+    ContactUsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ContactUsView(),
+      );
+    },
     EditProfileRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -85,6 +91,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ProfileView(),
       );
     },
+    ReferralRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ReferralView(),
+      );
+    },
     SearchEventRoute.name: (routeData) {
       final args = routeData.argsAs<SearchEventRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -120,6 +132,12 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           isFirstLocationView: args.isFirstLocationView,
         ),
+      );
+    },
+    SendFeedbackRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SendFeedbackView(),
       );
     },
     SplashRoute.name: (routeData) {
@@ -192,6 +210,20 @@ class ConfirmBookingRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ConfirmBookingRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ContactUsView]
+class ContactUsRoute extends PageRouteInfo<void> {
+  const ContactUsRoute({List<PageRouteInfo>? children})
+      : super(
+          ContactUsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ContactUsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -333,6 +365,20 @@ class ProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ReferralView]
+class ReferralRoute extends PageRouteInfo<void> {
+  const ReferralRoute({List<PageRouteInfo>? children})
+      : super(
+          ReferralRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ReferralRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [SearchEventView]
 class SearchEventRoute extends PageRouteInfo<SearchEventRouteArgs> {
   SearchEventRoute({
@@ -458,6 +504,20 @@ class SelectLocationRouteArgs {
   String toString() {
     return 'SelectLocationRouteArgs{key: $key, isFirstLocationView: $isFirstLocationView}';
   }
+}
+
+/// generated route for
+/// [SendFeedbackView]
+class SendFeedbackRoute extends PageRouteInfo<void> {
+  const SendFeedbackRoute({List<PageRouteInfo>? children})
+      : super(
+          SendFeedbackRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SendFeedbackRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

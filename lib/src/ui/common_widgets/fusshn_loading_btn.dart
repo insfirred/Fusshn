@@ -14,27 +14,18 @@ class FusshnLoadingBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: Container(
-            height: height,
-            width: width ??
-                MediaQuery.of(context).size.width -
-                    2 * homeTabHorizontalPadding,
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Center(
-              child: CircularProgressIndicator(color: Colors.white),
-            ),
-          ),
+    return Container(
+      height: height,
+      width: width ??
+          MediaQuery.of(context).size.width - 2 * homeTabHorizontalPadding,
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Theme.of(context).primaryColor,
+      ),
+      child: const Center(
+        child: CircularProgressIndicator(
+          color: Colors.white,
         ),
       ),
     );

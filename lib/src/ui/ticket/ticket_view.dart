@@ -1,17 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fusshn/src/repositories/app_repository.dart';
-import 'package:fusshn/src/ui/common_widgets/fusshn_btn.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../common/dimens.dart';
 import '../../models/booking.dart';
 import '../../models/event_data.dart';
+import '../../repositories/app_repository.dart';
 import '../common_widgets/fusshn_appbar.dart';
+import '../common_widgets/fusshn_btn.dart';
 
 @RoutePage()
 class TicketView extends StatelessWidget {
@@ -171,25 +171,34 @@ class TicketView extends StatelessWidget {
                                     softWrap: true,
                                   ),
                                   const SizedBox(height: 12),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(
-                                        color: const Color(0xFF78F894)
-                                            .withOpacity(0.7),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      if (!await launchUrl(Uri.parse(
+                                          'https://www.google.com/maps/@28.396366244820598,77.10404872451666,15z'))) {
+                                        throw Exception(
+                                            'Something went wrong on launching map url...');
+                                      }
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(
+                                          color: const Color(0xFF78F894)
+                                              .withOpacity(0.7),
+                                        ),
                                       ),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 17,
-                                      vertical: 12,
-                                    ),
-                                    child: Text(
-                                      'Get Directions',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        color: const Color(0xFF78F894)
-                                            .withOpacity(0.7),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 17,
+                                        vertical: 12,
+                                      ),
+                                      child: Text(
+                                        'Get Directions',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
+                                          color: const Color(0xFF78F894)
+                                              .withOpacity(0.7),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -242,17 +251,17 @@ class TicketView extends StatelessWidget {
             ),
 
             // Download Tickket Btn
-            Padding(
-              padding: const EdgeInsets.only(bottom: 30),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: FusshnBtn(
-                  onTap: () {},
-                  height: 43,
-                  label: 'Download Ticket',
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(bottom: 30),
+            //   child: Align(
+            //     alignment: Alignment.bottomCenter,
+            //     child: FusshnBtn(
+            //       onTap: () {},
+            //       height: 43,
+            //       label: 'Download Ticket',
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

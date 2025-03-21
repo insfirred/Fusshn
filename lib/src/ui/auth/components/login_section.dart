@@ -67,13 +67,13 @@ class LoginSectionState extends ConsumerState<LoginSection> {
 
     return Container(
       // TODO: Remove this margin in future
-      margin: const EdgeInsets.only(top: 160),
+      margin: const EdgeInsets.only(top: 200),
       decoration: BoxDecoration(
         color: const Color(0xFF707070).withOpacity(0.25),
         borderRadius: BorderRadius.circular(12),
       ),
       child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -154,7 +154,7 @@ class LoginSectionState extends ConsumerState<LoginSection> {
                     'Forgot Email or Password?',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontSize: 12,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w500,
                           color: const Color(0xFF01FFFF),
                         ),
                   ),

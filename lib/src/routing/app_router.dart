@@ -6,6 +6,7 @@ import '../models/event_data.dart';
 import '../ui/auth/auth_view.dart';
 import '../ui/booking_history/booking_history_view.dart';
 import '../ui/confirm_booking/confirm_booking_view.dart';
+import '../ui/contact_us/contact_us_view.dart';
 import '../ui/edit_profile/edit_profile_view.dart';
 import '../ui/event_detail_view/event_detail_view.dart';
 import '../ui/events_tab/events_view.dart';
@@ -14,10 +15,12 @@ import '../ui/main/main_view.dart';
 import '../ui/onboarding/onboarding_view.dart';
 import '../ui/privacy_policy/privacy_policy_view.dart';
 import '../ui/profile_tab/profile_view.dart';
+import '../ui/referral/referral_view.dart';
 import '../ui/search_events/search_event_view.dart';
 import '../ui/see_all_event/see_all_event_view.dart';
 import '../ui/select_first_location/select_first_location_view.dart';
 import '../ui/select_location/select_location_view.dart';
+import '../ui/send_feedback/send_feedback_view.dart';
 import '../ui/splash/splash_view.dart';
 import '../ui/terms_and_conditions/terms_and_conditions_view.dart';
 import '../ui/ticket/ticket_view.dart';
@@ -112,6 +115,18 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           path: '/select-first-location',
           page: SelectFirstLocationRoute.page,
+        ),
+        AutoRoute(
+          path: '/referral',
+          page: ReferralRoute.page,
+        ),
+        AutoRoute(
+          path: '/contact-us',
+          page: ContactUsRoute.page,
+        ),
+        AutoRoute(
+          path: '/send-feedback',
+          page: SendFeedbackRoute.page,
         ),
       ];
 }
