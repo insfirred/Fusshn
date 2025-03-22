@@ -103,7 +103,8 @@ class _OnboardingViewState extends ConsumerState<OnboardingView> {
       height: 8.0,
       width: isActive ? 28.0 : 8.0,
       decoration: BoxDecoration(
-        color: isActive ? const Color(0xffCFAAFF) : const Color(0xffD9D9D9),
+        color:
+            isActive ? Theme.of(context).primaryColor : const Color(0xffD9D9D9),
         borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
     );
