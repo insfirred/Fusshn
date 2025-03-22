@@ -29,7 +29,7 @@ class HomeViewModel extends StateNotifier<HomeViewState> {
     _fetchMyFeedbacks();
   }
 
-  postUserFeedback(String feedback) {
+  postUserFeedback(String feedback) async {
     final uid = ref.read(appRepositoryProvider).authUser!.uid;
     List<String> myFeedbacksList = [];
     for (var element in state.myFeedbacks) {
@@ -41,7 +41,7 @@ class HomeViewModel extends StateNotifier<HomeViewState> {
     Map<String, dynamic> feedbackJson = {
       'myFeedbacks': myFeedbacksList,
     };
-    firestore.collection('user_feedbacks').doc(uid).set(feedbackJson);
+    await firestore.collection('user_feedbacks').doc(uid).set(feedbackJson);
     state = state.copyWith(
       showFeedbackCardOnHome: false,
       myFeedbacks: myFeedbacksList,

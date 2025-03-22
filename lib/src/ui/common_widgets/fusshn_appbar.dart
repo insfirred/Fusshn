@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../../common/dimens.dart';
+
 class FusshnAppBar extends StatelessWidget {
   const FusshnAppBar({
     super.key,
@@ -13,8 +15,14 @@ class FusshnAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15),
+    return Container(
+      color: Colors.black,
+      padding: const EdgeInsets.only(
+        top: 30,
+        bottom: 15,
+        left: homeTabHorizontalPadding,
+        right: homeTabHorizontalPadding,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

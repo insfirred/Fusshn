@@ -1,27 +1,23 @@
 List<PopularCitiesData> popularIndianCities = [
   const PopularCitiesData(
-    name: "Mumbai",
-    icon: 'mumbai_logo',
+    name: "Delhi NCR",
+    icon: 'delhi_ncr_logo',
   ),
   const PopularCitiesData(
     name: "Hyderabad",
     icon: 'hyderabad_logo',
   ),
   const PopularCitiesData(
-    name: "Ahmedabad",
-    icon: 'ahmedabad_logo',
-  ),
-  const PopularCitiesData(
-    name: "Delhi NCR",
-    icon: 'delhi_ncr_logo',
-  ),
-  const PopularCitiesData(
     name: "Chennai",
     icon: 'chennai_logo',
   ),
   const PopularCitiesData(
-    name: "Agra",
-    icon: 'agra_logo',
+    name: "Mumbai",
+    icon: 'mumbai_logo',
+  ),
+  const PopularCitiesData(
+    name: "Ahmedabad",
+    icon: 'ahmedabad_logo',
   ),
   const PopularCitiesData(
     name: "Bengaluru",
@@ -32,16 +28,12 @@ List<PopularCitiesData> popularIndianCities = [
     icon: 'chandigarh_logo',
   ),
   const PopularCitiesData(
-    name: "Pune",
-    icon: 'pune_logo',
-  ),
-  const PopularCitiesData(
     name: "Kolkata",
     icon: 'kolkata_logo',
   ),
   const PopularCitiesData(
-    name: "Goa",
-    icon: 'goa_logo',
+    name: "Pune",
+    icon: 'pune_logo',
   ),
 ];
 

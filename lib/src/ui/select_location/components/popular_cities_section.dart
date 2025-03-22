@@ -28,13 +28,15 @@ class PopularCitiesSection extends StatelessWidget {
               .bodyMedium
               ?.copyWith(fontWeight: FontWeight.w500),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
         GridView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: popularIndianCities.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
+            crossAxisCount: 3,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20,
           ),
           itemBuilder: (context, index) => _PopularCityItem(
             city: popularIndianCities[index].name,
@@ -79,24 +81,31 @@ class _PopularCityItem extends ConsumerWidget {
         context.maybePop();
       },
       behavior: HitTestBehavior.opaque,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SvgPicture.asset(
-            'assets/indian_cities/$icon.svg',
-            width: 40,
-            color: isSelected ? const Color(0xFF17BD3B) : Colors.white,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            city,
-            style: GoogleFonts.poppins(
-              fontSize: 12,
-              fontWeight: FontWeight.normal,
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF1E1E1E),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              'assets/indian_cities/$icon.svg',
+              alignment: Alignment.bottomCenter,
+              width: 40,
               color: isSelected ? const Color(0xFF17BD3B) : Colors.white,
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            Text(
+              city,
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                fontWeight: FontWeight.normal,
+                color: isSelected ? const Color(0xFF17BD3B) : Colors.white,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

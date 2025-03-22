@@ -82,7 +82,8 @@ class _LocationFetchingLoadingScreen extends StatelessWidget {
               WavyAnimatedText(
                 'Fetching Location...',
                 textStyle: GoogleFonts.poppins(
-                  color: Theme.of(context).primaryColor,
+                  // color: Theme.of(context).primaryColor,
+                  color: Colors.white,
                 ),
               ),
             ],

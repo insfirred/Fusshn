@@ -33,32 +33,35 @@ class ContactUsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: homeTabHorizontalPadding),
-          child: Column(
-            children: [
-              const FusshnAppBar(label: 'Fusshn Support'),
-              const SizedBox(height: 30),
-              _SupportItem(
-                icon: FontAwesomeIcons.envelope,
-                label: 'Email',
-                description:
-                    'Send us an email with your query, and we will get back to you at the earliest',
-                onTap: _launchMailClient,
-              ),
-              const SizedBox(height: 30),
-              _SupportItem(
-                icon: FontAwesomeIcons.whatsapp,
-                label: 'WhatsApp',
-                description:
-                    'Message us on whatsapp, and we will help solving your issue right there!',
-                onTap: _launchWhatsAppClient,
-              ),
-            ],
+      body: Column(
+        children: [
+          const FusshnAppBar(label: 'Fusshn Support'),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: homeTabHorizontalPadding,
+            ),
+            child: Column(
+              children: [
+                const SizedBox(height: 30),
+                _SupportItem(
+                  icon: FontAwesomeIcons.envelope,
+                  label: 'Email',
+                  description:
+                      'Send us an email with your query, and we will get back to you at the earliest',
+                  onTap: _launchMailClient,
+                ),
+                const SizedBox(height: 30),
+                _SupportItem(
+                  icon: FontAwesomeIcons.whatsapp,
+                  label: 'WhatsApp',
+                  description:
+                      'Message us on whatsapp, and we will help solving your issue right there!',
+                  onTap: _launchWhatsAppClient,
+                ),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

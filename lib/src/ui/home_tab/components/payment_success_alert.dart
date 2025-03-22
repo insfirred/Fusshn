@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fusshn/src/routing/app_router.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../common_widgets/fusshn_btn.dart';
@@ -45,8 +47,11 @@ Widget paymentSuccessAlert(BuildContext context) => BackdropFilter(
           FusshnBtn(
             height: 40,
             width: 180,
-            onTap: () {},
-            label: 'View Ticket',
+            onTap: () {
+              context.maybePop();
+              context.navigateTo(const BookingHistoryRoute());
+            },
+            label: 'View my Bookings',
           ),
         ],
         actionsAlignment: MainAxisAlignment.center,

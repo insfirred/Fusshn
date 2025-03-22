@@ -109,35 +109,6 @@ class HomeView extends ConsumerWidget {
               // ),
               // const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
-              // SliverToBoxAdapter(
-              //   child: TextButton(
-              //     onPressed: () async {
-              //       Booking booking = Booking(
-              //         id: '1',
-              //         paymentId: '1',
-              //         eventId: '1',
-              //         ticketType: eventsForFirestore.first.tickets.first,
-              //         ticketCount: 1,
-              //         createdAt: DateTime.now(),
-              //         userId: '1',
-              //         userName: '1',
-              //         userEmail: '1',
-              //         userPhone: '1',
-              //         isCheckIn: false,
-              //         numberOfUserCheckedIn: 0,
-              //         totalUserAllowed: 1,
-              //       );
-
-              //       // booking added to booking collection...
-              //       var a = booking.toJson();
-              //       await FirebaseFirestore.instance
-              //           .collection('bookings')
-              //           .add(a);
-              //     },
-              //     child: const Text("Add Booking"),
-              //   ),
-              // ),
-
               // CAROUSEL SLIDER
               const SliverToBoxAdapter(
                 child: EventsCarouselSliderSection(),
@@ -169,8 +140,8 @@ class HomeView extends ConsumerWidget {
               const SliverToBoxAdapter(child: SizedBox(height: 8)),
               const SliverToBoxAdapter(child: HorizontalEventSlider()),
 
-              // const SliverToBoxAdapter(child: SizedBox(height: 20)),
               // // FEATURED ARTISTS Section
+              // const SliverToBoxAdapter(child: SizedBox(height: 20)),
               // const SliverTitle(label: 'Featured Artists'),
               // const SliverToBoxAdapter(child: SizedBox(height: 11)),
               // SliverToBoxAdapter(

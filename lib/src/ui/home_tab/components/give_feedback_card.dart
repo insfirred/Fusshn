@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:fusshn/src/utils/snackbar_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../common/dimens.dart';
@@ -9,7 +10,10 @@ import '../home_view_model.dart';
 class GiveFeedbackCard extends ConsumerStatefulWidget {
   const GiveFeedbackCard({
     super.key,
+    this.showBackBtn = true,
   });
+
+  final bool showBackBtn;
 
   @override
   ConsumerState<GiveFeedbackCard> createState() => _GiveFeedbackCardState();
@@ -29,6 +33,7 @@ class _GiveFeedbackCardState extends ConsumerState<GiveFeedbackCard> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
             padding: const EdgeInsets.only(
@@ -47,24 +52,26 @@ class _GiveFeedbackCardState extends ConsumerState<GiveFeedbackCard> {
                     color: const Color(0xFFFFFFFF),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    ref
-                        .read(homeViewModelProvider.notifier)
-                        .setTempRemoveFeedbackCard(true);
-                  },
-                  icon: const FaIcon(
-                    FontAwesomeIcons.xmark,
-                    color: Color(0xFFFFFFFF),
+                if (widget.showBackBtn) ...[
+                  IconButton(
+                    onPressed: () {
+                      ref
+                          .read(homeViewModelProvider.notifier)
+                          .setTempRemoveFeedbackCard(true);
+                    },
+                    icon: const FaIcon(
+                      FontAwesomeIcons.xmark,
+                      color: Color(0xFFFFFFFF),
+                    ),
                   ),
-                ),
+                ],
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              'We are upgrading us to give finest experience and you feedback can help us.',
+              'We are upgrading us to give finest experience and your feedback can help us.',
               style: GoogleFonts.poppins(
                 fontSize: 12,
                 fontWeight: FontWeight.normal,
@@ -111,10 +118,23 @@ class _GiveFeedbackCardState extends ConsumerState<GiveFeedbackCard> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    ref
-                        .read(homeViewModelProvider.notifier)
-                        .postUserFeedback(textController.text);
+                  onTap: () async {
+                    String feedback = textController.text;
+                    if (feedback.isNotEmpty) {
+                      await ref
+                          .read(homeViewModelProvider.notifier)
+                          .postUserFeedback(textController.text);
+                      textController.clear();
+                      showSuccessMessage(
+                        context,
+                        'Feedback sent successfully',
+                      );
+                    } else {
+                      showErrorMessage(
+                        context,
+                        'Write some feedback to send',
+                      );
+                    }
                   },
                   behavior: HitTestBehavior.opaque,
                   child: Container(

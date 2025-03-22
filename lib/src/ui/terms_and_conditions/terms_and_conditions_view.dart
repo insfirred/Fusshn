@@ -12,29 +12,27 @@ class TermsAndConditionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: homeTabHorizontalPadding,
-          ),
-          child: Column(
-            children: [
-              const FusshnAppBar(label: 'Terms And Conditions'),
-              Expanded(
-                child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: termsAndConditions.length,
-                  itemBuilder: (context, index) => _TncItem(
-                    termsAndConditions[index],
-                  ),
-                  separatorBuilder: (context, index) => Divider(
-                    color: Colors.white.withOpacity(0.5),
-                  ),
-                ),
+      body: Column(
+        children: [
+          const FusshnAppBar(label: 'Terms And Conditions'),
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.only(
+                left: homeTabHorizontalPadding,
+                right: homeTabHorizontalPadding,
+                top: 22,
               ),
-            ],
+              physics: const BouncingScrollPhysics(),
+              itemCount: termsAndConditions.length,
+              itemBuilder: (context, index) => _TncItem(
+                termsAndConditions[index],
+              ),
+              separatorBuilder: (context, index) => Divider(
+                color: Colors.white.withOpacity(0.5),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

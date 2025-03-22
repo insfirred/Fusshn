@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -32,111 +34,125 @@ class BookingHistoryView extends ConsumerWidget {
     );
 
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            horizontal: homeTabHorizontalPadding,
-          ),
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              const FusshnAppBar(label: 'My Booking'),
-              const SizedBox(height: 35),
-              status == BookingHistoryViewStatus.loading
-                  ? const CircularProgressIndicator()
-                  : status == BookingHistoryViewStatus.error
-                      ? const Text('Error while fetchiing booking')
-                      : Column(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Row(
-                                children: [
-                                  BookingsTopBarItem(
-                                    label: 'Upcoming',
-                                    onTap: () {
-                                      ref
-                                          .read(bookingHistoryViewModelProvider
-                                              .notifier)
-                                          .setViewType(
-                                              BookingHistoryViewType.UPCOMING);
-                                    },
-                                    isSelected: viewType ==
-                                        BookingHistoryViewType.UPCOMING,
-                                  ),
-                                  const SizedBox(width: 12),
-                                  BookingsTopBarItem(
-                                    label: 'Past Events',
-                                    onTap: () {
-                                      ref
-                                          .read(bookingHistoryViewModelProvider
-                                              .notifier)
-                                          .setViewType(BookingHistoryViewType
-                                              .PAST_EVENTS);
-                                    },
-                                    isSelected: viewType ==
-                                        BookingHistoryViewType.PAST_EVENTS,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 21),
-                            viewType == BookingHistoryViewType.UPCOMING
-                                ? upcomingBookings.isNotEmpty
-                                    ? ListView.separated(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemCount: upcomingBookings.length,
-                                        itemBuilder: (context, index) =>
-                                            BookingItem(
-                                                upcomingBookings[index]),
-                                        separatorBuilder: (context, index) =>
-                                            const SizedBox(height: 17),
-                                      )
-                                    : Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 250,
-                                          ),
-                                          child: Text(
-                                            'Looks like you dont have any Upcoming Events :(',
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                : pastBookings.isNotEmpty
-                                    ? ListView.separated(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemCount: pastBookings.length,
-                                        itemBuilder: (context, index) =>
-                                            BookingItem(pastBookings[index]),
-                                        separatorBuilder: (context, index) =>
-                                            const SizedBox(height: 17),
-                                      )
-                                    : Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 250,
-                                          ),
-                                          child: Text(
-                                            'Looks like you dont have any Past Events :(',
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ),
+      body: Column(
+        children: [
+          const FusshnAppBar(label: 'My Booking'),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(
+                horizontal: homeTabHorizontalPadding,
+              ),
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  const SizedBox(height: 35),
+                  status == BookingHistoryViewStatus.loading
+                      ? const CircularProgressIndicator()
+                      : status == BookingHistoryViewStatus.error
+                          ? const Text('Error while fetchiing booking')
+                          : Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Row(
+                                    children: [
+                                      BookingsTopBarItem(
+                                        label: 'Upcoming',
+                                        onTap: () {
+                                          ref
+                                              .read(
+                                                  bookingHistoryViewModelProvider
+                                                      .notifier)
+                                              .setViewType(
+                                                  BookingHistoryViewType
+                                                      .UPCOMING);
+                                        },
+                                        isSelected: viewType ==
+                                            BookingHistoryViewType.UPCOMING,
                                       ),
-                          ],
-                        ),
-            ],
+                                      const SizedBox(width: 12),
+                                      BookingsTopBarItem(
+                                        label: 'Past Events',
+                                        onTap: () {
+                                          ref
+                                              .read(
+                                                  bookingHistoryViewModelProvider
+                                                      .notifier)
+                                              .setViewType(
+                                                  BookingHistoryViewType
+                                                      .PAST_EVENTS);
+                                        },
+                                        isSelected: viewType ==
+                                            BookingHistoryViewType.PAST_EVENTS,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                viewType == BookingHistoryViewType.UPCOMING
+                                    ? upcomingBookings.isNotEmpty
+                                        ? ListView.separated(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemCount: upcomingBookings.length,
+                                            itemBuilder: (context, index) =>
+                                                BookingItem(
+                                              booking: upcomingBookings[index],
+                                              isPastEvent: false,
+                                            ),
+                                            separatorBuilder:
+                                                (context, index) =>
+                                                    const SizedBox(height: 17),
+                                          )
+                                        : Center(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                top: 250,
+                                              ),
+                                              child: Text(
+                                                'Looks like you dont have any Upcoming Events :(',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                    : pastBookings.isNotEmpty
+                                        ? ListView.separated(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemCount: pastBookings.length,
+                                            itemBuilder: (context, index) =>
+                                                BookingItem(
+                                              booking: pastBookings[index],
+                                              isPastEvent: true,
+                                            ),
+                                            separatorBuilder:
+                                                (context, index) =>
+                                                    const SizedBox(height: 17),
+                                          )
+                                        : Center(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                top: 250,
+                                              ),
+                                              child: Text(
+                                                'Looks like you dont have any Past Events :(',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                              ],
+                            ),
+                ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

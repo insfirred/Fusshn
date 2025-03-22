@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -13,20 +14,20 @@ import '../../../routing/app_router.dart';
 import '../booking_history_view_model.dart';
 
 class BookingItem extends ConsumerWidget {
-  const BookingItem(
-    this.booking, {
+  const BookingItem({
     super.key,
+    required this.booking,
+    required this.isPastEvent,
   });
 
   final Booking booking;
+  final bool isPastEvent;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final event = ref.watch(
       bookingHistoryViewModelProvider.select((_) => _.eventData),
     )?[booking.id];
-
-    log(booking.id);
 
     return GestureDetector(
       onTap: () {
@@ -39,7 +40,7 @@ class BookingItem extends ConsumerWidget {
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: booking.isCheckIn ? 182 : 160,
+        height: isPastEvent ? 182 : 160,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: Colors.white,
@@ -81,9 +82,9 @@ class BookingItem extends ConsumerWidget {
                         Text(
                           event?.name ?? "Unknown",
                           style: GoogleFonts.poppins(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: Colors.black,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w500,
                           ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
@@ -92,18 +93,41 @@ class BookingItem extends ConsumerWidget {
                         Text(
                           '${DateFormat('d MMM y,').add_jm().format(event!.startTime)} - ${DateFormat.jm().format(event.endTime)}',
                           style: GoogleFonts.poppins(
-                            fontSize: 14,
+                            fontSize: 10,
                             color: Colors.black.withOpacity(0.5),
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                         const SizedBox(height: 12),
                         Text(
                           '${booking.ticketType.name} x ${booking.ticketCount}',
                           style: GoogleFonts.poppins(
-                            fontSize: 12,
+                            fontSize: 10,
                             color: Colors.black,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Booking - ',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 10,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              TextSpan(
+                                text: booking.id,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 10,
+                                  color: Colors.black.withOpacity(0.5),
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              )
+                            ],
                           ),
                         ),
                       ],
@@ -112,7 +136,7 @@ class BookingItem extends ConsumerWidget {
                 ],
               ),
             ),
-            if (booking.isCheckIn) ...[
+            if (isPastEvent) ...[
               Flexible(
                 child: Container(
                   decoration: const BoxDecoration(
@@ -129,7 +153,9 @@ class BookingItem extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'FINISHED: Hope you enjoyed the show',
+                            booking.isCheckIn
+                                ? 'Event Finished: Hope you enjoyed the show'
+                                : 'Event Finished: Did not attend',
                             style: GoogleFonts.poppins(
                               fontStyle: FontStyle.italic,
                               fontSize: 14,

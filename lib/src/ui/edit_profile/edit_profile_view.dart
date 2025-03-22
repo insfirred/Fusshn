@@ -36,16 +36,17 @@ class EditProfileView extends ConsumerWidget {
     );
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: homeTabHorizontalPadding),
-          child: Stack(
+      body: Stack(
+        children: [
+          const Column(
             children: [
-              const SingleChildScrollView(
+              FusshnAppBar(label: 'Edit Profile'),
+              SingleChildScrollView(
+                padding: EdgeInsets.symmetric(
+                  horizontal: homeTabHorizontalPadding,
+                ),
                 child: Column(
                   children: [
-                    FusshnAppBar(label: 'Edit Profile'),
                     SizedBox(height: 50),
                     EditImageSection(),
                     SizedBox(height: 30),
@@ -53,24 +54,24 @@ class EditProfileView extends ConsumerWidget {
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: FusshnBtn(
-                    height: 50,
-                    label: 'Save Details',
-                    onTap: () {
-                      ref
-                          .read(editProfileViewModelProvider.notifier)
-                          .saveDetailsPressed();
-                    },
-                  ),
-                ),
-              ),
             ],
           ),
-        ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: FusshnBtn(
+                height: 50,
+                label: 'Save Details',
+                onTap: () {
+                  ref
+                      .read(editProfileViewModelProvider.notifier)
+                      .saveDetailsPressed();
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

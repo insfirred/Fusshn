@@ -12,29 +12,27 @@ class PrivacyPolicyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: homeTabHorizontalPadding,
-          ),
-          child: Column(
-            children: [
-              const FusshnAppBar(label: 'Privacy Policy'),
-              Expanded(
-                child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: privacyPoliciesVals.length,
-                  itemBuilder: (context, index) => _PnpItem(
-                    privacyPoliciesVals[index],
-                  ),
-                  separatorBuilder: (context, index) => Divider(
-                    color: Colors.white.withOpacity(0.5),
-                  ),
-                ),
+      body: Column(
+        children: [
+          const FusshnAppBar(label: 'Privacy Policy'),
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.only(
+                top: 22,
+                left: homeTabHorizontalPadding,
+                right: homeTabHorizontalPadding,
               ),
-            ],
+              physics: const BouncingScrollPhysics(),
+              itemCount: privacyPoliciesVals.length,
+              itemBuilder: (context, index) => _PnpItem(
+                privacyPoliciesVals[index],
+              ),
+              separatorBuilder: (context, index) => Divider(
+                color: Colors.white.withOpacity(0.5),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

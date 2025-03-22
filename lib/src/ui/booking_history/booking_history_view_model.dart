@@ -78,7 +78,7 @@ class BookingHistoryViewModel extends StateNotifier<BookingHistoryViewState> {
               // else => false
               bool isEventHappend = now.isAfter(event.endTime);
 
-              if (!myBooking.isCheckIn && !isEventHappend) {
+              if (!isEventHappend) {
                 upcomingBookings.add(myBooking);
               } else {
                 pastBookings.add(myBooking);
