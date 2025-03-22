@@ -186,11 +186,11 @@ List<OnboardingData> onboardingDataList = [
     description:
         'Purchase tickets and passes with ease using our secure checkout process.',
   ),
-  OnboardingData(
-    title: 'Enjoy complimentary drink, On Us!',
-    description:
-        'Simply present your booking confirmation at the venue to claim your free drink.',
-  ),
+  // OnboardingData(
+  //   title: 'Enjoy complimentary drink, On Us!',
+  //   description:
+  //       'Simply present your booking confirmation at the venue to claim your free drink.',
+  // ),
 ];
 
 final currentOnboardingIndexProvider = StateProvider<int>((ref) => 0);
