@@ -1,17 +1,15 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/dimens.dart';
-import '../../common/waste_data.dart';
-import '../../models/booking.dart';
 import '../../models/event_data.dart';
 import '../../routing/app_router.dart';
 import '../common_widgets/animated_gradient_background.dart';
 import '../common_widgets/sliver_title.dart';
 import 'components/events_carousel_slider_section.dart';
+import 'components/give_feedback_card.dart';
 import 'components/greetings_appbar.dart';
 import 'components/horizontal_event_slider.dart';
 import 'components/payment_success_alert.dart';
@@ -42,6 +40,13 @@ class HomeView extends ConsumerWidget {
     final List<EventData> eventDataList = ref.watch(
       homeViewModelProvider.select((_) => _.events),
     );
+
+    final showFeedbackCard = ref.watch(
+          homeViewModelProvider.select((_) => _.showFeedbackCardOnHome),
+        ) &&
+        !ref.watch(
+          homeViewModelProvider.select((_) => _.tempRemoveFeedbackCard),
+        );
 
     return Scaffold(
       body: SafeArea(
@@ -203,8 +208,13 @@ class HomeView extends ConsumerWidget {
               //     ),
               //   ),
               // ),
-              const SliverToBoxAdapter(child: SizedBox(height: 40)),
 
+              if (showFeedbackCard) ...[
+                const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                const SliverToBoxAdapter(child: GiveFeedbackCard()),
+              ],
+
+              const SliverToBoxAdapter(child: SizedBox(height: 40)),
               // LETS PARTY TOGETHER Section
               SliverToBoxAdapter(
                 child: Padding(

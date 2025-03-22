@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../models/event_data.dart';
 import '../home_view_model.dart';
@@ -31,30 +32,36 @@ class _EventsCarouselSliderSectionState
       homeViewModelProvider.select((_) => _.events),
     );
 
+    final status = ref.watch(
+      homeViewModelProvider.select((_) => _.status),
+    );
+
     return Column(
       children: [
-        CarouselSlider(
-          carouselController: controller,
-          options: CarouselOptions(
-            height: 360,
-            viewportFraction: 1,
-            autoPlay: true,
-            onPageChanged: (index, reason) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-          ),
-          items: eventDataList.map(
-            (event) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return HomeBanner(event);
-                },
-              );
-            },
-          ).toList(),
-        ),
+        status == HomeViewStatus.loading
+            ? const _EventCaroselShimmer()
+            : CarouselSlider(
+                carouselController: controller,
+                options: CarouselOptions(
+                  height: 360,
+                  viewportFraction: 1,
+                  autoPlay: true,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                ),
+                items: eventDataList.map(
+                  (event) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return HomeBanner(event);
+                      },
+                    );
+                  },
+                ).toList(),
+              ),
         const SizedBox(height: 8),
         SizedBox(
           height: 6,
@@ -88,6 +95,26 @@ class _CarouselDot extends StatelessWidget {
       ),
       width: isActive ? 15 : 6,
       height: 6,
+    );
+  }
+}
+
+class _EventCaroselShimmer extends StatelessWidget {
+  const _EventCaroselShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      period: const Duration(milliseconds: 800),
+      baseColor: Colors.black12,
+      highlightColor: Colors.grey.shade900,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.grey[900],
+        ),
+        height: 360,
+      ),
     );
   }
 }

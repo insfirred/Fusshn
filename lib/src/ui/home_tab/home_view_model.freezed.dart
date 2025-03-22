@@ -16,11 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomeViewState {
-  List<EventData> get events =>
-      throw _privateConstructorUsedError; // @Default([]) String selectedTag,
+  List<EventData> get events => throw _privateConstructorUsedError;
+  bool get showFeedbackCardOnHome => throw _privateConstructorUsedError;
+  List<String> get myFeedbacks => throw _privateConstructorUsedError;
   int get paymentSuccessPopupTrigger => throw _privateConstructorUsedError;
-  int get locationServicePopupTrigger => throw _privateConstructorUsedError;
-  int get locationPermissionPopuptrigger => throw _privateConstructorUsedError;
+  bool get tempRemoveFeedbackCard => throw _privateConstructorUsedError;
   HomeViewStatus get status => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -37,9 +37,10 @@ abstract class $HomeViewStateCopyWith<$Res> {
   @useResult
   $Res call(
       {List<EventData> events,
+      bool showFeedbackCardOnHome,
+      List<String> myFeedbacks,
       int paymentSuccessPopupTrigger,
-      int locationServicePopupTrigger,
-      int locationPermissionPopuptrigger,
+      bool tempRemoveFeedbackCard,
       HomeViewStatus status,
       String? errorMessage});
 }
@@ -58,9 +59,10 @@ class _$HomeViewStateCopyWithImpl<$Res, $Val extends HomeViewState>
   @override
   $Res call({
     Object? events = null,
+    Object? showFeedbackCardOnHome = null,
+    Object? myFeedbacks = null,
     Object? paymentSuccessPopupTrigger = null,
-    Object? locationServicePopupTrigger = null,
-    Object? locationPermissionPopuptrigger = null,
+    Object? tempRemoveFeedbackCard = null,
     Object? status = null,
     Object? errorMessage = freezed,
   }) {
@@ -69,18 +71,22 @@ class _$HomeViewStateCopyWithImpl<$Res, $Val extends HomeViewState>
           ? _value.events
           : events // ignore: cast_nullable_to_non_nullable
               as List<EventData>,
+      showFeedbackCardOnHome: null == showFeedbackCardOnHome
+          ? _value.showFeedbackCardOnHome
+          : showFeedbackCardOnHome // ignore: cast_nullable_to_non_nullable
+              as bool,
+      myFeedbacks: null == myFeedbacks
+          ? _value.myFeedbacks
+          : myFeedbacks // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       paymentSuccessPopupTrigger: null == paymentSuccessPopupTrigger
           ? _value.paymentSuccessPopupTrigger
           : paymentSuccessPopupTrigger // ignore: cast_nullable_to_non_nullable
               as int,
-      locationServicePopupTrigger: null == locationServicePopupTrigger
-          ? _value.locationServicePopupTrigger
-          : locationServicePopupTrigger // ignore: cast_nullable_to_non_nullable
-              as int,
-      locationPermissionPopuptrigger: null == locationPermissionPopuptrigger
-          ? _value.locationPermissionPopuptrigger
-          : locationPermissionPopuptrigger // ignore: cast_nullable_to_non_nullable
-              as int,
+      tempRemoveFeedbackCard: null == tempRemoveFeedbackCard
+          ? _value.tempRemoveFeedbackCard
+          : tempRemoveFeedbackCard // ignore: cast_nullable_to_non_nullable
+              as bool,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -103,9 +109,10 @@ abstract class _$$HomeViewStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {List<EventData> events,
+      bool showFeedbackCardOnHome,
+      List<String> myFeedbacks,
       int paymentSuccessPopupTrigger,
-      int locationServicePopupTrigger,
-      int locationPermissionPopuptrigger,
+      bool tempRemoveFeedbackCard,
       HomeViewStatus status,
       String? errorMessage});
 }
@@ -122,9 +129,10 @@ class __$$HomeViewStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? events = null,
+    Object? showFeedbackCardOnHome = null,
+    Object? myFeedbacks = null,
     Object? paymentSuccessPopupTrigger = null,
-    Object? locationServicePopupTrigger = null,
-    Object? locationPermissionPopuptrigger = null,
+    Object? tempRemoveFeedbackCard = null,
     Object? status = null,
     Object? errorMessage = freezed,
   }) {
@@ -133,18 +141,22 @@ class __$$HomeViewStateImplCopyWithImpl<$Res>
           ? _value._events
           : events // ignore: cast_nullable_to_non_nullable
               as List<EventData>,
+      showFeedbackCardOnHome: null == showFeedbackCardOnHome
+          ? _value.showFeedbackCardOnHome
+          : showFeedbackCardOnHome // ignore: cast_nullable_to_non_nullable
+              as bool,
+      myFeedbacks: null == myFeedbacks
+          ? _value._myFeedbacks
+          : myFeedbacks // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       paymentSuccessPopupTrigger: null == paymentSuccessPopupTrigger
           ? _value.paymentSuccessPopupTrigger
           : paymentSuccessPopupTrigger // ignore: cast_nullable_to_non_nullable
               as int,
-      locationServicePopupTrigger: null == locationServicePopupTrigger
-          ? _value.locationServicePopupTrigger
-          : locationServicePopupTrigger // ignore: cast_nullable_to_non_nullable
-              as int,
-      locationPermissionPopuptrigger: null == locationPermissionPopuptrigger
-          ? _value.locationPermissionPopuptrigger
-          : locationPermissionPopuptrigger // ignore: cast_nullable_to_non_nullable
-              as int,
+      tempRemoveFeedbackCard: null == tempRemoveFeedbackCard
+          ? _value.tempRemoveFeedbackCard
+          : tempRemoveFeedbackCard // ignore: cast_nullable_to_non_nullable
+              as bool,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -164,12 +176,14 @@ class _$HomeViewStateImpl
     implements _HomeViewState {
   const _$HomeViewStateImpl(
       {final List<EventData> events = const [],
+      this.showFeedbackCardOnHome = false,
+      final List<String> myFeedbacks = const [],
       this.paymentSuccessPopupTrigger = 0,
-      this.locationServicePopupTrigger = 0,
-      this.locationPermissionPopuptrigger = 0,
+      this.tempRemoveFeedbackCard = false,
       this.status = HomeViewStatus.initial,
       this.errorMessage})
-      : _events = events;
+      : _events = events,
+        _myFeedbacks = myFeedbacks;
 
   final List<EventData> _events;
   @override
@@ -180,16 +194,24 @@ class _$HomeViewStateImpl
     return EqualUnmodifiableListView(_events);
   }
 
-// @Default([]) String selectedTag,
+  @override
+  @JsonKey()
+  final bool showFeedbackCardOnHome;
+  final List<String> _myFeedbacks;
+  @override
+  @JsonKey()
+  List<String> get myFeedbacks {
+    if (_myFeedbacks is EqualUnmodifiableListView) return _myFeedbacks;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_myFeedbacks);
+  }
+
   @override
   @JsonKey()
   final int paymentSuccessPopupTrigger;
   @override
   @JsonKey()
-  final int locationServicePopupTrigger;
-  @override
-  @JsonKey()
-  final int locationPermissionPopuptrigger;
+  final bool tempRemoveFeedbackCard;
   @override
   @JsonKey()
   final HomeViewStatus status;
@@ -198,7 +220,7 @@ class _$HomeViewStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeViewState(events: $events, paymentSuccessPopupTrigger: $paymentSuccessPopupTrigger, locationServicePopupTrigger: $locationServicePopupTrigger, locationPermissionPopuptrigger: $locationPermissionPopuptrigger, status: $status, errorMessage: $errorMessage)';
+    return 'HomeViewState(events: $events, showFeedbackCardOnHome: $showFeedbackCardOnHome, myFeedbacks: $myFeedbacks, paymentSuccessPopupTrigger: $paymentSuccessPopupTrigger, tempRemoveFeedbackCard: $tempRemoveFeedbackCard, status: $status, errorMessage: $errorMessage)';
   }
 
   @override
@@ -207,12 +229,13 @@ class _$HomeViewStateImpl
     properties
       ..add(DiagnosticsProperty('type', 'HomeViewState'))
       ..add(DiagnosticsProperty('events', events))
+      ..add(
+          DiagnosticsProperty('showFeedbackCardOnHome', showFeedbackCardOnHome))
+      ..add(DiagnosticsProperty('myFeedbacks', myFeedbacks))
       ..add(DiagnosticsProperty(
           'paymentSuccessPopupTrigger', paymentSuccessPopupTrigger))
-      ..add(DiagnosticsProperty(
-          'locationServicePopupTrigger', locationServicePopupTrigger))
-      ..add(DiagnosticsProperty(
-          'locationPermissionPopuptrigger', locationPermissionPopuptrigger))
+      ..add(
+          DiagnosticsProperty('tempRemoveFeedbackCard', tempRemoveFeedbackCard))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('errorMessage', errorMessage));
   }
@@ -223,18 +246,16 @@ class _$HomeViewStateImpl
         (other.runtimeType == runtimeType &&
             other is _$HomeViewStateImpl &&
             const DeepCollectionEquality().equals(other._events, _events) &&
+            (identical(other.showFeedbackCardOnHome, showFeedbackCardOnHome) ||
+                other.showFeedbackCardOnHome == showFeedbackCardOnHome) &&
+            const DeepCollectionEquality()
+                .equals(other._myFeedbacks, _myFeedbacks) &&
             (identical(other.paymentSuccessPopupTrigger,
                     paymentSuccessPopupTrigger) ||
                 other.paymentSuccessPopupTrigger ==
                     paymentSuccessPopupTrigger) &&
-            (identical(other.locationServicePopupTrigger,
-                    locationServicePopupTrigger) ||
-                other.locationServicePopupTrigger ==
-                    locationServicePopupTrigger) &&
-            (identical(other.locationPermissionPopuptrigger,
-                    locationPermissionPopuptrigger) ||
-                other.locationPermissionPopuptrigger ==
-                    locationPermissionPopuptrigger) &&
+            (identical(other.tempRemoveFeedbackCard, tempRemoveFeedbackCard) ||
+                other.tempRemoveFeedbackCard == tempRemoveFeedbackCard) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
@@ -244,9 +265,10 @@ class _$HomeViewStateImpl
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_events),
+      showFeedbackCardOnHome,
+      const DeepCollectionEquality().hash(_myFeedbacks),
       paymentSuccessPopupTrigger,
-      locationServicePopupTrigger,
-      locationPermissionPopuptrigger,
+      tempRemoveFeedbackCard,
       status,
       errorMessage);
 
@@ -260,20 +282,23 @@ class _$HomeViewStateImpl
 abstract class _HomeViewState implements HomeViewState {
   const factory _HomeViewState(
       {final List<EventData> events,
+      final bool showFeedbackCardOnHome,
+      final List<String> myFeedbacks,
       final int paymentSuccessPopupTrigger,
-      final int locationServicePopupTrigger,
-      final int locationPermissionPopuptrigger,
+      final bool tempRemoveFeedbackCard,
       final HomeViewStatus status,
       final String? errorMessage}) = _$HomeViewStateImpl;
 
   @override
   List<EventData> get events;
-  @override // @Default([]) String selectedTag,
+  @override
+  bool get showFeedbackCardOnHome;
+  @override
+  List<String> get myFeedbacks;
+  @override
   int get paymentSuccessPopupTrigger;
   @override
-  int get locationServicePopupTrigger;
-  @override
-  int get locationPermissionPopuptrigger;
+  bool get tempRemoveFeedbackCard;
   @override
   HomeViewStatus get status;
   @override

@@ -25,19 +25,23 @@ List<PopularCitiesData> popularIndianCities = [
   ),
   const PopularCitiesData(
     name: "Bengaluru",
-    icon: 'mumbai_logo',
+    icon: 'bengaluru_logo',
   ),
   const PopularCitiesData(
     name: "Chandigarh",
-    icon: 'mumbai_logo',
+    icon: 'chandigarh_logo',
   ),
   const PopularCitiesData(
     name: "Pune",
-    icon: 'mumbai_logo',
+    icon: 'pune_logo',
   ),
   const PopularCitiesData(
     name: "Kolkata",
-    icon: 'mumbai_logo',
+    icon: 'kolkata_logo',
+  ),
+  const PopularCitiesData(
+    name: "Goa",
+    icon: 'goa_logo',
   ),
 ];
 

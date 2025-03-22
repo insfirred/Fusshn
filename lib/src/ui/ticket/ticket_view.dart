@@ -12,7 +12,6 @@ import '../../models/booking.dart';
 import '../../models/event_data.dart';
 import '../../repositories/app_repository.dart';
 import '../common_widgets/fusshn_appbar.dart';
-import '../common_widgets/fusshn_btn.dart';
 
 @RoutePage()
 class TicketView extends StatelessWidget {
