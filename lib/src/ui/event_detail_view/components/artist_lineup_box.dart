@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../../common/dimens.dart';
 import '../../../models/artist_data.dart';
@@ -28,9 +27,10 @@ class ArtistLineupBox extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
-            Row(
-              children: lineup.map((e) => _ArtistItem(e)).toList(),
-            ),
+            // Row(
+            //   children: lineup.map((e) => _ArtistItem(e)).toList(),
+            // ),
+            _ArtistItem(lineup.first),
             const SizedBox(height: 8),
             const Divider(
               color: Color(0xFF3F3F3F),
@@ -42,14 +42,14 @@ class ArtistLineupBox extends StatelessWidget {
     );
   }
 
-  String _generateArtistNames() {
-    String res = '';
-    for (var artist in lineup) {
-      res = '$res${artist.name}, ';
-    }
-    int len = res.length;
-    return res.substring(0, len - 2);
-  }
+  // String _generateArtistNames() {
+  //   String res = '';
+  //   for (var artist in lineup) {
+  //     res = '$res${artist.name}, ';
+  //   }
+  //   int len = res.length;
+  //   return res.substring(0, len - 2);
+  // }
 }
 
 class _ArtistItem extends StatelessWidget {

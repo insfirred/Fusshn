@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/dimens.dart';
 
@@ -18,7 +19,7 @@ class FusshnAppBar extends StatelessWidget {
     return Container(
       color: Colors.black,
       padding: const EdgeInsets.only(
-        top: 30,
+        top: 50,
         bottom: 15,
         left: homeTabHorizontalPadding,
         right: homeTabHorizontalPadding,
@@ -47,7 +48,10 @@ class FusshnAppBar extends StatelessWidget {
           ] else ...[
             Text(
               label,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ],

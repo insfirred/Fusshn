@@ -28,8 +28,9 @@ class PopularCitiesSection extends StatelessWidget {
               .bodyMedium
               ?.copyWith(fontWeight: FontWeight.w500),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
         GridView.builder(
+          padding: const EdgeInsets.all(0),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: popularIndianCities.length,

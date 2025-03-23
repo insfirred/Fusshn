@@ -22,7 +22,7 @@ Widget paymentSuccessAlert(BuildContext context) => BackdropFilter(
               ),
               const SizedBox(height: 10),
               const Text(
-                'Yayy',
+                'Yayy!!',
               ),
             ],
           ),
@@ -30,7 +30,7 @@ Widget paymentSuccessAlert(BuildContext context) => BackdropFilter(
         titleTextStyle: Theme.of(context)
             .textTheme
             .displaySmall
-            ?.copyWith(fontSize: 22, fontWeight: FontWeight.w600),
+            ?.copyWith(fontSize: 14, fontWeight: FontWeight.w500),
         content: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -40,7 +40,9 @@ Widget paymentSuccessAlert(BuildContext context) => BackdropFilter(
           ],
         ),
         contentTextStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: const Color(0xFF78F894),
+              color: const Color(0xFF78F894).withOpacity(0.7),
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
             ),
         contentPadding: const EdgeInsets.only(top: 15, bottom: 17),
         actions: [
@@ -51,7 +53,7 @@ Widget paymentSuccessAlert(BuildContext context) => BackdropFilter(
               context.maybePop();
               context.navigateTo(const BookingHistoryRoute());
             },
-            label: 'View my Bookings',
+            label: 'View bookings',
           ),
         ],
         actionsAlignment: MainAxisAlignment.center,

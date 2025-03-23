@@ -29,34 +29,39 @@ class SelectLocationView extends ConsumerWidget {
     );
 
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(
-                horizontal: homeTabHorizontalPadding,
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              FusshnAppBar(
+                label: 'Select your city',
+                showBackButton: !isFirstLocationView,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FusshnAppBar(
-                    label: 'Select your city',
-                    showBackButton: !isFirstLocationView,
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: homeTabHorizontalPadding,
                   ),
-                  LocationSearchBox(isFirstLocationView),
-                  const SizedBox(height: 20),
-                  PopularCitiesSection(isFirstLocationView),
-                  const SizedBox(height: 20),
-                  Divider(color: Colors.grey.shade700),
-                  AllCitiesSection(isFirstLocationView),
-                ],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 20),
+                      LocationSearchBox(isFirstLocationView),
+                      const SizedBox(height: 20),
+                      PopularCitiesSection(isFirstLocationView),
+                      const SizedBox(height: 20),
+                      Divider(color: Colors.grey.shade700),
+                      AllCitiesSection(isFirstLocationView),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            if (status == SelectLocationViewStatus.LOCATION_FETCHING) ...[
-              const _LocationFetchingLoadingScreen(),
             ],
+          ),
+          if (status == SelectLocationViewStatus.LOCATION_FETCHING) ...[
+            const _LocationFetchingLoadingScreen(),
           ],
-        ),
+        ],
       ),
     );
   }

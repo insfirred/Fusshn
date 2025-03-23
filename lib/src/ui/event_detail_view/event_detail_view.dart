@@ -120,8 +120,10 @@ class EventDetailView extends StatelessWidget {
                   const SliverToBoxAdapter(child: SizedBox(height: 8)),
 
                   // ARTIST LINEUP
-                  ArtistLineupBox(lineup: eventData.artistLineup),
-                  const SliverToBoxAdapter(child: SizedBox(height: 24)),
+                  if (eventData.artistLineup.isNotEmpty) ...[
+                    ArtistLineupBox(lineup: eventData.artistLineup),
+                    const SliverToBoxAdapter(child: SizedBox(height: 24)),
+                  ],
 
                   // TERMS AND CONDITIONS
                   TermsAndConditions(eventData.termsAndConditions),
