@@ -22,14 +22,14 @@ void main() async {
   );
 
   // for all users, subscribe to general topic.
-  await FirebaseMessaging.instance.subscribeToTopic('general');
+  // await FirebaseMessaging.instance.subscribeToTopic('general');
 
   final sharedPreferences = await SharedPreferences.getInstance();
   final container = ProviderContainer(overrides: [
     sharedPreferencesProvider.overrideWithValue(sharedPreferences),
   ]);
 
-  NotificationService().initNotifications();
+  // NotificationService().initNotifications();
 
   runApp(
     UncontrolledProviderScope(

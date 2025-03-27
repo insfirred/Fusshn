@@ -162,7 +162,7 @@ class TicketView extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 5),
                                   Text(
-                                    DateFormat.jm().format(eventData.endTime),
+                                    DateFormat.jm().format(eventData.startTime),
                                     overflow: TextOverflow.visible,
                                     style: GoogleFonts.poppins(
                                       fontSize: 14,

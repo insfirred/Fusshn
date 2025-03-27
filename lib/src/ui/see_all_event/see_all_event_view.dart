@@ -18,25 +18,33 @@ class SeeAllEventView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        padding:
-            const EdgeInsets.symmetric(horizontal: homeTabHorizontalPadding),
-        child: Column(
-          children: [
-            const FusshnAppBar(label: 'Happening near you'),
-            const SizedBox(height: 30),
-            ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: events.length,
-              itemBuilder: (context, index) => EventTabCard(events[index]),
-              separatorBuilder: (context, index) => const SizedBox(height: 18),
+      body: Column(
+        children: [
+          const FusshnAppBar(label: 'Happening near you'),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  const SizedBox(height: 30),
+                  ListView.separated(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: homeTabHorizontalPadding,
+                    ),
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: events.length,
+                    itemBuilder: (context, index) =>
+                        EventTabCard(events[index]),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 18),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      )),
+          ),
+        ],
+      ),
     );
   }
 }
