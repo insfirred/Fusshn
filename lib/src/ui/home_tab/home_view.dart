@@ -42,106 +42,106 @@ class HomeView extends ConsumerWidget {
       },
     );
 
-    // ref.listen(
-    //   appRepositoryProvider,
-    //   (previous, next) {
-    //     if (next.isUpdateAvailable) {
-    //       showModalBottomSheet(
-    //         backgroundColor: Colors.transparent,
-    //         enableDrag: false,
-    //         isDismissible: false,
-    //         context: context,
-    //         builder: (context) => BackdropFilter(
-    //           filter: ImageFilter.blur(
-    //             sigmaX: 8,
-    //             sigmaY: 8,
-    //           ),
-    //           child: Container(
-    //             padding: const EdgeInsets.symmetric(
-    //               horizontal: 32,
-    //               vertical: 30,
-    //             ),
-    //             decoration: const BoxDecoration(
-    //               color: Color(0xFF111111),
-    //               borderRadius: BorderRadius.only(
-    //                 topLeft: Radius.circular(20),
-    //                 topRight: Radius.circular(20),
-    //               ),
-    //             ),
-    //             child: Column(
-    //               mainAxisSize: MainAxisSize.min,
-    //               children: [
-    //                 Text(
-    //                   'New Update Available!!',
-    //                   style: GoogleFonts.poppins(
-    //                     fontSize: 14,
-    //                     fontWeight: FontWeight.w400,
-    //                     color: const Color(0xFFB3B3B3),
-    //                   ),
-    //                 ),
-    //                 const SizedBox(height: 24),
-    //                 Padding(
-    //                   padding: const EdgeInsets.symmetric(horizontal: 44),
-    //                   child: Text(
-    //                     'Update your Application to the Latest Version',
-    //                     style: GoogleFonts.poppins(
-    //                       fontSize: 16,
-    //                       fontWeight: FontWeight.w600,
-    //                     ),
-    //                     textAlign: TextAlign.center,
-    //                   ),
-    //                 ),
-    //                 const SizedBox(height: 20),
-    //                 Padding(
-    //                   padding: const EdgeInsets.symmetric(horizontal: 5),
-    //                   child: Text(
-    //                     'A brand new version of fusshn app is available in the Playstore. Please update your app to use all of our amazing features',
-    //                     style: GoogleFonts.poppins(
-    //                       fontSize: 14,
-    //                       fontWeight: FontWeight.w400,
-    //                       color: const Color(0xFFB3B3B3),
-    //                     ),
-    //                     textAlign: TextAlign.center,
-    //                   ),
-    //                 ),
-    //                 const SizedBox(height: 32),
-    //                 ClipRRect(
-    //                   borderRadius: BorderRadius.circular(8),
-    //                   child: Container(
-    //                     color: Theme.of(context).primaryColor,
-    //                     child: Material(
-    //                       color: Colors.transparent,
-    //                       child: InkWell(
-    //                         onTap: () {
-    //                           // Navigator.pop(context);
-    //                         },
-    //                         child: Container(
-    //                           height: 45,
-    //                           decoration: BoxDecoration(
-    //                             borderRadius: BorderRadius.circular(8),
-    //                           ),
-    //                           child: Center(
-    //                             child: Text(
-    //                               'Update Now',
-    //                               style: GoogleFonts.poppins(
-    //                                 fontSize: 16,
-    //                                 fontWeight: FontWeight.w600,
-    //                               ),
-    //                             ),
-    //                           ),
-    //                         ),
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //         ),
-    //       );
-    //     }
-    //   },
-    // );
+    ref.listen(
+      appRepositoryProvider,
+      (previous, next) {
+        if (next.isUpdateAvailable) {
+          showModalBottomSheet(
+            backgroundColor: Colors.transparent,
+            enableDrag: false,
+            isDismissible: false,
+            context: context,
+            builder: (context) => BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: 8,
+                sigmaY: 8,
+              ),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 30,
+                ),
+                decoration: const BoxDecoration(
+                  color: Color(0xFF111111),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'New Update Available!!',
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xFFB3B3B3),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 44),
+                      child: Text(
+                        'Update your Application to the Latest Version',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Text(
+                        'A brand new version of fusshn app is available in the Playstore. Please update your app to use all of our amazing features',
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(0xFFB3B3B3),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        color: Theme.of(context).primaryColor,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () {
+                              // Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 45,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Update Now',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+      },
+    );
 
     final List<EventData> allEvents = ref.watch(
       homeViewModelProvider.select((_) => _.allEvents),
