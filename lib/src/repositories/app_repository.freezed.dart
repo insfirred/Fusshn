@@ -19,6 +19,10 @@ mixin _$AppState {
   User? get authUser => throw _privateConstructorUsedError;
   UserData? get userData => throw _privateConstructorUsedError;
   AppStatus get status => throw _privateConstructorUsedError;
+  String get latestPlayStoreVersion => throw _privateConstructorUsedError;
+  String get latestAppStoreVersion => throw _privateConstructorUsedError;
+  String get currentAppVersion => throw _privateConstructorUsedError;
+  bool get isUpdateAvailable => throw _privateConstructorUsedError;
   LocationData? get userLocationData => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -35,6 +39,10 @@ abstract class $AppStateCopyWith<$Res> {
       {User? authUser,
       UserData? userData,
       AppStatus status,
+      String latestPlayStoreVersion,
+      String latestAppStoreVersion,
+      String currentAppVersion,
+      bool isUpdateAvailable,
       LocationData? userLocationData});
 }
 
@@ -54,6 +62,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? authUser = freezed,
     Object? userData = freezed,
     Object? status = null,
+    Object? latestPlayStoreVersion = null,
+    Object? latestAppStoreVersion = null,
+    Object? currentAppVersion = null,
+    Object? isUpdateAvailable = null,
     Object? userLocationData = freezed,
   }) {
     return _then(_value.copyWith(
@@ -69,6 +81,22 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AppStatus,
+      latestPlayStoreVersion: null == latestPlayStoreVersion
+          ? _value.latestPlayStoreVersion
+          : latestPlayStoreVersion // ignore: cast_nullable_to_non_nullable
+              as String,
+      latestAppStoreVersion: null == latestAppStoreVersion
+          ? _value.latestAppStoreVersion
+          : latestAppStoreVersion // ignore: cast_nullable_to_non_nullable
+              as String,
+      currentAppVersion: null == currentAppVersion
+          ? _value.currentAppVersion
+          : currentAppVersion // ignore: cast_nullable_to_non_nullable
+              as String,
+      isUpdateAvailable: null == isUpdateAvailable
+          ? _value.isUpdateAvailable
+          : isUpdateAvailable // ignore: cast_nullable_to_non_nullable
+              as bool,
       userLocationData: freezed == userLocationData
           ? _value.userLocationData
           : userLocationData // ignore: cast_nullable_to_non_nullable
@@ -89,6 +117,10 @@ abstract class _$$AppStateImplCopyWith<$Res>
       {User? authUser,
       UserData? userData,
       AppStatus status,
+      String latestPlayStoreVersion,
+      String latestAppStoreVersion,
+      String currentAppVersion,
+      bool isUpdateAvailable,
       LocationData? userLocationData});
 }
 
@@ -106,6 +138,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? authUser = freezed,
     Object? userData = freezed,
     Object? status = null,
+    Object? latestPlayStoreVersion = null,
+    Object? latestAppStoreVersion = null,
+    Object? currentAppVersion = null,
+    Object? isUpdateAvailable = null,
     Object? userLocationData = freezed,
   }) {
     return _then(_$AppStateImpl(
@@ -121,6 +157,22 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AppStatus,
+      latestPlayStoreVersion: null == latestPlayStoreVersion
+          ? _value.latestPlayStoreVersion
+          : latestPlayStoreVersion // ignore: cast_nullable_to_non_nullable
+              as String,
+      latestAppStoreVersion: null == latestAppStoreVersion
+          ? _value.latestAppStoreVersion
+          : latestAppStoreVersion // ignore: cast_nullable_to_non_nullable
+              as String,
+      currentAppVersion: null == currentAppVersion
+          ? _value.currentAppVersion
+          : currentAppVersion // ignore: cast_nullable_to_non_nullable
+              as String,
+      isUpdateAvailable: null == isUpdateAvailable
+          ? _value.isUpdateAvailable
+          : isUpdateAvailable // ignore: cast_nullable_to_non_nullable
+              as bool,
       userLocationData: freezed == userLocationData
           ? _value.userLocationData
           : userLocationData // ignore: cast_nullable_to_non_nullable
@@ -136,6 +188,10 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
       {this.authUser = null,
       this.userData,
       this.status = AppStatus.initial,
+      this.latestPlayStoreVersion = "",
+      this.latestAppStoreVersion = "",
+      this.currentAppVersion = "",
+      this.isUpdateAvailable = false,
       this.userLocationData});
 
   @override
@@ -147,11 +203,23 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
   @JsonKey()
   final AppStatus status;
   @override
+  @JsonKey()
+  final String latestPlayStoreVersion;
+  @override
+  @JsonKey()
+  final String latestAppStoreVersion;
+  @override
+  @JsonKey()
+  final String currentAppVersion;
+  @override
+  @JsonKey()
+  final bool isUpdateAvailable;
+  @override
   final LocationData? userLocationData;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppState(authUser: $authUser, userData: $userData, status: $status, userLocationData: $userLocationData)';
+    return 'AppState(authUser: $authUser, userData: $userData, status: $status, latestPlayStoreVersion: $latestPlayStoreVersion, latestAppStoreVersion: $latestAppStoreVersion, currentAppVersion: $currentAppVersion, isUpdateAvailable: $isUpdateAvailable, userLocationData: $userLocationData)';
   }
 
   @override
@@ -162,6 +230,11 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
       ..add(DiagnosticsProperty('authUser', authUser))
       ..add(DiagnosticsProperty('userData', userData))
       ..add(DiagnosticsProperty('status', status))
+      ..add(
+          DiagnosticsProperty('latestPlayStoreVersion', latestPlayStoreVersion))
+      ..add(DiagnosticsProperty('latestAppStoreVersion', latestAppStoreVersion))
+      ..add(DiagnosticsProperty('currentAppVersion', currentAppVersion))
+      ..add(DiagnosticsProperty('isUpdateAvailable', isUpdateAvailable))
       ..add(DiagnosticsProperty('userLocationData', userLocationData));
   }
 
@@ -175,13 +248,29 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
             (identical(other.userData, userData) ||
                 other.userData == userData) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.latestPlayStoreVersion, latestPlayStoreVersion) ||
+                other.latestPlayStoreVersion == latestPlayStoreVersion) &&
+            (identical(other.latestAppStoreVersion, latestAppStoreVersion) ||
+                other.latestAppStoreVersion == latestAppStoreVersion) &&
+            (identical(other.currentAppVersion, currentAppVersion) ||
+                other.currentAppVersion == currentAppVersion) &&
+            (identical(other.isUpdateAvailable, isUpdateAvailable) ||
+                other.isUpdateAvailable == isUpdateAvailable) &&
             (identical(other.userLocationData, userLocationData) ||
                 other.userLocationData == userLocationData));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, authUser, userData, status, userLocationData);
+  int get hashCode => Object.hash(
+      runtimeType,
+      authUser,
+      userData,
+      status,
+      latestPlayStoreVersion,
+      latestAppStoreVersion,
+      currentAppVersion,
+      isUpdateAvailable,
+      userLocationData);
 
   @JsonKey(ignore: true)
   @override
@@ -195,6 +284,10 @@ abstract class _AppState implements AppState {
       {final User? authUser,
       final UserData? userData,
       final AppStatus status,
+      final String latestPlayStoreVersion,
+      final String latestAppStoreVersion,
+      final String currentAppVersion,
+      final bool isUpdateAvailable,
       final LocationData? userLocationData}) = _$AppStateImpl;
 
   @override
@@ -203,6 +296,14 @@ abstract class _AppState implements AppState {
   UserData? get userData;
   @override
   AppStatus get status;
+  @override
+  String get latestPlayStoreVersion;
+  @override
+  String get latestAppStoreVersion;
+  @override
+  String get currentAppVersion;
+  @override
+  bool get isUpdateAvailable;
   @override
   LocationData? get userLocationData;
   @override

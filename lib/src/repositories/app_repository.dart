@@ -1,12 +1,16 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fusshn/src/services/firebase_rtdb.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../common/firestore_keys.dart';
 import '../common/hive_keys.dart';
@@ -20,15 +24,18 @@ part 'app_repository.freezed.dart';
 
 final appRepositoryProvider = StateNotifierProvider<AppRepository, AppState>(
   (ref) => AppRepository(
-      firebaseAuth: ref.watch(firebaseAuthProvider),
-      firestore: ref.watch(firestoreProvider),
-      hive: ref.watch(hiveProvider)),
+    firebaseAuth: ref.watch(firebaseAuthProvider),
+    firestore: ref.watch(firestoreProvider),
+    hive: ref.watch(hiveProvider),
+    database: ref.watch(firebaseRtdb),
+  ),
 );
 
 class AppRepository extends StateNotifier<AppState> {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firestore;
   final HiveInterface hive;
+  final FirebaseDatabase database;
   late final StreamSubscription _subscription;
   late final StreamSubscription _locationServiceSubscription;
 
@@ -36,10 +43,11 @@ class AppRepository extends StateNotifier<AppState> {
     required this.firebaseAuth,
     required this.firestore,
     required this.hive,
+    required this.database,
   }) : super(const AppState()) {
     () async {
       // it's a duration for splash screen
-      await Future.delayed(const Duration(milliseconds: 2000));
+      await Future.delayed(const Duration(milliseconds: 3000));
 
       // listens to auth changes and redirects accordingly.
       _subscription = firebaseAuth.authStateChanges().listen(
@@ -58,6 +66,7 @@ class AppRepository extends StateNotifier<AppState> {
                 status: AppStatus.authenticatedWithNoLocation,
               );
             } else {
+              log('last location: $userLastLocation');
               state = state.copyWith(
                 authUser: user,
                 status: AppStatus.authenticated,
@@ -69,6 +78,7 @@ class AppRepository extends StateNotifier<AppState> {
               );
             }
             await _fetchCurrentUserData();
+            _isUpdateAvailable();
           }
         },
       );
@@ -144,11 +154,6 @@ class AppRepository extends StateNotifier<AppState> {
     }
   }
 
-  // void _showLocationPermissionPopup() => state = state.copyWith(
-  //       locationPermissionPopuptrigger:
-  //           state.locationPermissionPopuptrigger + 1,
-  //     );
-
   /// returns user's last location, if not present then returns null.
   Map? _hasLastLocation() {
     var myLocationDataBox = hive.box<Map>(HiveKeys.myLocationDataBoxKey);
@@ -157,6 +162,58 @@ class AppRepository extends StateNotifier<AppState> {
 
   _deleterUserDetailsFromFirestore() async {
     await firestore.collection('users').doc(state.userData?.uid).delete();
+  }
+
+  _fetchLatestStoreVersions() async {
+    var pathRef = await database.ref('latestStoreVersions').get();
+    if (pathRef.exists) {
+      var data = pathRef.value as Map<dynamic, dynamic>;
+      if (data.containsKey('appStore')) {
+        state = state.copyWith(latestAppStoreVersion: data['appStore']);
+      }
+      if (data.containsKey('playStore')) {
+        state = state.copyWith(latestPlayStoreVersion: data['playStore']);
+      }
+    }
+  }
+
+  Future<String> _fetchCurrentAppVersion() async {
+    PackageInfo info = await PackageInfo.fromPlatform();
+    state = state.copyWith(currentAppVersion: info.version);
+    return info.version;
+  }
+
+  _isUpdateAvailable() async {
+    await _fetchCurrentAppVersion();
+    await _fetchLatestStoreVersions();
+
+    String latestVersion = Platform.isIOS
+        ? state.latestPlayStoreVersion
+        : state.latestPlayStoreVersion;
+    String currentVersion = state.currentAppVersion;
+
+    state = state.copyWith(
+      isUpdateAvailable: _isCurrentLowerVersion(currentVersion, latestVersion),
+    );
+  }
+
+  bool _isCurrentLowerVersion(String currentVersion, String latestVersion) {
+    List<String> currentParts = currentVersion.split('.');
+    List<String> latestParts = latestVersion.split('.');
+
+    int maxLength = currentParts.length > latestParts.length
+        ? currentParts.length
+        : latestParts.length;
+
+    for (int i = 0; i < maxLength; i++) {
+      int current = i < currentParts.length ? int.parse(currentParts[i]) : 0;
+      int latest = i < latestParts.length ? int.parse(latestParts[i]) : 0;
+
+      if (current < latest) return true; // Update is available
+      if (current > latest) return false; // Current version is newer
+    }
+
+    return false; // Versions are the same
   }
 
   @override
@@ -173,6 +230,10 @@ class AppState with _$AppState {
     @Default(null) User? authUser,
     UserData? userData,
     @Default(AppStatus.initial) AppStatus status,
+    @Default("") String latestPlayStoreVersion,
+    @Default("") String latestAppStoreVersion,
+    @Default("") String currentAppVersion,
+    @Default(false) bool isUpdateAvailable,
     LocationData? userLocationData,
   }) = _AppState;
 }

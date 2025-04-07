@@ -24,7 +24,7 @@ class SearchEventViewModel extends StateNotifier<SearchEventViewState> {
     required this.firestore,
     required this.ref,
   }) : super(SearchEventViewState(
-            allEvents: ref.watch(homeViewModelProvider).events)) {
+            allEvents: ref.watch(homeViewModelProvider).allEvents)) {
     state = state.copyWith(filteredEvents: state.allEvents);
   }
 

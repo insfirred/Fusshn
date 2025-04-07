@@ -27,7 +27,7 @@ class EventViewModel extends StateNotifier<EventViewState> {
     required this.ref,
   }) : super(
           EventViewState(
-            events: ref.watch(homeViewModelProvider.select((_) => _.events)),
+            events: ref.watch(homeViewModelProvider.select((_) => _.allEvents)),
           ),
         ) {
     state = state.copyWith(filteredEvents: state.events);

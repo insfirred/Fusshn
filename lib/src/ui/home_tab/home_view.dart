@@ -1,16 +1,15 @@
-import 'dart:developer';
+import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fusshn/src/common/enums.dart';
-import 'package:fusshn/src/models/artist_data.dart';
-import 'package:fusshn/src/models/ticket_type.dart';
+import 'package:fusshn/src/models/coordinates_data.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/dimens.dart';
 import '../../models/event_data.dart';
+import '../../repositories/app_repository.dart';
 import '../../routing/app_router.dart';
 import '../common_widgets/animated_gradient_background.dart';
 import '../common_widgets/sliver_title.dart';
@@ -43,8 +42,113 @@ class HomeView extends ConsumerWidget {
       },
     );
 
-    final List<EventData> eventDataList = ref.watch(
-      homeViewModelProvider.select((_) => _.events),
+    // ref.listen(
+    //   appRepositoryProvider,
+    //   (previous, next) {
+    //     if (next.isUpdateAvailable) {
+    //       showModalBottomSheet(
+    //         backgroundColor: Colors.transparent,
+    //         enableDrag: false,
+    //         isDismissible: false,
+    //         context: context,
+    //         builder: (context) => BackdropFilter(
+    //           filter: ImageFilter.blur(
+    //             sigmaX: 8,
+    //             sigmaY: 8,
+    //           ),
+    //           child: Container(
+    //             padding: const EdgeInsets.symmetric(
+    //               horizontal: 32,
+    //               vertical: 30,
+    //             ),
+    //             decoration: const BoxDecoration(
+    //               color: Color(0xFF111111),
+    //               borderRadius: BorderRadius.only(
+    //                 topLeft: Radius.circular(20),
+    //                 topRight: Radius.circular(20),
+    //               ),
+    //             ),
+    //             child: Column(
+    //               mainAxisSize: MainAxisSize.min,
+    //               children: [
+    //                 Text(
+    //                   'New Update Available!!',
+    //                   style: GoogleFonts.poppins(
+    //                     fontSize: 14,
+    //                     fontWeight: FontWeight.w400,
+    //                     color: const Color(0xFFB3B3B3),
+    //                   ),
+    //                 ),
+    //                 const SizedBox(height: 24),
+    //                 Padding(
+    //                   padding: const EdgeInsets.symmetric(horizontal: 44),
+    //                   child: Text(
+    //                     'Update your Application to the Latest Version',
+    //                     style: GoogleFonts.poppins(
+    //                       fontSize: 16,
+    //                       fontWeight: FontWeight.w600,
+    //                     ),
+    //                     textAlign: TextAlign.center,
+    //                   ),
+    //                 ),
+    //                 const SizedBox(height: 20),
+    //                 Padding(
+    //                   padding: const EdgeInsets.symmetric(horizontal: 5),
+    //                   child: Text(
+    //                     'A brand new version of fusshn app is available in the Playstore. Please update your app to use all of our amazing features',
+    //                     style: GoogleFonts.poppins(
+    //                       fontSize: 14,
+    //                       fontWeight: FontWeight.w400,
+    //                       color: const Color(0xFFB3B3B3),
+    //                     ),
+    //                     textAlign: TextAlign.center,
+    //                   ),
+    //                 ),
+    //                 const SizedBox(height: 32),
+    //                 ClipRRect(
+    //                   borderRadius: BorderRadius.circular(8),
+    //                   child: Container(
+    //                     color: Theme.of(context).primaryColor,
+    //                     child: Material(
+    //                       color: Colors.transparent,
+    //                       child: InkWell(
+    //                         onTap: () {
+    //                           // Navigator.pop(context);
+    //                         },
+    //                         child: Container(
+    //                           height: 45,
+    //                           decoration: BoxDecoration(
+    //                             borderRadius: BorderRadius.circular(8),
+    //                           ),
+    //                           child: Center(
+    //                             child: Text(
+    //                               'Update Now',
+    //                               style: GoogleFonts.poppins(
+    //                                 fontSize: 16,
+    //                                 fontWeight: FontWeight.w600,
+    //                               ),
+    //                             ),
+    //                           ),
+    //                         ),
+    //                       ),
+    //                     ),
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //       );
+    //     }
+    //   },
+    // );
+
+    final List<EventData> allEvents = ref.watch(
+      homeViewModelProvider.select((_) => _.allEvents),
+    );
+
+    final List<EventData> nearByEvents = ref.watch(
+      homeViewModelProvider.select((_) => _.nearByEvents),
     );
 
     final showFeedbackCard = ref.watch(
@@ -66,168 +170,39 @@ class HomeView extends ConsumerWidget {
               // SEARCH BOX
               const SearchAppBar(),
               const SliverToBoxAdapter(child: SizedBox(height: 12)),
-              // const SliverToBoxAdapter(
-              //   child: SizedBox(
-              //     height: 38,
-              //     child: AllEventTagsSection(),
-              //   ),
-              // ),
-              // const SliverToBoxAdapter(child: SizedBox(height: 24)),
-              // SliverToBoxAdapter(
-              //   child: ElevatedButton(
-              //     onPressed: () async {
-              //       for (var element in eventsForFirestore) {
-              //         await FirebaseFirestore.instance
-              //             .collection('events')
-              //             .add(element.toJson());
-              //       }
-              //     },
-              //     child: Text('push events'),
-              //   ),
-              // ),
-
-              // const SliverToBoxAdapter(child: SizedBox(height: 12)),
-              // SliverToBoxAdapter(
-              //   child: ElevatedButton(
-              //     onPressed: () async {
-              //       var a = Hive.box<Map>(HiveKeys.myLocationDataBoxKey)
-              //           .get(HiveKeys.lastLocationFieldKey);
-
-              //       log(a.toString());
-              //     },
-              //     child: Text('get city'),
-              //   ),
-              // ),
-              // const SliverToBoxAdapter(child: SizedBox(height: 12)),
-              // SliverToBoxAdapter(
-              //   child: ElevatedButton(
-              //     onPressed: () async {
-              //       User? user = FirebaseAuth.instance.currentUser;
-              //       // await user?.sendEmailVerification();
-              //       await user?.reload();
-              //       log('email verified? : ${user?.emailVerified}....');
-              //       // FirebaseAuth.instance.applyActionCode(
-              //       //     'g5KbDgbedLhr3QIYQ5rChHVnI-TxbIWM764bjTJMIsoAAAGTLtthdw');
-              //       // log('link sent.......');
-              //     },
-              //     child: const Text('Send link'),
-              //   ),
-              // ),
-              // const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
               // CAROUSEL SLIDER
               const SliverToBoxAdapter(
                 child: EventsCarouselSliderSection(),
               ),
-
-              // SliverToBoxAdapter(
-              //   child: TextButton(
-              //     onPressed: () async {
-              //       EventData eventData = EventData(
-              //         id: 'id',
-              //         name: 'Product Designer\'s Workshop',
-              //         description:
-              //             'Join us for an interactive workshop focused on the latest UI/UX design trends and techniques. Whether you\'re a beginner or looking to refine your skills, this session will provide valuable insights on creating user-centered designs, enhancing user experience, and mastering design tools. Be prepared for hands-on activities and real-world examples that will elevate your design process!',
-              //         artistLineup: [
-              //           const ArtistData(
-              //             id: 'gv',
-              //             name: 'ux.garvit',
-              //             imageUrl:
-              //                 'https://firebasestorage.googleapis.com/v0/b/fusshn-aef8e.appspot.com/o/simulation%2Fartist.jpg?alt=media&token=7127c225-9719-41f1-b202-b17e5512fd5a',
-              //           ),
-              //         ],
-              //         eventLocation: 'Centrum Plaza, Gurgaon',
-              //         posterUrl:
-              //             'https://images.unsplash.com/photo-1584448097764-374f81551427?q=80&w=2196&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-              //         imagesUrls: [
-              //           'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-              //           'https://images.unsplash.com/photo-1552581234-26160f608093?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-              //         ],
-              //         startTime: DateTime(2025, 3, 27, 11, 15),
-              //         endTime: DateTime(2025, 3, 27, 14),
-              //         tickets: [
-              //           const TicketType(
-              //             id: 'sp',
-              //             name: 'Student Pass',
-              //             price: 400,
-              //             personAllowedPerTicket: 1,
-              //             personGender: Gender.male,
-              //             description: 'One student entry pass',
-              //             isRefundable: false,
-              //             totalTickets: 50,
-              //             availableTickets: 50,
-              //           ),
-              //           const TicketType(
-              //             id: 'eb',
-              //             name: 'Early Bird',
-              //             price: 1179,
-              //             personAllowedPerTicket: 1,
-              //             personGender: Gender.male,
-              //             description: 'Pass for early birds',
-              //             isRefundable: false,
-              //             totalTickets: 50,
-              //             availableTickets: 50,
-              //           ),
-              //         ],
-              //         ageRestrictions: 16,
-              //         organiserName: 'Garvit Verma',
-              //         termsAndConditions: [
-              //           'The ticket is a revocable license to enter the event and is subject to the terms and conditions of the festival.',
-              //           'The ticket holder agrees to comply with all rules and regulations of the festival.',
-              //           'The ticket holder voluntarily assumes all risk and danger incidental to the event, whether occurring before, during, or after the event.',
-              //           'The event promoter reserves the right to refuse admission or eject any person whose conduct is deemed to be disorderly or who fails to comply with the terms and conditions of the event.',
-              //           'The event promoter is not responsible for lost or stolen items, and attendees are advised not to bring valuable items to the festival.',
-              //           'The event promoter may use any photos or videos taken at the event for promotional purposes.',
-              //           'The event promoter reserves the right to change the lineup, schedule, or location of the event without prior notice.',
-              //           'The ticket holder agrees to submit to a reasonable search for prohibited items upon entering the festival.',
-              //           'The ticket holder may not bring outside food, drink, or illegal substances to the festival.',
-              //           'The ticket holder may not resell or transfer their ticket without the express written consent of the event promoter.',
-              //         ],
-              //         tags: ['workshop'],
-              //       );
-
-              //       await FirebaseFirestore.instance
-              //           .collection('events')
-              //           .add(eventData.toJson())
-              //           .then(
-              //         (doc) {
-              //           doc.update(
-              //             {"id": doc.id},
-              //           );
-              //         },
-              //       );
-
-              //       log('Event added successfully!!!');
-              //     },
-              //     child: Text('Push Event Data'),
-              //   ),
-              // ),
+              const SliverToBoxAdapter(child: SizedBox(height: 26)),
 
               // HAPPENING NEAR YOU Section
-              const SliverToBoxAdapter(child: SizedBox(height: 26)),
-              SliverTitle(
-                label: 'Happening near you!',
-                onTap: () {
-                  context.navigateTo(SeeAllEventRoute(events: eventDataList));
-                },
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 8)),
-              const SliverToBoxAdapter(
-                child: HorizontalEventSlider(),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 20)),
+              if (nearByEvents.isNotEmpty) ...[
+                SliverTitle(
+                  label: 'Happening near you!',
+                  onTap: () {
+                    context.navigateTo(SeeAllEventRoute(events: nearByEvents));
+                  },
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: 8)),
+                SliverToBoxAdapter(
+                  child: HorizontalEventSlider(nearByEvents),
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: 20)),
+              ],
 
               // MUSIC EVENTS Section
               SliverTitle(
-                label: 'Music Events',
+                label: 'All Events',
                 onTap: () {
                   context.navigateTo(
-                    SeeAllEventRoute(events: eventDataList),
+                    SeeAllEventRoute(events: allEvents),
                   );
                 },
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 8)),
-              const SliverToBoxAdapter(child: HorizontalEventSlider()),
+              SliverToBoxAdapter(child: HorizontalEventSlider(allEvents)),
 
               // // FEATURED ARTISTS Section
               // const SliverToBoxAdapter(child: SizedBox(height: 20)),

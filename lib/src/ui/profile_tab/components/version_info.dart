@@ -1,35 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fusshn/src/repositories/app_repository.dart';
 
-class VersionInfo extends StatefulWidget {
+class VersionInfo extends ConsumerWidget {
   const VersionInfo({
     super.key,
   });
 
   @override
-  State<VersionInfo> createState() => _VersionInfoState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final versionNo = ref.watch(
+      appRepositoryProvider.select((_) => _.currentAppVersion),
+    );
 
-class _VersionInfoState extends State<VersionInfo> {
-  String version = '';
-
-  @override
-  void initState() {
-    super.initState();
-    fetchVersion();
-  }
-
-  fetchVersion() async {
-    PackageInfo info = await PackageInfo.fromPlatform();
-    setState(() {
-      version = info.version;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Text(
-      'v$version',
+      'v$versionNo',
       style: Theme.of(context).textTheme.bodySmall,
     );
   }

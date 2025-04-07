@@ -29,7 +29,7 @@ class _EventsCarouselSliderSectionState
   @override
   Widget build(BuildContext context) {
     final List<EventData> eventDataList = ref.watch(
-      homeViewModelProvider.select((_) => _.events),
+      homeViewModelProvider.select((_) => _.allEvents),
     );
 
     final status = ref.watch(

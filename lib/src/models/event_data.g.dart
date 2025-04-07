@@ -13,7 +13,9 @@ EventData _$EventDataFromJson(Map<String, dynamic> json) => EventData(
       artistLineup: (json['artistLineup'] as List<dynamic>)
           .map((e) => ArtistData.fromJson(e as Map<String, dynamic>))
           .toList(),
-      eventLocation: json['eventLocation'] as String,
+      eventLocationText: json['eventLocationText'] as String,
+      eventLocationCoordinates: CoordinatesData.fromJson(
+          json['eventLocationCoordinates'] as Map<String, dynamic>),
       posterUrl: json['posterUrl'] as String,
       imagesUrls: (json['imagesUrls'] as List<dynamic>)
           .map((e) => e as String)
@@ -35,13 +37,14 @@ Map<String, dynamic> _$EventDataToJson(EventData instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
-      'artistLineup': instance.artistLineup.map((e) => e.toJson()).toList(),
-      'eventLocation': instance.eventLocation,
+      'artistLineup': instance.artistLineup,
+      'eventLocationText': instance.eventLocationText,
+      'eventLocationCoordinates': instance.eventLocationCoordinates,
       'posterUrl': instance.posterUrl,
       'imagesUrls': instance.imagesUrls,
       'startTime': instance.startTime.toIso8601String(),
       'endTime': instance.endTime.toIso8601String(),
-      'tickets': instance.tickets.map((e) => e.toJson()).toList(),
+      'tickets': instance.tickets,
       'ageRestrictions': instance.ageRestrictions,
       'organiserName': instance.organiserName,
       'termsAndConditions': instance.termsAndConditions,

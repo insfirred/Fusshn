@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fusshn/src/common/app_constants.dart';
+import 'package:fusshn/src/models/coordinates_data.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../models/event_data.dart';
 import '../../repositories/app_repository.dart';
@@ -78,11 +81,39 @@ class HomeViewModel extends StateNotifier<HomeViewState> {
     state = state.copyWith(status: HomeViewStatus.loading);
     var listSnapshot = await firestore.collection('events').get();
 
-    List<EventData> events = listSnapshot.docs
-        .map((eventSnapshot) => EventData.fromJson(eventSnapshot.data()))
-        .toList();
+    List<EventData> nearByEvents = [];
+    double userLattitude =
+        ref.watch(appRepositoryProvider).userLocationData!.lattitide;
+    double userLongitude =
+        ref.watch(appRepositoryProvider).userLocationData!.longitude;
 
-    state = state.copyWith(events: events, status: HomeViewStatus.success);
+    List<EventData> events = listSnapshot.docs.map((eventSnapshot) {
+      EventData event = EventData.fromJson(
+        eventSnapshot.data(),
+      );
+
+      double eventLattitude = event.eventLocationCoordinates.lattitude;
+      double eventLongitude = event.eventLocationCoordinates.longitude;
+
+      final distanceInMeters = Geolocator.distanceBetween(
+        userLattitude,
+        userLongitude,
+        eventLattitude,
+        eventLongitude,
+      );
+
+      if (distanceInMeters <= AppConstants.nearByEventsWithinRadiusInMeters) {
+        nearByEvents.add(event);
+      }
+
+      return event;
+    }).toList();
+
+    state = state.copyWith(
+      allEvents: events,
+      nearByEvents: nearByEvents,
+      status: HomeViewStatus.success,
+    );
   }
 
   void showPaymentSuccessPopup() => state = state.copyWith(
@@ -97,7 +128,8 @@ class HomeViewModel extends StateNotifier<HomeViewState> {
 @freezed
 class HomeViewState with _$HomeViewState {
   const factory HomeViewState({
-    @Default([]) List<EventData> events,
+    @Default([]) List<EventData> allEvents,
+    @Default([]) List<EventData> nearByEvents,
     @Default(false) bool showFeedbackCardOnHome,
     @Default([]) List<String> myFeedbacks,
     @Default(0) int paymentSuccessPopupTrigger,

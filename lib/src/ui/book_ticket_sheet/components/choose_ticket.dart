@@ -173,7 +173,7 @@ class _EventInfo extends StatelessWidget {
                         ),
                   ),
                   Text(
-                    event.eventLocation,
+                    event.eventLocationText,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: Colors.white.withOpacity(0.5),
                         ),

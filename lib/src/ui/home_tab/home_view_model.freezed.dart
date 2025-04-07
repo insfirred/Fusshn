@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomeViewState {
-  List<EventData> get events => throw _privateConstructorUsedError;
+  List<EventData> get allEvents => throw _privateConstructorUsedError;
+  List<EventData> get nearByEvents => throw _privateConstructorUsedError;
   bool get showFeedbackCardOnHome => throw _privateConstructorUsedError;
   List<String> get myFeedbacks => throw _privateConstructorUsedError;
   int get paymentSuccessPopupTrigger => throw _privateConstructorUsedError;
@@ -36,7 +37,8 @@ abstract class $HomeViewStateCopyWith<$Res> {
       _$HomeViewStateCopyWithImpl<$Res, HomeViewState>;
   @useResult
   $Res call(
-      {List<EventData> events,
+      {List<EventData> allEvents,
+      List<EventData> nearByEvents,
       bool showFeedbackCardOnHome,
       List<String> myFeedbacks,
       int paymentSuccessPopupTrigger,
@@ -58,7 +60,8 @@ class _$HomeViewStateCopyWithImpl<$Res, $Val extends HomeViewState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? events = null,
+    Object? allEvents = null,
+    Object? nearByEvents = null,
     Object? showFeedbackCardOnHome = null,
     Object? myFeedbacks = null,
     Object? paymentSuccessPopupTrigger = null,
@@ -67,9 +70,13 @@ class _$HomeViewStateCopyWithImpl<$Res, $Val extends HomeViewState>
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
-      events: null == events
-          ? _value.events
-          : events // ignore: cast_nullable_to_non_nullable
+      allEvents: null == allEvents
+          ? _value.allEvents
+          : allEvents // ignore: cast_nullable_to_non_nullable
+              as List<EventData>,
+      nearByEvents: null == nearByEvents
+          ? _value.nearByEvents
+          : nearByEvents // ignore: cast_nullable_to_non_nullable
               as List<EventData>,
       showFeedbackCardOnHome: null == showFeedbackCardOnHome
           ? _value.showFeedbackCardOnHome
@@ -108,7 +115,8 @@ abstract class _$$HomeViewStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<EventData> events,
+      {List<EventData> allEvents,
+      List<EventData> nearByEvents,
       bool showFeedbackCardOnHome,
       List<String> myFeedbacks,
       int paymentSuccessPopupTrigger,
@@ -128,7 +136,8 @@ class __$$HomeViewStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? events = null,
+    Object? allEvents = null,
+    Object? nearByEvents = null,
     Object? showFeedbackCardOnHome = null,
     Object? myFeedbacks = null,
     Object? paymentSuccessPopupTrigger = null,
@@ -137,9 +146,13 @@ class __$$HomeViewStateImplCopyWithImpl<$Res>
     Object? errorMessage = freezed,
   }) {
     return _then(_$HomeViewStateImpl(
-      events: null == events
-          ? _value._events
-          : events // ignore: cast_nullable_to_non_nullable
+      allEvents: null == allEvents
+          ? _value._allEvents
+          : allEvents // ignore: cast_nullable_to_non_nullable
+              as List<EventData>,
+      nearByEvents: null == nearByEvents
+          ? _value._nearByEvents
+          : nearByEvents // ignore: cast_nullable_to_non_nullable
               as List<EventData>,
       showFeedbackCardOnHome: null == showFeedbackCardOnHome
           ? _value.showFeedbackCardOnHome
@@ -175,23 +188,34 @@ class _$HomeViewStateImpl
     with DiagnosticableTreeMixin
     implements _HomeViewState {
   const _$HomeViewStateImpl(
-      {final List<EventData> events = const [],
+      {final List<EventData> allEvents = const [],
+      final List<EventData> nearByEvents = const [],
       this.showFeedbackCardOnHome = false,
       final List<String> myFeedbacks = const [],
       this.paymentSuccessPopupTrigger = 0,
       this.tempRemoveFeedbackCard = false,
       this.status = HomeViewStatus.initial,
       this.errorMessage})
-      : _events = events,
+      : _allEvents = allEvents,
+        _nearByEvents = nearByEvents,
         _myFeedbacks = myFeedbacks;
 
-  final List<EventData> _events;
+  final List<EventData> _allEvents;
   @override
   @JsonKey()
-  List<EventData> get events {
-    if (_events is EqualUnmodifiableListView) return _events;
+  List<EventData> get allEvents {
+    if (_allEvents is EqualUnmodifiableListView) return _allEvents;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_events);
+    return EqualUnmodifiableListView(_allEvents);
+  }
+
+  final List<EventData> _nearByEvents;
+  @override
+  @JsonKey()
+  List<EventData> get nearByEvents {
+    if (_nearByEvents is EqualUnmodifiableListView) return _nearByEvents;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_nearByEvents);
   }
 
   @override
@@ -220,7 +244,7 @@ class _$HomeViewStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeViewState(events: $events, showFeedbackCardOnHome: $showFeedbackCardOnHome, myFeedbacks: $myFeedbacks, paymentSuccessPopupTrigger: $paymentSuccessPopupTrigger, tempRemoveFeedbackCard: $tempRemoveFeedbackCard, status: $status, errorMessage: $errorMessage)';
+    return 'HomeViewState(allEvents: $allEvents, nearByEvents: $nearByEvents, showFeedbackCardOnHome: $showFeedbackCardOnHome, myFeedbacks: $myFeedbacks, paymentSuccessPopupTrigger: $paymentSuccessPopupTrigger, tempRemoveFeedbackCard: $tempRemoveFeedbackCard, status: $status, errorMessage: $errorMessage)';
   }
 
   @override
@@ -228,7 +252,8 @@ class _$HomeViewStateImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'HomeViewState'))
-      ..add(DiagnosticsProperty('events', events))
+      ..add(DiagnosticsProperty('allEvents', allEvents))
+      ..add(DiagnosticsProperty('nearByEvents', nearByEvents))
       ..add(
           DiagnosticsProperty('showFeedbackCardOnHome', showFeedbackCardOnHome))
       ..add(DiagnosticsProperty('myFeedbacks', myFeedbacks))
@@ -245,7 +270,10 @@ class _$HomeViewStateImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeViewStateImpl &&
-            const DeepCollectionEquality().equals(other._events, _events) &&
+            const DeepCollectionEquality()
+                .equals(other._allEvents, _allEvents) &&
+            const DeepCollectionEquality()
+                .equals(other._nearByEvents, _nearByEvents) &&
             (identical(other.showFeedbackCardOnHome, showFeedbackCardOnHome) ||
                 other.showFeedbackCardOnHome == showFeedbackCardOnHome) &&
             const DeepCollectionEquality()
@@ -264,7 +292,8 @@ class _$HomeViewStateImpl
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_events),
+      const DeepCollectionEquality().hash(_allEvents),
+      const DeepCollectionEquality().hash(_nearByEvents),
       showFeedbackCardOnHome,
       const DeepCollectionEquality().hash(_myFeedbacks),
       paymentSuccessPopupTrigger,
@@ -281,7 +310,8 @@ class _$HomeViewStateImpl
 
 abstract class _HomeViewState implements HomeViewState {
   const factory _HomeViewState(
-      {final List<EventData> events,
+      {final List<EventData> allEvents,
+      final List<EventData> nearByEvents,
       final bool showFeedbackCardOnHome,
       final List<String> myFeedbacks,
       final int paymentSuccessPopupTrigger,
@@ -290,7 +320,9 @@ abstract class _HomeViewState implements HomeViewState {
       final String? errorMessage}) = _$HomeViewStateImpl;
 
   @override
-  List<EventData> get events;
+  List<EventData> get allEvents;
+  @override
+  List<EventData> get nearByEvents;
   @override
   bool get showFeedbackCardOnHome;
   @override

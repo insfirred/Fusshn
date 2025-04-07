@@ -136,7 +136,7 @@ class _DataState extends State<_Data> {
                   SizedBox(
                     width: 190,
                     child: Text(
-                      widget.eventData.eventLocation,
+                      widget.eventData.eventLocationText,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             fontSize: 12,

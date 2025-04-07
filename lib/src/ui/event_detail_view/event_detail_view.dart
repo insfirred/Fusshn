@@ -103,7 +103,8 @@ class EventDetailView extends StatelessWidget {
                   TimingAndVenue(
                     startTime: eventData.startTime,
                     endTime: eventData.endTime,
-                    location: eventData.eventLocation,
+                    locationText: eventData.eventLocationText,
+                    coordinates: eventData.eventLocationCoordinates,
                     organizerName: eventData.organiserName,
                   ),
                   const SliverToBoxAdapter(

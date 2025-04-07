@@ -25,14 +25,6 @@ class _SplashViewState extends ConsumerState<SplashView> {
     });
 
     return Scaffold(
-      // backgroundColor: Colors.black,
-      // body: Center(
-      //   // child: Text('Splash View'),
-      //   child: Image.asset(
-      //     'assets/app_icon.png',
-      //     width: 200,
-      //   ),
-      // ),
       body: Center(
         child: Lottie.asset(
           'assets/lottie/splash_animation.json',

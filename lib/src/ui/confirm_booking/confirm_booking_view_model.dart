@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../common/payment.dart';
 import '../../models/booking.dart';
@@ -109,12 +110,15 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
     // await _initRouteRequest();
 
     // 2. Create Booking Data in db
-    await _createBookingData(response.paymentId ?? '');
+    String bookingId = await _createBookingData(response.paymentId ?? '');
 
-    // 3. Refresh (fetch again) User Data
+    // 3. Send Booking Confirmation Email to User
+    await _sendBookingConfirmationEmail(bookingId);
+
+    // 4. Refresh (fetch again) User Data
     await ref.read(appRepositoryProvider.notifier).refreshUserData();
 
-    // 4. set the state of confirmBookingViewModelProvider.
+    // 5. set the state of confirmBookingViewModelProvider.
     state = state.copyWith(
       status: PaymentStatus.success,
       paymentSuccessResponse: response,
@@ -289,7 +293,7 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
   // }
 
   // TODO: Make it a Transaction method
-  _createBookingData(String paymentId) async {
+  Future<String> _createBookingData(String paymentId) async {
     String userId = ref.read(appRepositoryProvider).userData!.uid;
     String userName = ref.read(appRepositoryProvider).userData!.name!;
     String userEmail = ref.read(appRepositoryProvider).userData!.email;
@@ -338,6 +342,32 @@ class ConfirmBookingViewModel extends StateNotifier<ConfirmBookingState> {
         .update({
       'bookingIdsList': updatedBooking,
     });
+
+    return bookingId;
+  }
+
+  _sendBookingConfirmationEmail(String bookingId) async {
+    // https://zuepyymuebmlbwynssnk.supabase.co/functions/v1/booking-confirmation-email
+    var supabase = Supabase.instance.client;
+
+    var res = await supabase.functions.invoke(
+      'booking-confirmation-email',
+      body: {
+        "userEmail": ref.read(appRepositoryProvider).userData!.email,
+        "userName": ref.read(appRepositoryProvider).userData!.name,
+        "eventName": "",
+        "eventDate": "",
+        "eventVenue": "",
+        "bookingId": bookingId,
+        "totalUserAllowed": state.selectedTicketCount *
+            state.selectedTicketType!.personAllowedPerTicket,
+        "amountPerTicket": state.selectedTicketType!.price,
+        "totalAmount": state.grandTotalPrice,
+      },
+    );
+
+    log('status: ${res.status}');
+    log('data: ${res.data}');
   }
 }
 

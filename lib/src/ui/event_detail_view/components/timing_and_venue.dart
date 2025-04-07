@@ -5,19 +5,22 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../common/dimens.dart';
+import '../../../models/coordinates_data.dart';
 
 class TimingAndVenue extends StatelessWidget {
   const TimingAndVenue({
     super.key,
     required this.startTime,
     required this.endTime,
-    required this.location,
+    required this.locationText,
     required this.organizerName,
+    required this.coordinates,
   });
 
   final DateTime startTime;
   final DateTime endTime;
-  final String location;
+  final String locationText;
+  final CoordinatesData coordinates;
   final String organizerName;
 
   @override
@@ -119,7 +122,7 @@ class TimingAndVenue extends StatelessWidget {
                       GestureDetector(
                         onTap: _launchUrl,
                         child: Text(
-                          location,
+                          locationText,
                           style:
                               Theme.of(context).textTheme.bodySmall?.copyWith(
                                     decoration: TextDecoration.underline,
@@ -176,9 +179,13 @@ class TimingAndVenue extends StatelessWidget {
   }
 
   Future<void> _launchUrl() async {
-    log('opening maps');
-    if (!await launchUrl(Uri.parse(
-        'https://www.google.com/maps/@28.396366244820598,77.10404872451666,15z'))) {
+    log('opening maps at ${coordinates.lattitude}, ${coordinates.longitude}');
+
+    if (!await launchUrl(
+      Uri.parse(
+        'https://www.google.com/maps/@${coordinates.lattitude},${coordinates.longitude},18z',
+      ),
+    )) {
       throw Exception('Something went wrong on launching map url...');
     }
   }

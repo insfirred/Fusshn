@@ -7,16 +7,15 @@ import '../home_view_model.dart';
 import 'event_card.dart';
 
 class HorizontalEventSlider extends ConsumerWidget {
-  const HorizontalEventSlider({
+  const HorizontalEventSlider(
+    this.eventDataList, {
     super.key,
   });
 
+  final List<EventData> eventDataList;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<EventData> eventDataList = ref.watch(
-      homeViewModelProvider.select((_) => _.events),
-    );
-
     final status = ref.watch(
       homeViewModelProvider.select((_) => _.status),
     );

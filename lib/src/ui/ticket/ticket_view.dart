@@ -203,7 +203,7 @@ class TicketView extends StatelessWidget {
                             ),
                             const SizedBox(height: 5),
                             Text(
-                              eventData.eventLocation,
+                              eventData.eventLocationText,
                               overflow: TextOverflow.visible,
                               style: GoogleFonts.poppins(
                                 fontSize: 14,
